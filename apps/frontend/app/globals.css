@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * CSS custom properties mirror `cssVars` in
+ * packages/shared/src/design/tokens.ts (HSL channels, shadcn/ui compatible).
+ * If you change a token, update both files.
+ */
+:root {
+  --background: 0 0% 95%;
+  --foreground: 0 0% 7%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 7%;
+  --primary: 197 55% 38%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 195 55% 16%;
+  --secondary-foreground: 0 0% 100%;
+  --accent: 41 54% 54%;
+  --accent-foreground: 0 0% 7%;
+  --muted: 195 40% 95%;
+  --muted-foreground: 195 20% 35%;
+  --border: 195 30% 80%;
+  --input: 195 30% 80%;
+  --ring: 197 55% 38%;
+  --success: 146 50% 36%;
+  --danger: 6 63% 46%;
+  --radius: 0.5rem;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: theme('fontFamily.heading');
+  }
+
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: hsl(var(--primary) / 0.2);
+  }
+}

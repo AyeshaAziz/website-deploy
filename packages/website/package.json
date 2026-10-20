@@ -1,0 +1,36 @@
+{
+  "name": "@itqa/website",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./landing": "./src/landing/index.ts",
+    "./sections": "./src/sections/index.ts",
+    "./layout": "./src/layout/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "dependencies": { "@itqa/shared": "workspace:*" },
+  "peerDependencies": { "react": "^19.0.0", "react-dom": "^19.0.0" },
+  "devDependencies": {
+    "@storybook/addon-a11y": "^10.6.2",
+    "@storybook/addon-docs": "^10.6.2",
+    "@storybook/addon-links": "^10.6.2",
+    "@storybook/react-vite": "^10.6.2",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47",
+    "postcss-import": "^17.0.1",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "storybook": "^10.6.2",
+    "tailwindcss": "^3.4.13",
+    "typescript": "^5.5.4"
+  }
+}

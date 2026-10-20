@@ -1,0 +1,33 @@
+{
+  "name": "itqa-platform",
+  "private": true,
+  "packageManager": "pnpm@9.12.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @itqa/frontend dev",
+    "build": "pnpm --filter @itqa/frontend build",
+    "lint": "pnpm -r --if-present lint",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "test": "pnpm -r --if-present test",
+    "storybook": "pnpm --filter @itqa/website storybook",
+    "build-storybook": "pnpm --filter @itqa/website build-storybook",
+    "db:up": "docker compose up -d",
+    "db:push": "pnpm --filter @itqa/database db:push",
+    "db:seed": "pnpm --filter @itqa/database db:seed",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "prettier": "^3.3.3",
+    "typescript": "^5.5.4"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@prisma/client",
+      "@prisma/engines",
+      "prisma",
+      "esbuild"
+    ]
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "intro": {
+    "about": {
+      "title": "ITQA",
+      "body": "The International Ta\u2019limul-Qur\u2019an Academy provides multilingual courses for all age groups to learn. Whether you are a beginner or on an advanced level, you may find a suitable course, to learn and improve your recitation and understanding of the Holy Qur\u2019an. Furthermore, ITQA will be taking exams after which every Student has the great opportunity to advance in further levels."
+    },
+    "objectives": {
+      "title": "Objectives",
+      "preface": "The Promised Messiah(as) said:",
+      "quote": "\u201cI call Allah to witness that the Holy Qur\u2019an is a rare pearl. Its outside is light and its inside is light and its above is light and its below is light and there is light in every word of it. It is a spiritual garden whose clustered fruits are within easy reach and through which streams flow. Every fruit of this garden is found at its end every branch is fruit-laden. Its light has penetrated to my heart and I could not have acquired it by any other means.\u201d"
+    }
+  },
+  "stats": [
+    { "icon": "student-world-icon", "title": "Students", "caption": "2500 Students Worldwide" },
+    { "icon": "teacher-icon", "title": "Teachers", "caption": "350 Teachers from around the Globe" },
+    {
+      "icon": "laptop-icon",
+      "title": "Uploaded Classes",
+      "caption": "297 Tarjamatul-Qur\u2019an Classes in 12 languages"
+    },
+    { "icon": "classroom-icon", "title": "Hours taught", "caption": "21259 hours have been taught." }
+  ],
+  "usefulLinks": {
+    "title": "Useful Links",
+    "links": [
+      {
+        "title": "Al Islam",
+        "description": "The Official Website of the Ahmadiyya Muslim Community",
+        "href": "https://www.alislam.org",
+        "label": "www.alislam.org"
+      },
+      {
+        "title": "Holy Qur\u2019an",
+        "description": "An Online Advance Search Engine for the Holy Qur\u2019an",
+        "href": "https://www.openquran.com",
+        "label": "www.openquran.com"
+      },
+      {
+        "title": "Al Islam",
+        "description": "The Official Website of the Ahmadiyya Muslim Community",
+        "href": "https://www.alislam.org",
+        "label": "www.alislam.org"
+      }
+    ]
+  }
+}

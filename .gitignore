@@ -1,0 +1,10 @@
+node_modules
+.next
+.env
+.env.local
+*.tsbuildinfo
+.terraform
+*.tfstate*
+coverage
+storybook-static
+*.log

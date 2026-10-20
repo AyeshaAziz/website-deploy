@@ -1,0 +1,13 @@
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: itqa
+      POSTGRES_PASSWORD: itqa
+      POSTGRES_DB: itqa
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:

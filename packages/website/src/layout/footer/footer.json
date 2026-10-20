@@ -1,0 +1,34 @@
+{
+  "about": {
+    "title": "About ITQA",
+    "body": "The International Ta'limul Qur'an Academy (ITQA) provides a number of courses for individuals to improve the recitation, learning and understanding of the Word of God \u2018The Holy Qur\u2019an\u2019\u2026",
+    "ctaLabel": "Know More",
+    "ctaHref": "/about"
+  },
+  "social": {
+    "title": "Follow Us",
+    "links": [
+      { "label": "Twitter", "href": "https://twitter.com" },
+      { "label": "Instagram", "href": "https://instagram.com" },
+      { "label": "Facebook", "href": "https://facebook.com" },
+      { "label": "Youtube", "href": "https://youtube.com" },
+      { "label": "Soundcloud", "href": "https://soundcloud.com" }
+    ]
+  },
+  "contact": {
+    "title": "Contact Us",
+    "addressTitle": "Address:",
+    "addressLines": [
+      "ITQA Head Office",
+      "Masjid Baitul Ehsan",
+      "25 Willow Ln,",
+      "Mitcham",
+      "CR4 4TS"
+    ],
+    "emailTitle": "Email:",
+    "email": "contact@itqa.org.uk"
+  },
+  "map": {
+    "label": "ITQA location"
+  }
+}
