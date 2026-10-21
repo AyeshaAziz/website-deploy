@@ -1,0 +1,99 @@
+{
+  "playlist": {
+    "title": "ITQA Playlist",
+    "items": [
+      {
+        "id": "tarjamatul-quran",
+        "title": "Tarjamatul-Qur'an",
+        "description": "If you have finished the first recitation of the Holy Qur'an or are on an advanced level, this will be the next step to understand its meaning.",
+        "imageUrl": "/images/courses/tarjamatul-quran.png",
+        "href": "https://youtube.com",
+        "ctaLabel": "View"
+      },
+      {
+        "id": "annual-award",
+        "title": "1st Annual Award Ceremony",
+        "description": "Celebrate the achievements of our students and teachers at the first ITQA annual award ceremony.",
+        "imageUrl": "/images/banner.png",
+        "href": "https://youtube.com",
+        "ctaLabel": "View"
+      },
+      {
+        "id": "calligraphy",
+        "title": "Qur'anic Calligraphy Lessons",
+        "description": "Learn the art of Qur'anic calligraphy and develop a deeper connection with the written word.",
+        "imageUrl": "/images/courses/qawaidul-quran.png",
+        "href": "https://youtube.com",
+        "ctaLabel": "View"
+      },
+      {
+        "id": "urdu",
+        "title": "Qur'anic Urdu Lessons",
+        "description": "Build a stronger understanding of the Holy Qur'an through lessons delivered in Urdu.",
+        "imageUrl": "/images/courses/tafsirul-quran.png",
+        "href": "https://youtube.com",
+        "ctaLabel": "View"
+      },
+      {
+        "id": "spanish",
+        "title": "Qur'anic Spanish Lessons",
+        "description": "Explore the teachings of the Holy Qur'an through lessons delivered in Spanish.",
+        "imageUrl": "/images/courses/naziratul-quran.png",
+        "href": "https://youtube.com",
+        "ctaLabel": "View"
+      }
+    ]
+  },
+  "videos": {
+    "title": "Recently Added Videos",
+    "items": [
+      {
+        "id": "award-video",
+        "title": "1st Annual Award Ceremony",
+        "imageUrl": "/images/banner.png",
+        "duration": "1:29:39"
+      },
+      {
+        "id": "calligraphy-video",
+        "title": "Qur'anic Calligraphy",
+        "imageUrl": "/images/courses/qawaidul-quran.png",
+        "duration": "15:01"
+      },
+      {
+        "id": "tarjamatul-video",
+        "title": "Tarjamatul-Qur'an",
+        "imageUrl": "/images/courses/tarjamatul-quran.png",
+        "duration": "30:39"
+      }
+    ]
+  },
+  "links": {
+    "title": "Useful Links",
+    "links": [
+      {
+        "title": "Al Islam",
+        "description": "The Official Website of the Ahmadiyya Muslim Community",
+        "href": "https://www.alislam.org",
+        "label": "www.alislam.org"
+      },
+      {
+        "title": "Holy Qur'an",
+        "description": "An Online Advance Search Engine for the Holy Qur'an",
+        "href": "https://www.openquran.com",
+        "label": "www.openquran.com"
+      },
+      {
+        "title": "Holy Qur'an App",
+        "description": "Read, Listen and Search in the Holy Qur'an",
+        "href": "https://www.alislam.org/quran/app/",
+        "label": "The Holy Quran App"
+      },
+      {
+        "title": "ITQA on YouTube",
+        "description": "Watch classes, events and ceremonies from the ITQA YouTube channel",
+        "href": "https://youtube.com",
+        "label": "youtube.com"
+      }
+    ]
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "title": "Atfal/Nasirat Registration",
+  "description": "Register a child for the Atfal and Nasirat programme.",
+  "submitLabel": "Submit registration",
+  "fields": {
+    "firstName": { "label": "First name", "placeholder": "Enter the child's first name" },
+    "lastName": { "label": "Last name", "placeholder": "Enter the child's last name" },
+    "email": { "label": "Email address", "placeholder": "you@example.com" },
+    "phone": { "label": "Phone number", "placeholder": "+1 555 123 4567" },
+    "dateOfBirth": { "label": "Date of birth" },
+    "gender": { "label": "Gender" },
+    "address": { "label": "Address", "placeholder": "Street address" },
+    "city": { "label": "City", "placeholder": "City" },
+    "country": { "label": "Country", "placeholder": "Country" },
+    "category": { "label": "Category" },
+    "guardianName": { "label": "Guardian name", "placeholder": "Full name of parent or guardian" },
+    "guardianPhone": { "label": "Guardian phone", "placeholder": "+1 555 123 4567" },
+    "school": { "label": "School", "placeholder": "Name of school" },
+    "grade": { "label": "Grade" },
+    "consent": {
+      "label": "I agree to the privacy policy and consent to these details being stored for this registration.",
+      "help": "We only use these details to process the registration."
+    }
+  },
+  "options": {
+    "gender": { "male": "Male", "female": "Female" },
+    "category": { "atfal": "Atfal (boys)", "nasirat": "Nasirat (girls)" },
+    "grade": {
+      "1": "Grade 1",
+      "2": "Grade 2",
+      "3": "Grade 3",
+      "4": "Grade 4",
+      "5": "Grade 5",
+      "6": "Grade 6",
+      "7": "Grade 7",
+      "8": "Grade 8",
+      "9": "Grade 9",
+      "10": "Grade 10",
+      "11": "Grade 11",
+      "12": "Grade 12"
+    }
+  }
+}

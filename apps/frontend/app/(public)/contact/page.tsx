@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Button, Container, Input, Label, SectionHeading, Textarea } from '@itqa/website';
+import { Button, Container, Input, Label, SectionHeading, Textarea } from '@itqa/ui';
 import { sendContact } from './actions';
 
 export const metadata: Metadata = { title: 'Contact' };

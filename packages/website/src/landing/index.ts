@@ -1,1 +1,1 @@
-export { PageView as WebsiteLanding } from '../sections/Sections';
+export { PageView as WebsiteLanding } from '../sections/PageView';

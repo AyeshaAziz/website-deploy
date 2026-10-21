@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Container } from '../../ui/Container';
+import { Container } from '@itqa/ui';
 import type { AboutIntroData } from './about.types';
 
 const TITLE = 'font-cabin text-h3 font-bold text-primary-7';

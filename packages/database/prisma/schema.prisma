@@ -19,9 +19,10 @@ enum PublishStatus {
 }
 
 enum SectionType {
-  HERO
+  HOME
   TEXT
   FEATURED_COURSES
+  MULTIMEDIA
   FEATURED_RESOURCES
   CTA
 }
@@ -40,7 +41,7 @@ model User {
 
 model WebsitePage {
   id             String        @id @default(cuid())
-  slug           String        @unique
+  urlPath        String        @unique
   title          String
   status         PublishStatus @default(DRAFT)
   seoTitle       String?
@@ -69,7 +70,7 @@ model Section {
 // Fields are a starting point: validate with ITQA during discovery.
 model Course {
   id          String        @id @default(cuid())
-  slug        String        @unique
+  urlPath     String        @unique
   title       String
   summary     String
   description String?

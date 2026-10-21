@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Container } from '../../ui/Container';
+import { Container } from '@itqa/ui';
 import footerData from './footer.json';
 import { FooterAbout } from './FooterAbout';
 import { FooterContact } from './FooterContact';

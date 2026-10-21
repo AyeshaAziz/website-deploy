@@ -1,10 +1,8 @@
 'use client';
 
 import { useEffect, useState, type ReactNode } from 'react';
-import { NavItem } from '@itqa/shared';
-import { Container } from '../../ui/Container';
-import { NavBar } from '../../ui/NavBar';
-import { MobileNav } from '../../ui/NavBarMobile';
+import { NavItem } from '@itqa/core';
+import { Container, MobileNav, NavBar } from '@itqa/ui';
 import { Subheader } from './Subheader';
 
 export interface HeaderProps {

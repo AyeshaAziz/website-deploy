@@ -1,11 +1,11 @@
 # Frontend Architecture Plan: Core/UI Split and Backend-Ready Registration
 
-Status: Approved for implementation
+Status: Implemented
 Scope: `@itqa/core`, `@itqa/ui`, `@itqa/website`, `@itqa/frontend`
 
 ## 1. Goals
 
-- Rename `@itqa/shared` to `@itqa/core` (contracts, design tokens, utils, form model).
+- Rename the shared package to `@itqa/core` (contracts, design tokens, utils, form model).
 - Create `@itqa/ui`, a shared library for all generic React components.
 - Build registration forms frontend-first, with no backend, without rework when the backend arrives.
 - Keep the code modular and follow SOLID where practical.
@@ -55,7 +55,7 @@ Forms are split by concern:
 
 ## 4. What moves where
 
-### 4.1 Into `@itqa/core` (renamed from `packages/shared`)
+### 4.1 Into `@itqa/core` (renamed from the old shared package directory)
 
 - `src/design/*` (unchanged)
 - `src/model/*`
@@ -100,16 +100,18 @@ Exports: `.` for primitives (no react-hook-form) and `./forms` for the client-on
 - `layout/header/Subheader.tsx`
 - `layout/footer/*`
 - `sections/about/*`
-- `sections/Sections.tsx`
-- `sections/BannerSlideshow.tsx`
+- `sections/SectionRenderer.tsx`
+- `sections/PageView.tsx`
+- `sections/<name>/*` (Home, Text, FeaturedCourses, Multimedia, FeaturedResources, Cta)
+- `sections/shared/carousel/*` (`Carousel` API: fade banner, scroll rows, playlist)
 
 These import primitives from `@itqa/ui` and types from `@itqa/core`.
 
-## 5. Phase 1: Rename `@itqa/shared` to `@itqa/core`
+## 5. Phase 1: Rename the shared package to `@itqa/core`
 
 ### Tasks
 
-- Rename directory `packages/shared` to `packages/core`.
+- Rename the old shared package directory to `packages/core`.
 - Update `package.json`:
   - name to `@itqa/core`
   - add `zod` dependency
@@ -127,8 +129,8 @@ These import primitives from `@itqa/ui` and types from `@itqa/core`.
   - `packages/website/src/layout/header/Subheader.tsx:2`
   - `packages/website/src/ui/NavBar.tsx:4`
   - `packages/website/src/ui/NavBarMobile.tsx:3`
-  - `packages/website/src/sections/Sections.tsx:2-3`
-  - `packages/website/src/sections/BannerSlideshow.tsx:4`
+  - `packages/website/src/sections/SectionRenderer.tsx:2-3`
+  - `packages/website/src/sections/shared/carousel/Carousel.tsx:1`
   - All files in `packages/website/src/ui/`
 - Update configuration:
   - `apps/frontend/next.config.mjs:37`
@@ -152,22 +154,22 @@ These import primitives from `@itqa/ui` and types from `@itqa/core`.
 
 - Create `packages/ui` with `package.json`, `tsconfig.json`, tailwind config, postcss config, and Storybook.
 - Move the generic components and stories listed in section 4.2.
-- Update imports inside moved files from `@itqa/shared` to `@itqa/core`.
+- Keep imports of design tokens and contracts on `@itqa/core`.
 - Delete `packages/website/src/ui/`.
 - Remove `export * from './ui'` from `packages/website/src/index.ts`.
 - Update `@itqa/website` internals to import from `@itqa/ui`:
   - `Header.tsx`, `Subheader.tsx`: Container, NavBar, MobileNav
-  - `Sections.tsx`: ButtonLink, Card, Container, SectionHeading
+  - `sections/*`: ButtonLink, Card, Container, SectionHeading
   - `sections/about/*`: Container
   - `layout/footer/*`: Container
 - Update frontend imports (no re-exports):
   - `app/(public)/contact/page.tsx:2`
   - `app/admin/login/page.tsx:1`
-  - `app/admin/content-management/[slug]/page.tsx:4`
+  - `app/admin/content-management/[page]/page.tsx:4`
   - `app/admin/content-management/page.tsx:2`
   - `app/(public)/courses/page.tsx:2`
-  - `app/(public)/courses/[slug]/page.tsx:3`
-- Keep `Header`, `Footer`, `AboutSections`, `WebsiteLanding`, and `BannerSlideshow` on `@itqa/website`.
+  - `app/(public)/courses/[course]/page.tsx:3`
+- Keep `Header`, `Footer`, `AboutSections`, `WebsiteLanding`, and `Carousel` on `@itqa/website`.
 
 ### Package wiring
 
@@ -383,7 +385,7 @@ pnpm build-storybook
 
 ## 11. Acceptance criteria
 
-- Zero `@itqa/shared` references remain.
+- Zero references to the old shared package name remain.
 - No `@itqa/forms` package exists.
 - `packages/website/src/ui` is removed.
 - `@itqa/core` root is React-free.

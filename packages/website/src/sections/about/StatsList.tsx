@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Container } from '../../ui/Container';
+import { Container } from '@itqa/ui';
 import type { AboutStat } from './about.types';
 
 function StatRow({ stat }: { stat: AboutStat }): ReactNode {

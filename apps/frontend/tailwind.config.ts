@@ -5,16 +5,18 @@ import {
   colors,
   fontFamily,
   fontSize,
+  gradients,
   maxWidth,
   screens,
   spacing,
-} from '@itqa/shared/design';
+} from '@itqa/core/design';
 
 const config: Config = {
   content: [
     './app/**/*.{ts,tsx}',
     '../../packages/website/src/**/*.{ts,tsx}',
-    '../../packages/shared/src/**/*.{ts,tsx}',
+    '../../packages/ui/src/**/*.{ts,tsx}',
+    '../../packages/core/src/**/*.{ts,tsx}',
   ],
   theme: {
     extend: {
@@ -25,6 +27,7 @@ const config: Config = {
       maxWidth,
       borderRadius,
       boxShadow,
+      backgroundImage: gradients,
       screens,
     },
   },

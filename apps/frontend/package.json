@@ -7,11 +7,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
   },
   "dependencies": {
     "@itqa/database": "workspace:*",
-    "@itqa/shared": "workspace:*",
+    "@itqa/core": "workspace:*",
+    "@itqa/ui": "workspace:*",
     "@itqa/website": "workspace:*",
     "bcryptjs": "^2.4.3",
     "jose": "^5.9.0",
@@ -31,6 +33,7 @@
     "eslint-config-next": "16.4.2",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.13",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "vitest": "^2.1.0"
   }
 }

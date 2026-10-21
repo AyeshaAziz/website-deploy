@@ -1,4 +1,4 @@
-# ITQA Website (Day 1 skeleton)
+# ITQA Website
 
 Website-only scope from the ITQA Architecture Design Document: public pages plus a database-driven CMS.
 No portals, no Express backend, no Redis yet. Layout matches the full platform monorepo so Phase 3 adds to it.
@@ -23,9 +23,10 @@ Editor login: http://localhost:3000/admin/login (credentials from `SEED_ADMIN_EM
 
 | Path | Purpose |
 | --- | --- |
-| `apps/frontend` | Next.js 14 app: public routes, `/admin` CMS, server actions, middleware |
+| `apps/frontend` | Next.js 16 app: public routes, registration pages, `/admin` CMS, BFF API, server actions, middleware |
 | `packages/website` | `@itqa/website`: header/footer, section components, page renderer |
-| `packages/shared` | `@itqa/shared`: types, constants, small utils |
+| `packages/ui` | `@itqa/ui`: generic React components, Storybook, generic form engine (`@itqa/ui/forms`) |
+| `packages/core` | `@itqa/core`: contracts, design tokens, utils, form model (`@itqa/core/forms`) |
 | `packages/database` | `@itqa/database`: Prisma schema, client, seed (reused by Express later) |
 | `infra/terraform` | AWS base (media bucket done; VPC, RDS, ALB, compute TODO) |
 | `.github/workflows` | CI: install, db push, seed, lint, typecheck, test, build |
@@ -33,8 +34,36 @@ Editor login: http://localhost:3000/admin/login (credentials from `SEED_ADMIN_EM
 ## What works
 
 - ISR public pages: Home, any CMS page (`/about`, `/study-materials`), Courses list and detail, Contact form (validation, honeypot, rate limit)
+- Registration forms for Atfal/Nasirat, Ansar, Khuddam, Lajna and Teachers, driven by `@itqa/core` schemas and JSON copy, with a `/api/v1` BFF, idempotency, duplicate handling and rate limits
 - Editor login (bcrypt + signed JWT cookie), role check in every server action, audit log on every change
 - Draft / publish with on-demand revalidation; sitemap.xml and robots.txt; security headers
+
+## Registration API
+
+The forms call the Next.js BFF at `/api/v1`. In development the BFF uses an in-memory
+mock (resets on restart); no backend is required.
+
+```env
+REGISTRATION_API_MODE=mock   # or "live"
+BACKEND_API_URL=             # required when live
+NEXT_PUBLIC_API_BASE_URL=/api/v1
+```
+
+See `docs/api-contract.md` for the contract and `BACKEND_TODO.md` for the handoff. Each
+track is one schema (`packages/core`), one JSON file (`apps/frontend/content/registration`),
+and one registry entry (`apps/frontend/lib/registrations/tracks.ts`).
+
+## Checks
+
+```bash
+pnpm lint
+pnpm typecheck
+pnpm test
+pnpm build
+pnpm build-storybook
+```
+
+Storybook lives in `packages/ui` (`pnpm storybook`).
 
 ## Stubbed or TODO (maps to the plan steps)
 
@@ -43,4 +72,5 @@ Editor login: http://localhost:3000/admin/login (credentials from `SEED_ADMIN_EM
 - Step 4: Contact email via SES, structured data, Open Graph images, real copy
 - Step 5: typed section forms, Tiptap rich text, dnd-kit ordering, S3 image upload, Course/Resource editors
 - Step 6: CSP with nonces, WordPress content migration and 301 redirects, load test
+- Registration backend: replace the mock adapter with the live API (`BACKEND_TODO.md`), shared Redis rate limiting, S3 uploads
 - Auth is a minimal JWT cookie; `requireAuth`/`requireRole` in `apps/frontend/lib/auth.ts` is the interface to keep if you move to Auth.js.

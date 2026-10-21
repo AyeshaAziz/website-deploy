@@ -7,7 +7,7 @@ Use this document when adding pages, sections or UI; update it when the system c
 
 > **Provisional values.** The Figma design-system frame was too small to read, so every colour,
 > font size and weight is *estimated*. Values are marked `// provisional` in
-> `packages/shared/src/design/tokens.ts`. Replace them from the Figma Variables / Dev Mode export,
+> `packages/core/src/design/tokens.ts`. Replace them from the Figma Variables / Dev Mode export,
 > then re-check contrast, before launch.
 
 ---
@@ -16,20 +16,20 @@ Use this document when adding pages, sections or UI; update it when the system c
 
 | File | Role |
 | --- | --- |
-| `packages/shared/src/design/tokens.ts` | **Single source of truth** for colour, type, spacing, radii, shadows, screens and CSS variables |
-| `packages/shared/src/design/index.ts` | Barrel for the design module |
+| `packages/core/src/design/tokens.ts` | **Single source of truth** for colour, type, spacing, radii, shadows, gradients, screens and CSS variables |
+| `packages/core/src/design/index.ts` | Barrel for the design module |
 | `apps/frontend/tailwind.config.ts` | Imports the tokens and maps them into Tailwind's `theme.extend` |
 | `apps/frontend/app/globals.css` | `:root` CSS variables + `@layer base` defaults (body, headings, focus ring, selection) |
 | `apps/frontend/app/layout.tsx` | Loads fonts with `next/font` and exposes `--font-sans/heading/arabic` |
-| `packages/website/src/ui/*` | Reusable UI primitives |
-| `packages/website/tailwind.config.ts` / `postcss.config.mjs` | Package-local Tailwind so the UI builds without the app |
-| `packages/website/.storybook/*` | Storybook config (see §10) |
+| `packages/ui/src/*` | Reusable UI primitives |
+| `packages/ui/tailwind.config.ts` / `postcss.config.mjs` | Package-local Tailwind so the UI builds without the app |
+| `packages/ui/.storybook/*` | Storybook config (see §10) |
 
 **Import paths**
 
 ```ts
-import { Button, Card, Container, SectionHeading } from '@itqa/website'; // primitives
-import { colors, fontSize, cssVars } from '@itqa/shared/design';        // raw tokens
+import { Button, Card, Container, SectionHeading } from '@itqa/ui'; // primitives
+import { colors, fontSize, cssVars } from '@itqa/core/design';     // raw tokens
 ```
 
 **Rule:** edit tokens in `tokens.ts`, never hardcode hex values or font stacks in components.
@@ -53,8 +53,10 @@ keyed `neg1`/`neg2` in code so classes read `bg-primary-neg1` instead of `bg-pri
 | `primary-5` | `#BDD7E1` (Figma `Primary 5`) | `border-primary-5`, `bg-primary-5` | Card/panel borders, dividers, on-dark text |
 | `primary-6` | `#EEF6F9` (Figma `Primary 6`) | `bg-primary-6` | Page tint, ghost button hover |
 | `accent-gold` | `#C9A24B` | `bg-accent-gold`, `text-accent-gold` | Hero ornament, highlights, "gold" buttons |
+| `warm-surface` / `warm-ink` / `warm-border` | `#F2EDE4` / `#7A623F` / `#D9CBB7` | `bg-warm-surface`, `text-warm-ink`, `ring-warm-border` | Warm multimedia library headings and carousel arrows |
 | `success` | `#2E8B57` | `text-success`, `bg-success/10` | Success form state |
 | `danger` | `#C0392B` | `text-danger`, `bg-danger/10` | Error form state |
+| `ink` | `#292929` | `border-ink`, `bg-ink` | Playlist card border and shadow |
 
 Tailwind's default `neutral-*` and `slate-*` palettes remain available for body text and
 muted copy (the source map's `neutral-900/100` were mapped onto the defaults rather than
@@ -115,10 +117,23 @@ Inter and Playfair Display are variable fonts; Amiri loads weights `400` and `70
 | Page width | `max-w-page` | `1200px` |
 | Card radius | `rounded-card` | `0.5rem` |
 | Card shadow | `shadow-card` | subtle primary-tinted shadow |
+| Playlist card shadow | `shadow-playlist-card` | `#292929` shadow for the playlist fan |
+| Warm card shadow | `shadow-warm-card` | warm-tinted shadow for the library headings |
 | Breakpoints | `sm` 640, `md` 768, `lg` 1024, `xl` 1280, `2xl` 1536 | standard |
 
 Page structure: wrap content in `Container` (`max-w-page` + responsive `px-4 sm:px-6`), then a
 vertical section with `py-section-sm` (or `py-section` for large bands).
+
+### Gradients
+
+Section and card gradients live in `gradients` (`tokens.ts`) and are mapped to Tailwind's
+`backgroundImage`, so components use `bg-<name>` instead of inline `linear-gradient(...)`:
+
+| Token | Tailwind class | Used by |
+| --- | --- | --- |
+| `courses-section` | `bg-courses-section` | `FeaturedCourses` band |
+| `course-card` | `bg-course-card` | `CourseCard` overlay |
+| `media-library` | `bg-media-library` | `MediaLibrary` (multimedia videos/links) |
 
 ---
 
@@ -167,12 +182,13 @@ Variants follow the Figma "Primary button" sheet (Style 1–3), plus a `gold` ac
 | Component | Location | Consumes |
 | --- | --- | --- |
 | `SiteHeader`, `SiteFooter` | `packages/website/src/layout/SiteChrome.tsx` | `Container`, primary tokens, `accent-gold` |
-| `Hero`, `Text`, `FeaturedCourses`, `FeaturedResources`, `Cta` | `packages/website/src/sections/Sections.tsx` | `Container`, `SectionHeading`, `Card`, `ButtonLink` |
-| `SectionRenderer`, `PageView` / `WebsiteLanding` | same | maps `Section.type` → section component |
+| `Home`, `Text`, `FeaturedCourses`, `Multimedia`, `FeaturedResources`, `Cta` | `packages/website/src/sections/<name>/` | `Container`, `SectionHeading`, `Card`, `ButtonLink` |
+| `SectionRenderer`, `PageView` / `WebsiteLanding` | `packages/website/src/sections/SectionRenderer.tsx`, `PageView.tsx` | maps `Section.type` → section component |
+| `Carousel` | `packages/website/src/sections/shared/carousel/` | one API: `fade` banner, `scroll` rows (hidden scrollbar), `playlist` fan |
 | Courses list/detail, Contact, admin editor | `apps/frontend/app/**` | primitives above |
 
-`SectionRenderer` maps the CMS `Section.type` (`HERO`, `TEXT`, `FEATURED_COURSES`,
-`FEATURED_RESOURCES`, `CTA`) to a component, so editors can reorder/edit sections without a redeploy.
+`SectionRenderer` maps the CMS `Section.type` (`HOME`, `TEXT`, `FEATURED_COURSES`,
+`MULTIMEDIA`, `FEATURED_RESOURCES`, `CTA`) to a component, so editors can reorder/edit sections without a redeploy.
 
 ---
 
@@ -197,7 +213,7 @@ Carried over from the source map (§1.5):
 - [ ] Verify contrast: white on `primary-2` and gold on dark meet WCAG AA
 - [ ] Confirm spacing and breakpoints against the Figma desktop + mobile widths
 - [ ] Confirm the Latin heading/body fonts and the Arabic font from Figma text styles
-- [ ] Keep tokens in `packages/shared` so the eventual portals can reuse them
+- [ ] Keep tokens in `packages/core` so the eventual portals can reuse them
 
 ## 9. Out of scope
 
@@ -207,27 +223,27 @@ Carried over from the source map (§1.5):
 
 ## 10. Storybook (package-local preview)
 
-The UI can be developed and tested from `packages/website` alone — no Next.js app required.
+The UI can be developed and tested from `packages/ui` alone — no Next.js app required.
 
 ```bash
-pnpm storybook            # root helper -> packages/website, http://localhost:6006
-pnpm build-storybook      # static build -> packages/website/storybook-static
+pnpm storybook            # root helper -> packages/ui, http://localhost:6006
+pnpm build-storybook      # static build -> packages/ui/storybook-static
 # or directly:
-pnpm --filter @itqa/website storybook
+pnpm --filter @itqa/ui storybook
 ```
 
 | File | Role |
 | --- | --- |
-| `packages/website/.storybook/main.ts` | Framework (`@storybook/react-vite`), stories globs, addons (docs, a11y, links) |
-| `packages/website/.storybook/preview.ts` | Global parameters; imports the preview stylesheet |
-| `packages/website/.storybook/preview.css` | Tailwind entry + `:root` vars + base layer (mirrors `apps/frontend/app/globals.css`) |
-| `packages/website/.storybook/preview-head.html` | Loads Inter / Playfair Display / Amiri and sets `--font-*` |
-| `packages/website/tailwind.config.ts` | Package Tailwind theme built from the shared tokens |
+| `packages/ui/.storybook/main.ts` | Framework (`@storybook/react-vite`), stories globs, addons (docs, a11y, links) |
+| `packages/ui/.storybook/preview.ts` | Global parameters; imports the preview stylesheet |
+| `packages/ui/.storybook/preview.css` | Tailwind entry + `:root` vars + base layer (mirrors `apps/frontend/app/globals.css`) |
+| `packages/ui/.storybook/preview-head.html` | Loads Inter / Playfair Display / Amiri and sets `--font-*` |
+| `packages/ui/tailwind.config.ts` | Package Tailwind theme built from the shared tokens |
 
 Stories live beside the components as `src/**/*.stories.tsx` and use `tags: ['autodocs']`:
 
 - **Primitives:** Button, Input, Textarea, Select, Label, Card, Badge, SectionHeading, Container
-- **Sections:** Hero, Text, FeaturedCourses, FeaturedResources, CallToAction (via `SectionRenderer`)
+- **Sections:** Home, Text, FeaturedCourses, Multimedia, FeaturedResources, CallToAction (via `SectionRenderer`)
 - **Layout:** Site header, footer
 
 To add a story, create `X.stories.tsx` next to `X.tsx`:

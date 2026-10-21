@@ -34,7 +34,8 @@ const nextConfig = {
 
   transpilePackages: [
     '@itqa/website',
-    '@itqa/shared',
+    '@itqa/ui',
+    '@itqa/core',
     '@itqa/database',
   ],
 

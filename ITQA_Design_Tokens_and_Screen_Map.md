@@ -25,7 +25,7 @@ Scope: public website only (`@itqa/website`), per the Day 1 plan.
 
 The login screens use five colour variants (pink, blue, green, orange, beige). Treat these as per-role portal themes (admin, coordinator, teacher, student, parent), **not** website tokens. Keep them out of the website package.
 
-### 1.2 `tailwind.config.ts` (in `packages/shared`)
+### 1.2 `tailwind.config.ts` (in `packages/core`)
 
 ```ts
 import type { Config } from 'tailwindcss';
@@ -94,7 +94,7 @@ export default {
 - [ ] Replace provisional values above
 - [ ] Check contrast: white text on `brand-500` and gold on dark must meet WCAG AA
 - [ ] Define spacing and breakpoints (the Figma shows desktop and a single mobile width)
-- [ ] Put tokens in `packages/shared`, consumed by both `@itqa/website` and the portals
+- [ ] Put tokens in `packages/core`, consumed by both `@itqa/website` and the portals
 
 ---
 
@@ -110,7 +110,7 @@ export default {
 | Teachers | `/teachers` | ISR | Teacher listing and enquiry/contact form |
 | Login screens (5 colour variants) | `/login` | Client component | Out of website scope. Build one layout, theme per role later |
 
-### 2.2 Shared layout components (`packages/shared` or `@itqa/website`)
+### 2.2 Shared layout components (`packages/ui` + `@itqa/website`)
 
 | Component | Used on | Notes |
 | --- | --- | --- |
@@ -124,7 +124,7 @@ export default {
 
 | Component | Maps to CMS section type | Page |
 | --- | --- | --- |
-| `Hero` | `HERO` | Home |
+| `Hero` | `HOME` | Home |
 | `TextBlock` | `TEXT` | About, Home |
 | `FeaturedCourses` | `FEATURED_COURSES` | Home |
 | `FeaturedResources` | `FEATURED_RESOURCES` | Home |
@@ -140,7 +140,7 @@ export default {
 
 ### 2.4 Suggested build order
 
-1. Tokens, Tailwind config and fonts in `packages/shared`
+1. Tokens, Tailwind config and fonts in `packages/core`
 2. `SiteHeader`, `SiteFooter`, `PageContainer`
 3. `SectionRenderer` with `Hero` and `TextBlock`
 4. Home page (ISR) with `FeaturedCourses`

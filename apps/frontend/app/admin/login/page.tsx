@@ -1,4 +1,4 @@
-import { Button, Container, Input, Label, SectionHeading } from '@itqa/website';
+import { Button, Container, Input, Label, SectionHeading } from '@itqa/ui';
 import { login } from '../actions';
 
 export default function LoginPage({ searchParams }: { searchParams: { error?: string } }) {

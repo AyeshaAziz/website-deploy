@@ -1,0 +1,44 @@
+{
+  "title": "Lajna Registration",
+  "description": "Register as a Lajna volunteer with ITQA.",
+  "submitLabel": "Submit registration",
+  "fields": {
+    "firstName": { "label": "First name", "placeholder": "Enter your first name" },
+    "lastName": { "label": "Last name", "placeholder": "Enter your last name" },
+    "email": { "label": "Email address", "placeholder": "you@example.com" },
+    "phone": { "label": "Phone number", "placeholder": "+1 555 123 4567" },
+    "dateOfBirth": { "label": "Date of birth" },
+    "gender": { "label": "Gender" },
+    "address": { "label": "Address", "placeholder": "Street address" },
+    "city": { "label": "City", "placeholder": "City" },
+    "country": { "label": "Country", "placeholder": "Country" },
+    "profession": { "label": "Profession", "placeholder": "Optional" },
+    "education": { "label": "Highest education" },
+    "maritalStatus": { "label": "Marital status" },
+    "skills": {
+      "label": "Skills and interests",
+      "placeholder": "Tell us how you would like to contribute",
+      "help": "Optional. Separate multiple skills with commas."
+    },
+    "consent": {
+      "label": "I agree to the privacy policy and consent to these details being stored for this registration.",
+      "help": "We only use these details to process the registration."
+    }
+  },
+  "options": {
+    "gender": { "male": "Male", "female": "Female" },
+    "education": {
+      "high-school": "High school",
+      "bachelor": "Bachelor's degree",
+      "master": "Master's degree",
+      "doctorate": "Doctorate",
+      "other": "Other"
+    },
+    "maritalStatus": {
+      "single": "Single",
+      "married": "Married",
+      "widowed": "Widowed",
+      "divorced": "Divorced"
+    }
+  }
+}

@@ -4,7 +4,7 @@
 
 /*
  * CSS custom properties mirror `cssVars` in
- * packages/shared/src/design/tokens.ts (HSL channels, shadcn/ui compatible).
+ * packages/core/src/design/tokens.ts (HSL channels, shadcn/ui compatible).
  * If you change a token, update both files.
  */
 :root {
