@@ -21,6 +21,8 @@ export interface FooterContactData {
   addressLines: string[];
   emailTitle: string;
   email: string;
+  phoneTitle: string;
+  phone: string;
 }
 
 export interface FooterMapData {

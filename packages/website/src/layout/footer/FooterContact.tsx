@@ -7,6 +7,8 @@ export function FooterContact({
   addressLines,
   emailTitle,
   email,
+  phoneTitle,
+  phone
 }: FooterContactData): ReactNode {
   return (
     <div className="min-w-0">
@@ -23,6 +25,10 @@ export function FooterContact({
       <a href={`mailto:${email}`} className="mt-1 block break-words text-small hover:text-white">
         {email}
       </a>
+      <h3 className="mt-4 text-small font-bold text-white">{phoneTitle}</h3>
+      <p className="mt-1 block break-words text-small hover:text-white">
+        {phone}
+      </p>
     </div>
   );
 }
