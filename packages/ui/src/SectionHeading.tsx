@@ -35,7 +35,6 @@ export function SectionHeading({
           {arabicSubtitle}
         </p>
       )}
-      {subtitle && <p className="mt-2 max-w-2xl text-body text-neutral-600">{subtitle}</p>}
     </div>
   );
 }

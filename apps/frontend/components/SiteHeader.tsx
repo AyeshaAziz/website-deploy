@@ -24,6 +24,7 @@ const PRIMARY_NAV: NavItem[] = [
     ],
   },
   // { label: 'Volunteers', href: '/volunteers' },
+  { label: 'Contact Us', href: '/contact' },
 ];
 
 const SECONDARY_NAV: NavItem[] = [

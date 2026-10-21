@@ -48,8 +48,9 @@ export default {
         accent: { gold: '#C9A24B' },
       },
       fontFamily: {
-        sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
-        heading: ['var(--font-heading)', 'serif'],
+        sans: ['var(--font-cabin)', 'system-ui', 'sans-serif'],
+        heading: ['var(--font-cabin)', 'system-ui', 'sans-serif'],
+        cabin: ['var(--font-cabin)', 'system-ui', 'sans-serif'],
         arabic: ['var(--font-arabic)', 'serif'],
       },
       fontSize: {
@@ -84,9 +85,10 @@ export default {
 
 ### 1.4 Fonts
 
-- Load with `next/font` and expose as `--font-sans`, `--font-heading`, `--font-arabic`.
-- The hero uses Arabic calligraphy and the site needs Arabic body text, so add an Arabic font (for example Amiri or Noto Naskh Arabic).
-- Confirm the Latin heading and body fonts from the Figma text styles.
+- Load with `next/font` and expose `--font-cabin` (Cabin) and `--font-arabic` (Amiri).
+- Cabin is the single font for all Latin text (body, headings, UI); the `font-sans`, `font-heading` and `font-cabin` utilities all resolve to it.
+- Amiri covers Arabic/RTL text and subtitles.
+- Confirm font weights and sizes from the Figma text styles.
 
 ### 1.5 Token handover checklist
 

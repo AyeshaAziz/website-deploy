@@ -163,6 +163,9 @@ Import direction: apps may import packages; packages must not import apps.
 - **Never hardcode colors, fonts, spacing, radii, or shadows.** Import tokens
   from `@itqa/core/design` or use the generated Tailwind classes
   (`bg-primary-5`, `text-h3`, `shadow-card`).
+- Typography uses **Cabin** for all Latin text (body, headings, UI) through
+  `font-sans` / `font-cabin` / `font-heading`; Arabic/RTL text uses
+  `font-arabic` (Amiri). Never hardcode fonts.
 - Use `cn()` from `@itqa/core` for conditional classes.
 - Match the existing responsive approach: mobile-first, `sm/md/lg` breakpoints.
 - Use semantic HTML and accessible names. Interactive elements must be real

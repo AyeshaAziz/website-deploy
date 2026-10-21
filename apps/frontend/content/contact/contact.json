@@ -1,0 +1,36 @@
+{
+  "page": {
+    "title": "Contact Us",
+    "description": "Get in touch with the ITQA team.",
+    "heading": "Contact Us"
+  },
+  "aside": {
+    "image": {
+      "src": "/images/patterns/islamic-lattice.png",
+      "alt": "",
+      "width": 2880,
+      "height": 1208,
+      "sizes": "(min-width: 1024px) 45vw, 100vw"
+    },
+    "heading": "We're here to help",
+    "body": "Questions about courses, exams, or enrolment? Send a message to the team that can help.",
+    "emailLabel": "General Enquiries"
+  },
+  "form": {
+    "success": "Thank you, your message was sent.",
+    "error": "Please check your details and try again.",
+    "departmentLabel": "Department",
+    "departmentHint": "Choose the team that should receive your message.",
+    "nameLabel": "Name",
+    "emailLabel": "Email",
+    "messageLabel": "Message",
+    "submit": "Send message"
+  },
+  "departments": [
+    { "id": "general", "label": "General Enquiries", "email": "contact@itqa.org.uk" },
+    { "id": "office", "label": "Office", "email": "office@itqa.org.uk" },
+    { "id": "teachers", "label": "Teachers", "email": "teachers@itqa.org.uk" },
+    { "id": "students", "label": "Students", "email": "students@itqa.org.uk" },
+    { "id": "exams", "label": "Exams", "email": "exam@itqa.org.uk" }
+  ]
+}

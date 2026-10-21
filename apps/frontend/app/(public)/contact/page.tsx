@@ -1,42 +1,36 @@
 import type { Metadata } from 'next';
-import { Button, Container, Input, Label, SectionHeading, Textarea } from '@itqa/ui';
-import { sendContact } from './actions';
+import { Container, SectionHeading } from '@itqa/ui';
+import { ContactAside } from '@/components/contact/ContactAside';
+import { ContactForm } from '@/components/contact/ContactForm';
+import {
+  CONTACT_CONTENT,
+  CONTACT_DEPARTMENT_LIST,
+  GENERAL_CONTACT_DEPARTMENT,
+} from '@/lib/contact/content';
 
-export const metadata: Metadata = { title: 'Contact' };
+const { page, aside, form } = CONTACT_CONTENT;
 
-type Props = { searchParams: { sent?: string; error?: string } };
+export const metadata: Metadata = {
+  title: page.title,
+  description: page.description,
+};
 
-export default function ContactPage({ searchParams }: Props) {
+type Props = { searchParams: Promise<{ sent?: string; error?: string }> };
+
+export default async function ContactPage({ searchParams }: Props) {
+  const params = await searchParams;
+
   return (
     <Container className="py-section-sm">
-      <div className="mx-auto max-w-xl">
-        <SectionHeading as="h1" title="Contact us" className="mb-6" />
-        {searchParams.sent && (
-          <p role="status" className="mb-4 rounded-card bg-success/10 p-3 text-success">
-            Thank you, your message was sent.
-          </p>
-        )}
-        {searchParams.error && (
-          <p role="alert" className="mb-4 rounded-card bg-danger/10 p-3 text-danger">
-            Please check your details and try again.
-          </p>
-        )}
-        <form action={sendContact} className="space-y-4">
-          <div>
-            <Label htmlFor="name">Name</Label>
-            <Input id="name" name="name" required maxLength={100} className="mt-1" />
-          </div>
-          <div>
-            <Label htmlFor="email">Email</Label>
-            <Input id="email" name="email" type="email" required maxLength={200} className="mt-1" />
-          </div>
-          <div>
-            <Label htmlFor="message">Message</Label>
-            <Textarea id="message" name="message" required maxLength={2000} rows={5} className="mt-1" />
-          </div>
-          <input name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="hidden" />
-          <Button type="submit">Send</Button>
-        </form>
+      <SectionHeading as="h1" title={page.heading} className="mb-6" />
+      <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
+        <ContactAside content={aside} email={GENERAL_CONTACT_DEPARTMENT.email} />
+        <ContactForm
+          departments={CONTACT_DEPARTMENT_LIST}
+          copy={form}
+          sent={Boolean(params.sent)}
+          error={Boolean(params.error)}
+        />
       </div>
     </Container>
   );

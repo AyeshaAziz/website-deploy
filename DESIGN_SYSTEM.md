@@ -20,7 +20,7 @@ Use this document when adding pages, sections or UI; update it when the system c
 | `packages/core/src/design/index.ts` | Barrel for the design module |
 | `apps/frontend/tailwind.config.ts` | Imports the tokens and maps them into Tailwind's `theme.extend` |
 | `apps/frontend/app/globals.css` | `:root` CSS variables + `@layer base` defaults (body, headings, focus ring, selection) |
-| `apps/frontend/app/layout.tsx` | Loads fonts with `next/font` and exposes `--font-sans/heading/arabic` |
+| `apps/frontend/app/layout.tsx` | Loads Cabin (Latin) and Amiri (Arabic) with `next/font`, exposing `--font-cabin` / `--font-arabic` |
 | `packages/ui/src/*` | Reusable UI primitives |
 | `packages/ui/tailwind.config.ts` / `postcss.config.mjs` | Package-local Tailwind so the UI builds without the app |
 | `packages/ui/.storybook/*` | Storybook config (see §10) |
@@ -90,11 +90,11 @@ etc.). If you change a token value, update **both** files.
 
 | Variable | Font | Tailwind class | Used for |
 | --- | --- | --- | --- |
-| `--font-sans` | **Inter** | `font-sans` | Body copy (default on `<body>`) |
-| `--font-heading` | **Playfair Display** | `font-heading` | Headings (applied to `h1`–`h4` in base layer) |
+| `--font-cabin` | **Cabin** | `font-sans`, `font-heading`, `font-cabin` | All Latin text: body copy, headings, UI |
 | `--font-arabic` | **Amiri** | `font-arabic` | Arabic text and subtitles |
 
-Inter and Playfair Display are variable fonts; Amiri loads weights `400` and `700`.
+Cabin is a variable font and is the single family for all Latin text; `font-sans` and
+`font-heading` both map to it. Amiri loads weights `400` and `700` for Arabic/RTL copy.
 
 ### Type scale
 
@@ -237,7 +237,7 @@ pnpm --filter @itqa/ui storybook
 | `packages/ui/.storybook/main.ts` | Framework (`@storybook/react-vite`), stories globs, addons (docs, a11y, links) |
 | `packages/ui/.storybook/preview.ts` | Global parameters; imports the preview stylesheet |
 | `packages/ui/.storybook/preview.css` | Tailwind entry + `:root` vars + base layer (mirrors `apps/frontend/app/globals.css`) |
-| `packages/ui/.storybook/preview-head.html` | Loads Inter / Playfair Display / Amiri and sets `--font-*` |
+| `packages/ui/.storybook/preview-head.html` | Loads Cabin / Amiri and sets `--font-*` |
 | `packages/ui/tailwind.config.ts` | Package Tailwind theme built from the shared tokens |
 
 Stories live beside the components as `src/**/*.stories.tsx` and use `tags: ['autodocs']`:

@@ -56,8 +56,8 @@ export const colors: {
 
 /** Font families resolve to CSS variables set by `next/font` in the app layout. */
 export const fontFamily = {
-  sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
-  heading: ['var(--font-heading)', 'Georgia', 'serif'],
+  sans: ['var(--font-cabin)', 'system-ui', 'sans-serif'],
+  heading: ['var(--font-cabin)', 'system-ui', 'sans-serif'],
   cabin: ['var(--font-cabin)', 'system-ui', 'sans-serif'],
   arabic: ['var(--font-arabic)', 'serif'],
 };
