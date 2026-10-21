@@ -4,6 +4,52 @@
 > conflicts with these rules, explain the conflict and ask before proceeding.
 > The goal is safe, predictable, modular changes that match the existing codebase.
 
+## 0. Critical Rules — Must Follow
+
+### Responses
+
+- Keep responses concise and to the point unless the user asks otherwise.
+
+### Planning Mode
+
+- Always ask clarifying questions.
+- Never assume design, tech stack, or features.
+- Use deep-dive sub-agents to assist with research.
+- Use deep-dive sub-agents to review the different aspects of the plan before
+  presenting it to the user.
+
+### Change / Edit Mode
+
+- Never implement features yourself when avoidable — use sub-agents.
+- Identify plan changes that can be implemented in parallel and delegate them to
+  sub-agents efficiently.
+- When sub-agents implement features, act as coordinator only.
+- Use the best model for the task: premium models for complex work (e.g.
+  coding), mid-tier models for simpler work (e.g. documentation).
+- After completing features (large or small), always run lint, typecheck, and
+  build to verify code quality (see §8).
+
+### Database Schema Changes
+
+- This project uses **Prisma**, not Drizzle.
+- After any schema change, always run generate and migrate:
+  `pnpm --filter @itqa/database generate` then
+  `pnpm --filter @itqa/database db:migrate`.
+- **Never** run `prisma db push` (including `pnpm db:push`).
+
+### Testing
+
+- Use the testing tools, libraries, and scripts the project provides.
+- Never assume changes simply work — always test.
+- If no testing tools, scripts, MCP tools, or skills are available, ask the user
+  whether testing should be skipped.
+
+### UI Design
+
+- Always follow the UI design system when creating or reviewing components or
+  pages.
+- Design system: `DESIGN_SYSTEM.md` (tokens: `packages/core/src/design/tokens.ts`).
+
 ## 1. Project Overview
 
 ITQA (International Ta'limul Qur'an Academy) public website plus CMS and

@@ -38,30 +38,28 @@ export function Header({
   };
 
   return (
-    <header className="relative z-20 shadow-header">
-      <div className="relative z-30">
-        <div className="bg-primary-7 text-white">
-          <Container className="flex  items-center justify-between gap-6">
-            <NavBar
-              items={nav}
-              activeHref={currentHref}
-              onNavigate={navigate}
-              ariaLabel="Main"
-              className="hidden lg:block"
-            />
-            {/* Mobile menu button */}
-            <button
-              type="button"
-              aria-expanded={menuOpen}
-              aria-controls="site-menu"
-              onClick={() => setMenuOpen((value) => !value)}
-              className="flex w-full items-center justify-between py-3 text-small font-semibold uppercase tracking-wide text-white lg:hidden"
-            >
-              <span>Menu</span>
-              <MenuIcon open={menuOpen} />
-            </button>
-          </Container>
-        </div>
+    <>
+      <header className="sticky top-0 z-50 bg-primary-7 text-white shadow-header">
+        <Container className="flex items-center justify-between gap-6">
+          <NavBar
+            items={nav}
+            activeHref={currentHref}
+            onNavigate={navigate}
+            ariaLabel="Main"
+            className="hidden lg:block"
+          />
+          {/* Mobile menu button */}
+          <button
+            type="button"
+            aria-expanded={menuOpen}
+            aria-controls="site-menu"
+            onClick={() => setMenuOpen((value) => !value)}
+            className="flex w-full items-center justify-between py-3 text-small font-semibold uppercase tracking-wide text-white lg:hidden"
+          >
+            <span>Menu</span>
+            <MenuIcon open={menuOpen} />
+          </button>
+        </Container>
 
         {menuOpen && (
           <>
@@ -81,7 +79,7 @@ export function Header({
             </div>
           </>
         )}
-      </div>
+      </header>
 
       <Subheader
         logoUrl={logoUrl}
@@ -89,7 +87,7 @@ export function Header({
         activeHref={currentHref}
         onNavigate={navigate}
       />
-    </header>
+    </>
   );
 }
 
