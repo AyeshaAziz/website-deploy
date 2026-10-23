@@ -51,19 +51,19 @@ key returns the original result.
 
 Body: the selected track's fields plus `track`.
 
-Tracks:
+Tracks: `teacher` and `student`. Both use the same fields:
 
-- `atfalNasirat`: `firstName`, `lastName`, `email`, `phone`, `dateOfBirth`, `gender`,
-  `address`, `city`, `country`, `category`, `guardianName`, `guardianPhone`, `school`,
-  `grade`, `consent`
-- `ansar`: shared fields plus `occupation`, `employer?`, `bloodGroup?`, `skills?`
-- `khuddam`: shared fields plus `profession`, `education`, `bloodGroup?`, `skills?`
-- `lajna`: shared fields plus `profession?`, `education`, `maritalStatus`, `skills?`
-- `teacher`: shared fields plus `qualification`, `subjects`, `experienceYears`,
-  `availability`, `notes?`
-
-Shared fields: `firstName`, `lastName`, `email`, `phone`, `dateOfBirth` (`YYYY-MM-DD`),
-`gender` (`male` | `female`), `address`, `city`, `country`, `consent` (`true`).
+- `aimsNo` — AIMS number or member code (required)
+- `firstName`, `lastName` — required
+- `tanzeem` — `atfal` | `nasirat` | `khuddam` | `lajna` | `ansar`
+- `country`, `city` — required
+- `phone` — required, `+0123456789() -` characters only
+- `email`, `confirmEmail` — must match (case-insensitive)
+- `teachingExperience` — free text, `teacher` track only
+- `course` — required, the selected course id
+- `courseLanguage` — preferred language for teaching, free text
+- `secondLanguage` — optional second language preference
+- `consent` — must be `true`
 
 The canonical validation schemas live in `@itqa/core` (`registrationSchema` and
 `REGISTRATION_SCHEMAS`). The backend must use the same schemas or an equivalent contract
@@ -75,8 +75,8 @@ Success (`201`):
 {
   "ok": true,
   "data": {
-    "reference": "ITQA-KHD-20261020-A1B2C3",
-    "track": "khuddam",
+    "reference": "ITQA-TCH-20261020-A1B2C3",
+    "track": "teacher",
     "submittedAt": "2026-10-20T12:00:00.000Z",
     "status": "RECEIVED"
   }

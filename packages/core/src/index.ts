@@ -1,3 +1,4 @@
+export * from './content';
 export * from './design';
 export * from './model';
 
@@ -30,15 +31,6 @@ export interface PageDTO {
   seoTitle?: string | null;
   seoDescription?: string | null;
   sections: SectionDTO[];
-}
-
-export interface CourseDTO {
-  id: string;
-  urlPath: string;
-  title: string;
-  summary: string;
-  description?: string | null;
-  imageUrl?: string | null;
 }
 
 export interface ResourceDTO {

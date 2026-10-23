@@ -6,7 +6,6 @@ export interface ContainerProps {
   className?: string;
 }
 
-/** Centered page container: `max-w-page` with responsive padding. */
 export function Container({ children, className }: ContainerProps): ReactNode {
   return <div className={cn('mx-auto w-full max-w-page px-4 sm:px-6', className)}>{children}</div>;
 }

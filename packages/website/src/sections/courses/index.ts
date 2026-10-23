@@ -1,4 +1,13 @@
 export { CourseCard } from './CourseCard';
 export type { CourseCardProps } from './CourseCard';
+export { CourseGlyph } from './CourseGlyph';
+export { CoursesBanner } from './CoursesBanner';
+export type { CoursesBannerProps } from './CoursesBanner';
+export { CoursesPageSections } from './CoursesPageSections';
+export type { CoursesPageContent, CoursesPageSectionsProps } from './CoursesPageSections';
 export { FeaturedCourses } from './FeaturedCourses';
 export type { FeaturedCoursesProps } from './FeaturedCourses';
+export { StudentCourseCard } from './StudentCourseCard';
+export type { StudentCourseCardProps } from './StudentCourseCard';
+export { StudentCourses } from './StudentCourses';
+export type { StudentCoursesProps } from './StudentCourses';

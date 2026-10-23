@@ -1,5 +1,5 @@
+import { FALLBACK_COURSES } from '@itqa/core';
 import type { CourseDTO, PageDTO, ResourceDTO, SectionType } from '@itqa/core';
-import { HOME_COURSES } from '@/content/home-courses';
 
 // No DATABASE_URL (or an unreachable database) = frontend-only mode with static fallbacks.
 const hasDb = () => Boolean(process.env.DATABASE_URL);
@@ -64,7 +64,7 @@ export async function getPage(urlPath: string): Promise<PageDTO | null> {
 const courseSelect = { id: true, urlPath: true, title: true, summary: true, description: true, imageUrl: true } as const;
 
 export async function getCourses(): Promise<CourseDTO[]> {
-  if (!hasDb()) return HOME_COURSES;
+  if (!hasDb()) return FALLBACK_COURSES;
   try {
     const prisma = await db();
     const courses = await prisma.course.findMany({
@@ -72,14 +72,14 @@ export async function getCourses(): Promise<CourseDTO[]> {
       orderBy: { sortOrder: 'asc' },
       select: courseSelect,
     });
-    return courses.length > 0 ? courses : HOME_COURSES;
+    return courses;
   } catch {
-    return HOME_COURSES;
+    return FALLBACK_COURSES;
   }
 }
 
 export async function getCourse(urlPath: string): Promise<CourseDTO | null> {
-  if (!hasDb()) return HOME_COURSES.find((c) => c.urlPath === urlPath) ?? null;
+  if (!hasDb()) return FALLBACK_COURSES.find((c) => c.urlPath === urlPath) ?? null;
   try {
     const prisma = await db();
     return await prisma.course.findFirst({
@@ -87,7 +87,7 @@ export async function getCourse(urlPath: string): Promise<CourseDTO | null> {
       select: courseSelect,
     });
   } catch {
-    return HOME_COURSES.find((c) => c.urlPath === urlPath) ?? null;
+    return FALLBACK_COURSES.find((c) => c.urlPath === urlPath) ?? null;
   }
 }
 

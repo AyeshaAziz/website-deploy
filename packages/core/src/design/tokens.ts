@@ -24,7 +24,6 @@ export const colors: {
   warm: { surface: string; ink: string; border: string };
   success: string;
   danger: string;
-  ink: string;
 } = {
   primary: {
     neg2: '#052D39',

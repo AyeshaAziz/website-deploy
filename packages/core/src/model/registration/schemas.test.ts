@@ -7,20 +7,26 @@ describe('registration schemas', () => {
     expect(Object.keys(REGISTRATION_SCHEMAS)).toEqual([...REGISTRATION_TRACKS]);
   });
 
+  it('only includes teaching experience on the teacher schema', () => {
+    expect('teachingExperience' in REGISTRATION_SCHEMAS.student.shape).toBe(false);
+    expect('teachingExperience' in REGISTRATION_SCHEMAS.teacher.shape).toBe(true);
+  });
+
   it('requires consent and validates the discriminated union', () => {
     const result = registrationSchema.safeParse({
-      track: 'khuddam',
+      track: 'teacher',
+      aimsNo: 'AIMS-12345',
       firstName: 'A',
       lastName: 'B',
-      email: 'a@example.com',
-      phone: '+123456789',
-      dateOfBirth: '1990-01-01',
-      gender: 'male',
-      address: '1 Street',
-      city: 'City',
+      tanzeem: 'khuddam',
       country: 'Country',
-      profession: 'Engineer',
-      education: 'bachelor',
+      city: 'City',
+      phone: '+123456789',
+      email: 'a@example.com',
+      confirmEmail: 'a@example.com',
+      teachingExperience: '3 years',
+      course: 'naziratul-quran',
+      courseLanguage: 'English',
       consent: false,
     });
 

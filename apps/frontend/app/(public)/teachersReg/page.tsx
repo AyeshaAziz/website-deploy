@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import { Container, SectionHeading } from '@itqa/ui';
-import { RegistrationForm } from '@/components/registration/RegistrationForm';
+import { RegistrationForm } from '@/components/registration/form/RegistrationForm';
 import { getTrackDefinition } from '@/lib/registrations/tracks';
+import { getCourses } from '@/lib/content';
 
 const TRACK = 'teacher' as const;
 
@@ -10,8 +11,9 @@ export function generateMetadata(): Metadata {
   return { title: content.title, description: content.description };
 }
 
-export default function TeacherRegistrationPage() {
+export default async function TeacherRegistrationPage() {
   const { content } = getTrackDefinition(TRACK);
+  const courses = await getCourses();
 
   return (
     <Container className="py-section-sm">
@@ -21,7 +23,7 @@ export default function TeacherRegistrationPage() {
         subtitle={content.description}
         className="mb-8"
       />
-      <RegistrationForm track={TRACK} />
+      <RegistrationForm track={TRACK} courses={courses} />
     </Container>
   );
 }

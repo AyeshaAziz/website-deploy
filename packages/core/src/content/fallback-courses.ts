@@ -1,17 +1,12 @@
-import type { CourseDTO } from '@itqa/core';
+﻿import type { CourseDTO } from '../model/courses';
 
-/**
- * Frontend-only fallback used when the database is unavailable or no courses
- * are published yet. The same five courses are created by the Prisma seed, so
- * the CMS can take over without a UI change.
- */
-export const HOME_COURSES: CourseDTO[] = [
+export const FALLBACK_COURSES: CourseDTO[] = [
   {
     id: 'home-naziratul-quran',
     urlPath: 'naziratul-quran',
     title: "Naziratul-Qur'an",
     summary: 'Recitation',
-    description: null,
+    description: "Read the Qur'an fluently with correct pronunciation under teacher guidance.",
     imageUrl: '/images/courses/naziratul-quran.png',
   },
   {
@@ -19,7 +14,7 @@ export const HOME_COURSES: CourseDTO[] = [
     urlPath: 'yassarnal-quran',
     title: "Yassarnal-Qur'an",
     summary: 'Qaidah',
-    description: null,
+    description: 'A gentle foundation course for beginners learning to read the Qur’an.',
     imageUrl: '/images/courses/yassarnal-quran.png',
   },
   {
@@ -27,7 +22,7 @@ export const HOME_COURSES: CourseDTO[] = [
     urlPath: 'tafsirul-quran',
     title: "Tafsirul-Qur'an",
     summary: 'Interpretation',
-    description: null,
+    description: 'Understand the meanings and context of the Qur’anic verses.',
     imageUrl: '/images/courses/tafsirul-quran.png',
   },
   {
@@ -35,7 +30,7 @@ export const HOME_COURSES: CourseDTO[] = [
     urlPath: 'qawaidul-quran',
     title: "Qawaidul-Qur'an",
     summary: 'Grammar',
-    description: null,
+    description: 'Learn the Arabic grammar needed to understand Qur’anic Arabic.',
     imageUrl: '/images/courses/qawaidul-quran.png',
   },
   {
@@ -43,7 +38,7 @@ export const HOME_COURSES: CourseDTO[] = [
     urlPath: 'tarjamatul-quran',
     title: "Tarjamatul-Qur'an",
     summary: 'Translation',
-    description: null,
+    description: 'Translate Qur’anic Arabic accurately with structured practice.',
     imageUrl: '/images/courses/tarjamatul-quran.png',
   },
 ];

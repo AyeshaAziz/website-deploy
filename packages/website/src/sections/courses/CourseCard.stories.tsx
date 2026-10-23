@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { FALLBACK_COURSES } from '@itqa/core';
 import { CourseCard } from './CourseCard';
 
 const meta = {
@@ -6,13 +7,7 @@ const meta = {
   component: CourseCard,
   tags: ['autodocs'],
   args: {
-    course: {
-      id: '1',
-      urlPath: 'naziratul-quran',
-      title: "Naziratul-Qur'an",
-      summary: 'Recitation',
-      imageUrl: '/images/courses/naziratul-quran.png',
-    },
+    course: FALLBACK_COURSES[0],
   },
   decorators: [
     (Story) => (
@@ -30,12 +25,6 @@ export const Default: Story = {};
 
 export const WithoutImage: Story = {
   args: {
-    course: {
-      id: '2',
-      urlPath: 'yassarnal-quran',
-      title: "Yassarnal-Qur'an",
-      summary: 'Qaidah',
-      imageUrl: null,
-    },
+    course: { ...FALLBACK_COURSES[1], imageUrl: null },
   },
 };

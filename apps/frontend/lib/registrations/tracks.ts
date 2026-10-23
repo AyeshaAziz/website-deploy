@@ -1,31 +1,55 @@
 import {
+  FALLBACK_COURSES,
   REGISTRATION_SCHEMAS,
+  TANZEEM_OPTIONS,
+  type CourseDTO,
   type RegistrationTrack,
+  type Tanzeem,
 } from '@itqa/core';
 import {
   createFormConfig,
   formContentSchema,
+  type FieldContent,
   type FormConfig,
   type FormContent,
 } from '@itqa/core/forms';
-import atfalNasiratJson from '../../content/registration/atfal-nasirat.json';
-import ansarJson from '../../content/registration/ansar.json';
-import khuddamJson from '../../content/registration/khuddam.json';
-import lajnaJson from '../../content/registration/lajna.json';
-import teacherJson from '../../content/registration/teacher.json';
+import commonJson from '../../content/registration/common.json';
 import messagesJson from '../../content/registration/messages.json';
+import studentJson from '../../content/registration/student.json';
+import teacherJson from '../../content/registration/teacher.json';
 
-const rawContent: Record<RegistrationTrack, object> = {
-  atfalNasirat: atfalNasiratJson,
-  ansar: ansarJson,
-  khuddam: khuddamJson,
-  lajna: lajnaJson,
+interface TrackContentJson {
+  title: string;
+  description?: string;
+  submitLabel: string;
+}
+
+interface CommonContentJson {
+  fields: Record<string, FieldContent>;
+  options?: Record<string, Record<string, string>>;
+}
+
+const common: CommonContentJson = commonJson;
+
+const rawContent: Record<RegistrationTrack, TrackContentJson> = {
   teacher: teacherJson,
+  student: studentJson,
 };
 
 function buildContent(track: RegistrationTrack): FormContent {
+  const trackContent = rawContent[track];
+  const schema = REGISTRATION_SCHEMAS[track];
+
+  const fields = Object.fromEntries(
+    Object.entries(common.fields).filter(([name]) => name in schema.shape),
+  );
+
   return formContentSchema.parse({
-    ...rawContent[track],
+    title: trackContent.title,
+    description: trackContent.description,
+    submitLabel: trackContent.submitLabel,
+    fields,
+    options: common.options,
     messages: messagesJson,
   });
 }
@@ -36,25 +60,13 @@ export interface TrackDefinition {
 }
 
 export const REGISTRATION: Record<RegistrationTrack, TrackDefinition> = {
-  atfalNasirat: {
-    schema: REGISTRATION_SCHEMAS.atfalNasirat,
-    content: buildContent('atfalNasirat'),
-  },
-  ansar: {
-    schema: REGISTRATION_SCHEMAS.ansar,
-    content: buildContent('ansar'),
-  },
-  khuddam: {
-    schema: REGISTRATION_SCHEMAS.khuddam,
-    content: buildContent('khuddam'),
-  },
-  lajna: {
-    schema: REGISTRATION_SCHEMAS.lajna,
-    content: buildContent('lajna'),
-  },
   teacher: {
     schema: REGISTRATION_SCHEMAS.teacher,
     content: buildContent('teacher'),
+  },
+  student: {
+    schema: REGISTRATION_SCHEMAS.student,
+    content: buildContent('student'),
   },
 };
 
@@ -62,7 +74,35 @@ export function getTrackDefinition(track: RegistrationTrack): TrackDefinition {
   return REGISTRATION[track];
 }
 
-export function getFormConfig(track: RegistrationTrack): FormConfig {
+export interface FormConfigOverrides {
+  courses?: CourseDTO[];
+  tanzeem?: readonly Tanzeem[];
+}
+
+export function getFormConfig(
+  track: RegistrationTrack,
+  { courses, tanzeem = TANZEEM_OPTIONS }: FormConfigOverrides = {},
+): FormConfig {
   const definition = getTrackDefinition(track);
-  return createFormConfig(definition.schema, definition.content);
+  const config = createFormConfig(definition.schema, definition.content);
+
+  const list = courses?.length ? courses : FALLBACK_COURSES;
+  const courseOptions = list.map(({ id, title }) => ({ value: id, label: title }));
+  const allowedTanzeem = new Set(tanzeem);
+
+  return {
+    ...config,
+    fields: config.fields.map((field) => {
+      if (field.name === 'course') return { ...field, options: courseOptions };
+      if (field.name === 'tanzeem') {
+        return {
+          ...field,
+          options: field.options.filter((option) =>
+            allowedTanzeem.has(option.value as Tanzeem),
+          ),
+        };
+      }
+      return field;
+    }),
+  };
 }

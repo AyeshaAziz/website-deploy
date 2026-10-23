@@ -8,6 +8,7 @@ export * from './Input';
 export * from './Label';
 export * from './NavBar';
 export * from './NavBarMobile';
+export * from './Notice';
 export * from './SectionHeading';
 export * from './Select';
 export * from './Textarea';

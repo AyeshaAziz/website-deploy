@@ -9,11 +9,8 @@ import {
 import type { RegistrationService } from './service';
 
 const REFERENCE_PREFIX: Record<RegistrationTrack, string> = {
-  atfalNasirat: 'ATN',
-  ansar: 'ANS',
-  khuddam: 'KHD',
-  lajna: 'LJN',
   teacher: 'TCH',
+  student: 'STU',
 };
 
 function createReference(track: RegistrationTrack): string {
@@ -43,6 +40,14 @@ export class MockRegistrationService implements RegistrationService {
     if (!parsed.success) {
       return apiFailure('VALIDATION_ERROR', 'The registration could not be validated.', {
         fieldErrors: toFieldErrors(parsed.error.issues),
+      });
+    }
+
+    const email = parsed.data.email.trim().toLowerCase();
+    const confirmEmail = parsed.data.confirmEmail.trim().toLowerCase();
+    if (email !== confirmEmail) {
+      return apiFailure('VALIDATION_ERROR', 'Email addresses must match.', {
+        fieldErrors: { confirmEmail: 'Email addresses must match.' },
       });
     }
 

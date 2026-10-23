@@ -13,6 +13,7 @@
     "typecheck": "prisma generate && tsc --noEmit"
   },
   "dependencies": {
+    "@itqa/core": "workspace:*",
     "@prisma/client": "^5.22.0"
   },
   "devDependencies": {

@@ -6,6 +6,7 @@ import { getChannelVideos, getPlaylistVideos } from '@/lib/youtube';
 export const revalidate = 3600; // ISR: regenerate hourly; CMS publish also revalidates on demand
 
 const BANNER_SLIDES = [
+    { src: '/images/banner-ws.png', alt: "International Ta'limul Qur'an Academy" },
   { src: '/images/banner_quran.png', alt: "International Ta'limul Qur'an Academy" },
   { src: '/images/banner.png', alt: "International Ta'limul Qur'an Academy" },
 ];

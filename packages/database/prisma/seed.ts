@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
 import { PrismaClient, Prisma } from '@prisma/client';
+import { FALLBACK_COURSES } from '@itqa/core';
 
 const prisma = new PrismaClient();
 
@@ -20,43 +21,13 @@ async function main() {
     where: { urlPath: { in: ['sample-course-one', 'sample-course-two'] } },
   });
 
-  const courses = [
-    {
-      urlPath: 'naziratul-quran',
-      title: "Naziratul-Qur'an",
-      summary: 'Recitation',
-      description: "Read the Qur'an fluently with correct pronunciation under teacher guidance.",
-      imageUrl: '/images/courses/naziratul-quran.png',
-    },
-    {
-      urlPath: 'yassarnal-quran',
-      title: "Yassarnal-Qur'an",
-      summary: 'Qaidah',
-      description: 'A gentle foundation course for beginners learning to read the Qur’an.',
-      imageUrl: '/images/courses/yassarnal-quran.png',
-    },
-    {
-      urlPath: 'tafsirul-quran',
-      title: "Tafsirul-Qur'an",
-      summary: 'Interpretation',
-      description: 'Understand the meanings and context of the Qur’anic verses.',
-      imageUrl: '/images/courses/tafsirul-quran.png',
-    },
-    {
-      urlPath: 'qawaidul-quran',
-      title: "Qawaidul-Qur'an",
-      summary: 'Grammar',
-      description: 'Learn the Arabic grammar needed to understand Qur’anic Arabic.',
-      imageUrl: '/images/courses/qawaidul-quran.png',
-    },
-    {
-      urlPath: 'tarjamatul-quran',
-      title: "Tarjamatul-Qur'an",
-      summary: 'Translation',
-      description: 'Translate Qur’anic Arabic accurately with structured practice.',
-      imageUrl: '/images/courses/tarjamatul-quran.png',
-    },
-  ];
+  const courses = FALLBACK_COURSES.map(({ urlPath, title, summary, description, imageUrl }) => ({
+    urlPath,
+    title,
+    summary,
+    description,
+    imageUrl,
+  }));
   for (const [i, c] of courses.entries()) {
     await prisma.course.upsert({
       where: { urlPath: c.urlPath },

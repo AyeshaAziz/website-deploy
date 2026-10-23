@@ -19,6 +19,9 @@ export function ContactAside({ content, email, className }: ContactAsideProps): 
           width={content.image.width}
           height={content.image.height}
           sizes={content.image.sizes}
+          preload
+          loading="eager"
+          fetchPriority="high"
           className="h-auto w-full"
         />
       </div>

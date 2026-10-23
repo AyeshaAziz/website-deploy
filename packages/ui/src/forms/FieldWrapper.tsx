@@ -19,7 +19,12 @@ export function FieldWrapper({
   children,
 }: FieldWrapperProps) {
   return (
-    <div className={cn('flex flex-col gap-1', field.colSpan === 2 && 'sm:col-span-2')}>
+    <div
+      className={cn(
+        'flex flex-col gap-1',
+        field.colSpan === 2 && 'sm:col-span-2 lg:col-span-3',
+      )}
+    >
       {!hideLabel && (
         <Label htmlFor={id}>
           {field.label}

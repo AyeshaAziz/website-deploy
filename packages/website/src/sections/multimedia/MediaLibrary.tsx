@@ -17,7 +17,7 @@ export function MediaLibrary({ videos, links }: MediaLibraryProps): ReactNode {
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[url('/images/patterns/islamic-lattice.png')] bg-cover bg-center"
+        className="pointer-events-none absolute inset-0 bg-[url('/images/background/islamic-lattice.webp')] bg-cover bg-center"
       />
       <Container className="relative py-10 sm:py-14">
         <div className="mx-auto flex max-w-5xl flex-col gap-12">

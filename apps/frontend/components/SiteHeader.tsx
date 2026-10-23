@@ -8,40 +8,46 @@ export function SiteHeader() {
   const pathname = usePathname();
   const router = useRouter();
 
-const PRIMARY_NAV: NavItem[] = [
-  { label: 'Home', href: '/' },
-  { label: 'About', href: '/about' },
-  { label: 'Login', href: '/login' },
-  { label: 'Courses', href: '/courses' },
-  {
-    label: 'Registration',
-    options: [
-      { label: 'Student Registration - Atfal/Nasirat', href: '/atfalNasirat' },
-      { label: 'Student Registration - Ansar', href: '/ansar' },
-      { label: 'Student Registration - Khuddam', href: '/khuddam' },
-      { label: 'Student Registration - Lajna', href: '/lajna' },
-      { label: 'Teachers', href: '/teachersReg' },
-    ],
-  },
-  // { label: 'Volunteers', href: '/volunteers' },
-  { label: 'Contact Us', href: '/contact' },
-];
+  const PRIMARY_NAV: NavItem[] = [
+    { label: 'Home', href: '/' },
+    { label: 'Courses', href: '/courses' },
+    {
+      label: 'Registration',
+      href: '/register',
+      options: [
+        { label: 'Teacher Registration', href: '/teachersReg' },
+        {
+          label: 'Students',
+          options: [
+            { label: 'Ansar', href: '/register?group=ansar' },
+            { label: 'Lajna', href: '/register?group=lajna' },
+            { label: 'Khuddam', href: '/register?group=khuddam' },
+            { label: 'Nasirat / Atfal', href: '/register?group=atfal-nasirat' },
+          ],
+        },
+      ],
+    },
+    // { label: 'Volunteers', href: '/volunteers' },
+    { label: 'About', href: '/about' },
+    { label: 'Contact Us', href: '/contact' },
+    { label: 'Login', href: '/login' },
+  ];
 
-const SECONDARY_NAV: NavItem[] = [
-  { label: 'ITQA Calendar', href: '/calendar' },
-  { label: 'Events', href: '/events' },
-  { label: 'Shop', href: '/shop' },
-  {
-    label: 'Resources',
-    href: '/resources',
-    options: [{ label: 'Study Materials', href: '/study-materials' }],
-  },
-  {
-    label: 'Multimedia',
-    href: '/multimedia',
-    options: [{ label: 'Gallery', href: '/multimedia' }],
-  },
-];
+  const SECONDARY_NAV: NavItem[] = [
+    { label: 'ITQA Calendar', href: '/calendar' },
+    { label: 'Events', href: '/events' },
+    { label: 'Shop', href: '/shop' },
+    {
+      label: 'Resources',
+      href: '/resources',
+      options: [{ label: 'Study Materials', href: '/study-materials' }],
+    },
+    {
+      label: 'Multimedia',
+      href: '/multimedia',
+      options: [{ label: 'Gallery', href: '/multimedia' }],
+    },
+  ];
   return (
     <Header
       logoUrl="/images/logo.png"

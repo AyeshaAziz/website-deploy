@@ -3,24 +3,11 @@
 import { useState, type ReactNode } from 'react';
 import { cn } from '@itqa/core';
 import type { CourseDTO } from '@itqa/core';
+import { CourseGlyph } from './CourseGlyph';
 
 export interface CourseCardProps {
   course: CourseDTO;
   className?: string;
-}
-
-function BookGlyph(): ReactNode {
-  return (
-    <svg viewBox="0 0 64 64" aria-hidden="true" className="h-10 w-10 text-primary-2" fill="none">
-      <path
-        d="M32 14c-5-3-11-4-17-3v35c6-1 12 0 17 3 5-3 11-4 17-3V11c-6-1-12 0-17 3Z"
-        stroke="currentColor"
-        strokeWidth="3"
-        strokeLinejoin="round"
-      />
-      <path d="M32 14v35" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-    </svg>
-  );
 }
 
 export function CourseCard({ course, className }: CourseCardProps): ReactNode {
@@ -29,7 +16,8 @@ export function CourseCard({ course, className }: CourseCardProps): ReactNode {
 
   return (
     <a
-      href={`/courses/${course.urlPath}`}
+      href={`/register?course=${encodeURIComponent(course.urlPath)}`}
+      aria-label={`Register for ${course.title}`}
       className={cn(
         'group flex h-full items-center gap-4 rounded-card bg-course-card p-4 shadow-lg shadow-primary-7/20 transition duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-primary-7/25',
         className,
@@ -46,7 +34,7 @@ export function CourseCard({ course, className }: CourseCardProps): ReactNode {
             className="h-full w-full object-contain"
           />
         ) : (
-          <BookGlyph />
+          <CourseGlyph />
         )}
       </span>
       <span className="min-w-0">

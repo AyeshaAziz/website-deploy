@@ -69,6 +69,7 @@ registration foundations.
 
 - **[Ctx] Inspect before editing.** Read the relevant files and follow existing
   patterns. Never assume a library, script, or convention exists.
+- Follow SOLID and DRY principles where possible
 - **[SF] Simplicity first.** Choose the smallest solution that fully solves the
   problem. No speculative abstractions.
 - **[RP] Readability first.** Code must be understandable without a walkthrough.
@@ -91,7 +92,7 @@ apps/frontend/                 Next.js app (public site, admin, API routes)
   app/admin/                   CMS admin
   app/api/v1/                  API route handlers
   components/                  App-only components
-  content/                     Static fallback content (e.g. home-courses.ts)
+  content/                     Static app fallback content (contact, registration)
   lib/                         Server/data/auth helpers
 packages/core/                 Shared contracts, DTOs, tokens, form schemas
 packages/database/             Prisma schema, client singleton, seed
@@ -195,7 +196,9 @@ Import direction: apps may import packages; packages must not import apps.
   `packages/core/src/index.ts`, `packages/database/prisma/schema.prisma`,
   `SectionRenderer`, seed data, Storybook stories, and docs.
 - Seed scripts must be idempotent: use `upsert`; never duplicate rows on rerun.
-- Static fallback content belongs in `apps/frontend/content/`.
+- App-only static fallback content belongs in `apps/frontend/content/`. Data
+  shared with the database seed lives in `@itqa/core` (e.g.
+  `FALLBACK_COURSES`) so there is one source of truth.
 - Design tokens have one source of truth: `packages/core/src/design/tokens.ts`.
   If a CSS variable changes, update both `tokens.ts` and
   `apps/frontend/app/globals.css`.
@@ -300,4 +303,4 @@ Stop and ask before:
 - Do not reintroduce `export * from '@prisma/client'` in
   `packages/database/src/index.ts`.
 - Do not hardcode the five course cards in the page; they come from
-  `getCourses()` with `apps/frontend/content/home-courses.ts` as fallback.
+  `getCourses()` with `FALLBACK_COURSES` from `@itqa/core` as the no-DB fallback.

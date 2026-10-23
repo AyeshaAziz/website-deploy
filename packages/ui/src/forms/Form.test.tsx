@@ -61,6 +61,24 @@ describe('Form', () => {
     expect(firstName.getAttribute('aria-describedby')).toContain('-error');
   });
 
+  it('reports changes to the watched field', async () => {
+    const user = userEvent.setup();
+    const onWatchChange = vi.fn();
+    render(
+      <Form
+        schema={schema}
+        config={config}
+        onSubmit={vi.fn()}
+        watchField="firstName"
+        onWatchChange={onWatchChange}
+      />,
+    );
+
+    await user.type(screen.getByLabelText(/first name/i), 'A');
+
+    await waitFor(() => expect(onWatchChange).toHaveBeenLastCalledWith('A'));
+  });
+
   it('submits valid values', async () => {
     const user = userEvent.setup();
     const onSubmit = vi.fn();

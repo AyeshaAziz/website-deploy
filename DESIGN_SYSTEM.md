@@ -175,6 +175,10 @@ Variants follow the Figma "Primary button" sheet (Style 1–3), plus a `gold` ac
 ### `Badge`
 `{ tone?: 'primary'|'gold'|'success'|'danger', className? }` — small pill; default `primary`.
 
+### `Notice`
+`{ title?, tone?: 'info'|'gold', children, className? }` — token-styled callout for contextual
+help or registration information. `info` uses `bg-primary-6`; `gold` uses the accent tint.
+
 ---
 
 ## 6. Component map

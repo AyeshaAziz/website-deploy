@@ -22,7 +22,6 @@ export default async function ContactPage({ searchParams }: Props) {
 
   return (
     <Container className="py-section-sm">
-      <SectionHeading as="h1" title={page.heading} className="mb-6" />
       <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
         <ContactAside content={aside} email={GENERAL_CONTACT_DEPARTMENT.email} />
         <ContactForm

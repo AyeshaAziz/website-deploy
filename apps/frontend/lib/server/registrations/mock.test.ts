@@ -7,23 +7,31 @@ import {
 import { MockRegistrationService } from './mock';
 
 const base = {
+  aimsNo: 'AIMS-12345',
   firstName: 'Ayesha',
   lastName: 'Aziz',
-  email: 'ayesha@example.com',
-  phone: '+123456789',
-  dateOfBirth: '1990-01-01',
-  gender: 'female',
-  address: '1 Example Street',
-  city: 'London',
+  tanzeem: 'lajna',
   country: 'UK',
+  city: 'London',
+  phone: '+123456789',
+  email: 'ayesha@example.com',
+  confirmEmail: 'ayesha@example.com',
+  teachingExperience: '3 years',
+  course: 'naziratul-quran',
+  courseLanguage: 'English',
   consent: true,
 } as const;
 
-const khuddam: RegistrationInput = {
+const teacher: RegistrationInput = {
   ...base,
-  track: 'khuddam',
-  profession: 'Engineer',
-  education: 'bachelor',
+  track: 'teacher',
+};
+
+const student: RegistrationInput = {
+  ...base,
+  track: 'student',
+  email: 'student@example.com',
+  confirmEmail: 'student@example.com',
 };
 
 const envelope = apiResultSchema(registrationResultSchema);
@@ -31,8 +39,8 @@ const envelope = apiResultSchema(registrationResultSchema);
 describe('MockRegistrationService', () => {
   it('replays the same result for the same idempotency key', async () => {
     const service = new MockRegistrationService();
-    const first = await service.submit(khuddam, 'key-1');
-    const second = await service.submit(khuddam, 'key-1');
+    const first = await service.submit(teacher, 'key-1');
+    const second = await service.submit(teacher, 'key-1');
 
     expect(first.ok).toBe(true);
     expect(second.ok).toBe(true);
@@ -44,8 +52,8 @@ describe('MockRegistrationService', () => {
 
   it('rejects a duplicate email for the same track', async () => {
     const service = new MockRegistrationService();
-    await service.submit(khuddam, 'key-1');
-    const duplicate = await service.submit(khuddam, 'key-2');
+    await service.submit(teacher, 'key-1');
+    const duplicate = await service.submit(teacher, 'key-2');
 
     expect(duplicate.ok).toBe(false);
     if (!duplicate.ok) {
@@ -55,7 +63,7 @@ describe('MockRegistrationService', () => {
 
   it('returns field errors for invalid input', async () => {
     const service = new MockRegistrationService();
-    const result = await service.submit({ ...khuddam, consent: false }, 'key-3');
+    const result = await service.submit({ ...teacher, consent: false }, 'key-3');
 
     expect(result.ok).toBe(false);
     if (!result.ok) {
@@ -65,9 +73,35 @@ describe('MockRegistrationService', () => {
     expect(envelope.safeParse(result).success).toBe(true);
   });
 
+  it('accepts a valid student registration', async () => {
+    const service = new MockRegistrationService();
+    const result = await service.submit(student, 'key-5');
+
+    expect(result.ok).toBe(true);
+    if (result.ok) {
+      expect(result.data.track).toBe('student');
+      expect(result.data.reference).toContain('ITQA-STU-');
+    }
+  });
+
+  it('rejects a student registration with mismatched confirmEmail', async () => {
+    const service = new MockRegistrationService();
+    const result = await service.submit(
+      { ...student, confirmEmail: 'other@example.com' },
+      'key-6',
+    );
+
+    expect(result.ok).toBe(false);
+    if (!result.ok) {
+      expect(result.error.code).toBe('VALIDATION_ERROR');
+      expect(result.error.fieldErrors?.confirmEmail).toBeTruthy();
+    }
+    expect(envelope.safeParse(result).success).toBe(true);
+  });
+
   it('finds a stored registration by reference', async () => {
     const service = new MockRegistrationService();
-    const created = await service.submit(khuddam, 'key-4');
+    const created = await service.submit(teacher, 'key-4');
 
     expect(created.ok).toBe(true);
     if (!created.ok) return;

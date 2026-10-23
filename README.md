@@ -34,7 +34,7 @@ Editor login: http://localhost:3000/admin/login (credentials from `SEED_ADMIN_EM
 ## What works
 
 - ISR public pages: Home, any CMS page (`/about`, `/study-materials`), Courses list and detail, Contact form (department routing, validation, honeypot, rate limit; email delivery pending SES)
-- Registration forms for Atfal/Nasirat, Ansar, Khuddam, Lajna and Teachers, driven by `@itqa/core` schemas and JSON copy, with a `/api/v1` BFF, idempotency, duplicate handling and rate limits
+- Registration forms for Students and Teachers, driven by `@itqa/core` schemas and JSON copy, with a `/api/v1` BFF, idempotency, duplicate handling and rate limits
 - Editor login (bcrypt + signed JWT cookie), role check in every server action, audit log on every change
 - Draft / publish with on-demand revalidation; sitemap.xml and robots.txt; security headers
 

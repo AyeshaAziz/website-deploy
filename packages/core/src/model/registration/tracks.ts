@@ -1,9 +1,6 @@
 export const REGISTRATION_TRACKS = [
-  'atfalNasirat',
-  'ansar',
-  'khuddam',
-  'lajna',
   'teacher',
+  'student',
 ] as const;
 
 export type RegistrationTrack = (typeof REGISTRATION_TRACKS)[number];

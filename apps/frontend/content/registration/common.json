@@ -1,0 +1,39 @@
+{
+  "fields": {
+    "aimsNo": { "label": "AIMS no./Member code", "placeholder": "Enter your AIMS number or member code" },
+    "firstName": { "label": "First name", "placeholder": "Enter your first name" },
+    "lastName": { "label": "Surname", "placeholder": "Enter your surname" },
+    "tanzeem": { "label": "Tanzeem" },
+    "country": { "label": "Country/Region", "placeholder": "Enter your country or region" },
+    "city": { "label": "City", "placeholder": "Enter your city" },
+    "phone": { "label": "Phone number", "placeholder": "+1 555 123 4567" },
+    "email": { "label": "Email", "placeholder": "you@example.com" },
+    "confirmEmail": { "label": "Confirm email", "placeholder": "Re-enter your email" },
+    "teachingExperience": {
+      "label": "Current teaching experience",
+      "placeholder": "e.g. 3 years teaching Nazirah classes"
+    },
+    "courseLanguage": {
+      "label": "Preferred language",
+      "placeholder": "e.g. English, Urdu, Arabic"
+    },
+    "secondLanguage": {
+      "label": "Second language preference",
+      "placeholder": "Optional"
+    },
+    "course": { "label": "Course", "help": "Choose the course you are registering for." },
+    "consent": {
+      "label": "By ticking this box, I confirm that I am a member of the Ahmadiyya Muslim Community and agree to the privacy policy.",
+      "help": "We only use these details to process the registration."
+    }
+  },
+  "options": {
+    "tanzeem": {
+      "atfal": "Atfal",
+      "nasirat": "Nasirat",
+      "khuddam": "Khuddam",
+      "lajna": "Lajna",
+      "ansar": "Ansar"
+    }
+  }
+}

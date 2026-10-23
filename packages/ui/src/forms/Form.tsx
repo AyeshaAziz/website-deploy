@@ -4,6 +4,7 @@ import { useEffect, useId, useMemo } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   useForm,
+  useWatch,
   type DefaultValues,
   type Path,
   type Resolver,
@@ -21,6 +22,8 @@ export interface FormProps<TSchema extends z.ZodTypeAny> {
   onSubmit: (values: z.infer<TSchema>) => void | Promise<void>;
   defaultValues?: Partial<z.infer<TSchema>>;
   fieldErrors?: Record<string, string>;
+  watchField?: string;
+  onWatchChange?: (value: unknown) => void;
   disabled?: boolean;
   className?: string;
 }
@@ -31,6 +34,8 @@ export function Form<TSchema extends z.ZodTypeAny>({
   onSubmit,
   defaultValues,
   fieldErrors,
+  watchField,
+  onWatchChange,
   disabled = false,
   className,
 }: FormProps<TSchema>) {
@@ -49,6 +54,16 @@ export function Form<TSchema extends z.ZodTypeAny>({
     setFocus,
     clearErrors,
   } = form;
+
+  const watchName = watchField ?? config.fields[0]?.name ?? '';
+  const watchedValue = useWatch({
+    control: form.control,
+    name: watchName as Path<Values>,
+  });
+
+  useEffect(() => {
+    if (watchField) onWatchChange?.(watchedValue);
+  }, [watchField, onWatchChange, watchedValue]);
 
   useEffect(() => {
     if (!fieldErrors) {
@@ -76,7 +91,7 @@ export function Form<TSchema extends z.ZodTypeAny>({
 
   return (
     <form noValidate onSubmit={submit} className={cn('space-y-6', className)}>
-      <div className="grid gap-6 sm:grid-cols-2">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {config.fields.map((field) => {
           const id = `${idPrefix}-${field.name}`;
           const error = errorMap[field.name]?.message;

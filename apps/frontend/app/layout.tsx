@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Amiri, Cabin } from 'next/font/google';
+import { ExtensionAttributeGuard } from '@/components/ExtensionAttributeGuard';
 import './globals.css';
 
 const cabin = Cabin({ subsets: ['latin'], variable: '--font-cabin', display: 'swap' });
@@ -21,7 +22,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       lang="en"
       className={`${cabin.variable} ${arabic.variable}`}
     >
-      <body className="min-h-screen bg-primary-6 font-sans text-neutral-900 antialiased">{children}</body>
+      <body
+        suppressHydrationWarning
+        className="min-h-screen bg-primary-6 font-sans text-neutral-900 antialiased"
+      >
+        <ExtensionAttributeGuard />
+        {children}
+      </body>
     </html>
   );
 }

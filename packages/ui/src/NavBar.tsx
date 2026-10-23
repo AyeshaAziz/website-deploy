@@ -161,7 +161,7 @@ function NavDropdown({
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLLIElement>(null);
   const nested = depth > 0;
-  const colors = TONES[tone];
+  const colors = TONES[nested ? 'light' : tone];
 
   useEffect(() => {
     if (!open) return;
@@ -200,18 +200,26 @@ function NavDropdown({
         aria-haspopup="true"
         onClick={() => setOpen((value) => !value)}
         className={cn(
-          'inline-flex items-center gap-1.5 font-medium',
-          itemPadding(tone, size),
+          'font-medium',
+          nested
+            ? 'flex w-full items-center justify-between gap-2 px-4 py-2 text-left text-small hover:bg-primary-6'
+            : 'inline-flex items-center gap-1.5',
+          nested ? undefined : itemPadding(tone, size),
           active ? colors.active : colors.item,
         )}
       >
         {item.label}
-        <ChevronDown className={cn('transition-transform duration-200', open && 'rotate-180')} />
+        <ChevronDown
+          className={cn(
+            'transition-transform duration-200',
+            nested ? (open ? 'rotate-0' : '-rotate-90') : open && 'rotate-180',
+          )}
+        />
       </button>
       {open && item.options && (
         <ul
           className={cn(
-            'absolute z-30 min-w-56 rounded-card border border-primary-5 bg-white py-1 shadow-card',
+            'absolute z-40 min-w-56 rounded-card border border-primary-5 bg-white py-1 shadow-card',
             nested
               ? 'left-full top-0 ml-2'
               : `top-full mt-2 ${align === 'right' ? 'right-0' : 'left-0'}`,
@@ -223,7 +231,10 @@ function NavDropdown({
                 key={option.href ?? option.label}
                 item={option}
                 activeHref={activeHref}
-                onNavigate={onNavigate}
+                onNavigate={(href) => {
+                  setOpen(false);
+                  onNavigate?.(href);
+                }}
                 tone={tone}
                 size={size}
                 align={align}

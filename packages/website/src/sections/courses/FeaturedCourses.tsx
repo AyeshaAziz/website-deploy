@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { str } from '@itqa/core';
 import type { CourseDTO, SectionDTO } from '@itqa/core';
-import { Container } from '@itqa/ui';
+import { Container, ButtonLink } from '@itqa/ui';
 import { CourseCard } from './CourseCard';
 
 export interface FeaturedCoursesProps {

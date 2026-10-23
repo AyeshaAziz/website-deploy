@@ -1,14 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import type { CourseDTO, ResourceDTO, SectionDTO } from '@itqa/core';
+import { FALLBACK_COURSES } from '@itqa/core';
+import type { ResourceDTO, SectionDTO } from '@itqa/core';
 import { SectionRenderer } from './SectionRenderer';
 
-const courses: CourseDTO[] = [
-  { id: '1', urlPath: 'naziratul-quran', title: "Naziratul-Qur'an", summary: 'Recitation', imageUrl: '/images/courses/naziratul-quran.png' },
-  { id: '2', urlPath: 'yassarnal-quran', title: "Yassarnal-Qur'an", summary: 'Qaidah', imageUrl: '/images/courses/yassarnal-quran.png' },
-  { id: '3', urlPath: 'tafsirul-quran', title: "Tafsirul-Qur'an", summary: 'Interpretation', imageUrl: '/images/courses/tafsirul-quran.png' },
-  { id: '4', urlPath: 'qawaidul-quran', title: "Qawaidul-Qur'an", summary: 'Grammar', imageUrl: '/images/courses/qawaidul-quran.png' },
-  { id: '5', urlPath: 'tarjamatul-quran', title: "Tarjamatul-Qur'an", summary: 'Translation', imageUrl: '/images/courses/tarjamatul-quran.png' },
-];
+const courses = FALLBACK_COURSES;
 
 const resources: ResourceDTO[] = [
   { id: '1', title: 'Qaida Noorania', url: '#', kind: 'PDF', description: 'Starter reading guide.' },

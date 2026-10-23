@@ -6,10 +6,10 @@
   },
   "aside": {
     "image": {
-      "src": "/images/patterns/islamic-lattice.png",
+      "src": "/images/background/islamic-lattice.webp",
       "alt": "",
-      "width": 2880,
-      "height": 1208,
+      "width": 1600,
+      "height": 671,
       "sizes": "(min-width: 1024px) 45vw, 100vw"
     },
     "heading": "We're here to help",

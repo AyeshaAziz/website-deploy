@@ -14,6 +14,7 @@ import {
 const config: Config = {
   content: [
     './app/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
     '../../packages/website/src/**/*.{ts,tsx}',
     '../../packages/ui/src/**/*.{ts,tsx}',
     '../../packages/core/src/**/*.{ts,tsx}',
