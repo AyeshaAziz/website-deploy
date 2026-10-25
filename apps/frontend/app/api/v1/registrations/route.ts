@@ -3,7 +3,7 @@ import {
   apiFailure,
   type ApiResult,
   type RegistrationResult,
-} from '@itqa/core';
+} from '@itqasys/core';
 import { rateLimit } from '@/lib/rate-limit';
 import { getRegistrationService } from '@/lib/server/registrations/factory';
 

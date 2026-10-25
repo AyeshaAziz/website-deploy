@@ -1,7 +1,7 @@
 'use client';
 
 import { Fragment, type ReactNode, useEffect, useRef, useState } from 'react';
-import { cn, NavItem } from '@itqa/core';
+import { cn, NavItem } from '@itqasys/core';
 import { ChevronDown } from './ChevronDown';
 
 export type NavBarTone = 'dark' | 'light';

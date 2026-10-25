@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { WebsiteLanding } from '@itqa/website';
-import { getCourses, getPage, getResources } from '@/lib/content';
+import { getCoursesSafe } from '@/lib/courses';
+import { getPage, getResources } from '@/lib/content';
 import { getChannelVideos, getPlaylistVideos } from '@/lib/youtube';
 
 export const revalidate = 3600;
@@ -20,7 +21,7 @@ export default async function CmsPage({ params }: Props) {
   if (!page) notFound();
   const hasMultimedia = page.sections.some((section) => section.type === 'MULTIMEDIA');
   const [courses, resources, videos, playlist] = await Promise.all([
-    getCourses(),
+    getCoursesSafe(),
     getResources(),
     hasMultimedia ? getChannelVideos() : Promise.resolve([]),
     hasMultimedia ? getPlaylistVideos() : Promise.resolve([]),

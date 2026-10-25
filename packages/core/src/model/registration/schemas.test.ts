@@ -32,4 +32,24 @@ describe('registration schemas', () => {
 
     expect(result.success).toBe(false);
   });
+
+  it('requires the confirmation email to match', () => {
+    const result = registrationSchema.safeParse({
+      track: 'student',
+      aimsNo: 'AIMS-12345',
+      firstName: 'A',
+      lastName: 'B',
+      tanzeem: 'khuddam',
+      country: 'Country',
+      city: 'City',
+      phone: '+123456789',
+      email: 'a@example.com',
+      confirmEmail: 'b@example.com',
+      course: 'naziratul-quran',
+      courseLanguage: 'English',
+      consent: true,
+    });
+
+    expect(result.success).toBe(false);
+  });
 });

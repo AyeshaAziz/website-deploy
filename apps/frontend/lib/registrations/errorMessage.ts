@@ -1,5 +1,5 @@
-import type { ApiErrorCode } from '@itqa/core';
-import type { FormMessages } from '@itqa/core/forms';
+import type { ApiErrorCode } from '@itqasys/core';
+import type { FormMessages } from '@itqasys/core/forms';
 
 export function getRegistrationErrorMessage(
   code: ApiErrorCode,

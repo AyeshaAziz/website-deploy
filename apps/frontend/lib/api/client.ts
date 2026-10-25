@@ -1,4 +1,4 @@
-import { apiFailure, type ApiResult } from '@itqa/core';
+import { apiFailure, type ApiResult } from '@itqasys/core';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? '/api/v1';
 const DEFAULT_TIMEOUT_MS = 15_000;

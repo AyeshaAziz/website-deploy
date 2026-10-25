@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
-import { cn } from '@itqa/core';
-import type { FieldConfig } from '@itqa/core/forms';
+import { cn } from '@itqasys/core';
+import type { FieldConfig } from '@itqasys/core/forms';
 import { Label } from '../Label';
 
 export interface FieldWrapperProps {

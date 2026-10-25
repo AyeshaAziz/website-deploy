@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { apiFailure } from '@itqa/core';
+import { apiFailure } from '@itqasys/core';
 import { rateLimit } from '@/lib/rate-limit';
 import { getRegistrationService } from '@/lib/server/registrations/factory';
 
@@ -26,7 +26,8 @@ export async function GET(
   const result = await getRegistrationService().get(reference);
 
   if (!result.ok) {
-    return NextResponse.json(result, { status: 404 });
+    const status = result.error.code === 'NOT_FOUND' ? 404 : 502;
+    return NextResponse.json(result, { status });
   }
 
   return NextResponse.json(result);

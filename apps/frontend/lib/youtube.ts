@@ -1,4 +1,4 @@
-import type { MediaVideoDTO } from '@itqa/core';
+import type { MediaVideoDTO } from '@itqasys/core';
 
 const CHANNEL_ID = 'UCFfBE6Jh86oromF4MDWG8xg';
 const CHANNEL_FEED_URL = `https://www.youtube.com/feeds/videos.xml?channel_id=${CHANNEL_ID}`;

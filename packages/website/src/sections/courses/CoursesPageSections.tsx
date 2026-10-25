@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
-import { cn } from '@itqa/core';
-import type { CourseDTO } from '@itqa/core';
+import { cn } from '@itqasys/core';
+import type { CourseDTO } from '@itqasys/core';
 import { ABOUT_CONTENT } from '../about/data';
 import { UsefulLinks } from '../about/UsefulLinks';
 import coursesData from './courses.json';

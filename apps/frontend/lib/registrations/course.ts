@@ -1,5 +1,5 @@
-import type { CourseDTO } from '@itqa/core';
-import { getCourse } from '@/lib/content';
+import type { CourseDTO } from '@itqasys/core';
+import { getCourse } from '@/lib/courses';
 
 export interface RegistrationCourse {
   course: CourseDTO | null;

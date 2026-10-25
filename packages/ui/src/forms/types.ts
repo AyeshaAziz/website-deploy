@@ -1,4 +1,4 @@
-import type { FieldConfig, FieldType } from '@itqa/core/forms';
+import type { FieldConfig, FieldType } from '@itqasys/core/forms';
 import type { ReactNode } from 'react';
 import type { UseFormRegisterReturn } from 'react-hook-form';
 

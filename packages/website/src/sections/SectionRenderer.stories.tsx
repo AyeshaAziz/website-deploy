@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { FALLBACK_COURSES } from '@itqa/core';
-import type { ResourceDTO, SectionDTO } from '@itqa/core';
+import { COURSE_FIXTURES } from '@itqasys/core/fixtures';
+import type { ResourceDTO, SectionDTO } from '@itqasys/core';
 import { SectionRenderer } from './SectionRenderer';
 
-const courses = FALLBACK_COURSES;
+const courses = COURSE_FIXTURES;
 
 const resources: ResourceDTO[] = [
   { id: '1', title: 'Qaida Noorania', url: '#', kind: 'PDF', description: 'Starter reading guide.' },

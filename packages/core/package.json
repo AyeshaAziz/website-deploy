@@ -1,15 +1,57 @@
 {
-  "name": "@itqa/core",
+  "name": "@itqasys/core",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {
     ".": "./src/index.ts",
     "./design": "./src/design/index.ts",
-    "./forms": "./src/forms/index.ts"
+    "./forms": "./src/forms/index.ts",
+    "./fixtures": "./src/fixtures/index.ts"
   },
-  "scripts": { "typecheck": "tsc --noEmit", "test": "vitest run" },
-  "dependencies": { "zod": "^3.23.8" },
-  "devDependencies": { "typescript": "^5.5.4", "vitest": "^2.1.0" }
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted",
+    "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.js",
+        "require": "./dist/index.cjs"
+      },
+      "./design": {
+        "types": "./dist/design/index.d.ts",
+        "import": "./dist/design/index.js",
+        "require": "./dist/design/index.cjs"
+      },
+      "./forms": {
+        "types": "./dist/forms/index.d.ts",
+        "import": "./dist/forms/index.js",
+        "require": "./dist/forms/index.cjs"
+      },
+      "./fixtures": {
+        "types": "./dist/fixtures/index.d.ts",
+        "import": "./dist/fixtures/index.js",
+        "require": "./dist/fixtures/index.cjs"
+      }
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.5",
+    "typescript": "^5.5.4",
+    "vitest": "^2.1.0"
+  }
 }

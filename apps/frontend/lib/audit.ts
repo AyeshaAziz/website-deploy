@@ -1,5 +1,5 @@
 import { headers } from 'next/headers';
-import { prisma, Prisma } from '@itqa/database';
+import { supabase, type SupabaseClient } from './db';
 
 export async function audit(params: {
   actorId: string;
@@ -10,17 +10,19 @@ export async function audit(params: {
   after?: unknown;
 }): Promise<void> {
   const h = await headers();
-  const json = (v: unknown) => (v === undefined ? undefined : (v as Prisma.InputJsonValue));
-  await prisma.auditLog.create({
-    data: {
-      actorId: params.actorId,
-      action: params.action,
-      entityType: params.entityType,
-      entityId: params.entityId,
-      before: json(params.before),
-      after: json(params.after),
-      ipAddress: h.get('x-forwarded-for')?.split(',')[0]?.trim() ?? null,
-      userAgent: h.get('user-agent'),
-    },
+  const ipAddress = h.get('x-forwarded-for')?.split(',')[0]?.trim() ?? null;
+  const userAgent = h.get('user-agent');
+
+  const { error } = await supabase.from('auditLog').insert({
+    actorId: params.actorId,
+    action: params.action,
+    entityType: params.entityType,
+    entityId: params.entityId,
+    before: params.before,
+    after: params.after,
+    ipAddress,
+    userAgent,
   });
+
+  if (error) throw error;
 }

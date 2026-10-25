@@ -1,6 +1,6 @@
 import type { ReactNode, Ref } from 'react';
 import { Card } from '@itqa/ui';
-import type { FormMessages } from '@itqa/core/forms';
+import type { FormMessages } from '@itqasys/core/forms';
 
 export interface RegistrationSuccessProps {
   messages: FormMessages;

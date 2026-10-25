@@ -1,0 +1,22 @@
+import type { CourseDTO, CourseSitemapEntry } from '@itqasys/core';
+import { getCourseService } from './server/courses/factory';
+
+export async function getCourses(): Promise<CourseDTO[]> {
+  return getCourseService().list();
+}
+
+export async function getCoursesSafe(): Promise<CourseDTO[]> {
+  try {
+    return await getCourses();
+  } catch {
+    return [];
+  }
+}
+
+export async function getCourse(urlPath: string): Promise<CourseDTO | null> {
+  return getCourseService().get(urlPath);
+}
+
+export async function getCourseSitemap(): Promise<CourseSitemapEntry[]> {
+  return getCourseService().sitemap();
+}

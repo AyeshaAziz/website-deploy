@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
-import { apiFailure, apiSuccess } from '@itqa/core';
+import { apiFailure, apiSuccess } from '@itqasys/core';
 
 const requestSchema = z.object({
   name: z.string().min(1).max(255),

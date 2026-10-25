@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from 'next/navigation';
 import { Header } from '@itqa/website';
-import { NavItem } from '@itqa/core';
+import { NavItem } from '@itqasys/core';
 
 export function SiteHeader() {
   const pathname = usePathname();

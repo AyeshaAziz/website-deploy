@@ -23,8 +23,12 @@
     },
     "course": { "label": "Course", "help": "Choose the course you are registering for." },
     "consent": {
-      "label": "By ticking this box, I confirm that I am a member of the Ahmadiyya Muslim Community and agree to the privacy policy.",
+      "label": "By ticking this box, I confirm that I am a member of the Ahmadiyya Muslim Community and agree to the",
       "help": "We only use these details to process the registration."
+    },
+    "parentalConsent": {
+      "label": "I confirm that I am a parent or guardian and consent on behalf of the minor for Atfal/Nasirat programs.",
+      "help": "Required for Atfal and Nasirat registrations. By ticking this box, I confirm that I am a parent or legal guardian and consent to the minor's participation in ITQA courses."
     }
   },
   "options": {

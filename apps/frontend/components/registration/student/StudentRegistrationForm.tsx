@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useState, type ReactNode } from 'react';
-import type { CourseDTO, Tanzeem } from '@itqa/core';
+import type { CourseDTO, Tanzeem } from '@itqasys/core';
 import { RegistrationForm } from '../form/RegistrationForm';
 import { AtfalNasiratPanel } from './AtfalNasiratPanel';
 import { StudentRegistrationCard } from './StudentRegistrationCard';

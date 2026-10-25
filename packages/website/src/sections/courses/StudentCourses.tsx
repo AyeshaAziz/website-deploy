@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
-import { cn } from '@itqa/core';
-import type { CourseDTO } from '@itqa/core';
+import { cn } from '@itqasys/core';
+import type { CourseDTO } from '@itqasys/core';
 import { Container } from '@itqa/ui';
 import { StudentCoursesCarousel } from './StudentCoursesCarousel';
 

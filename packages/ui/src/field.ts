@@ -1,4 +1,4 @@
-import { cn } from '@itqa/core';
+import { cn } from '@itqasys/core';
 
 /** Shared classes for text inputs, textareas and selects. */
 export const FIELD_BASE =

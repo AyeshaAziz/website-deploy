@@ -11,10 +11,11 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@itqa/database": "workspace:*",
-    "@itqa/core": "workspace:*",
     "@itqa/ui": "workspace:*",
     "@itqa/website": "workspace:*",
+    "@itqasys/core": "workspace:*",
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.118.0",
     "bcryptjs": "^2.4.3",
     "jose": "^5.9.0",
     "next": "16.4.2",

@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { Carousel, WebsiteLanding } from '@itqa/website';
-import { getCourses, getPage, getResources } from '@/lib/content';
+import { getCoursesSafe } from '@/lib/courses';
+import { getPage, getResources } from '@/lib/content';
 import { getChannelVideos, getPlaylistVideos } from '@/lib/youtube';
 
 export const revalidate = 3600; // ISR: regenerate hourly; CMS publish also revalidates on demand
@@ -14,7 +15,7 @@ const BANNER_SLIDES = [
 export default async function HomePage() {
   const [page, courses, resources, videos, playlist] = await Promise.all([
     getPage('home'),
-    getCourses(),
+    getCoursesSafe(),
     getResources(),
     getChannelVideos(),
     getPlaylistVideos(),

@@ -87,6 +87,13 @@ const consent = f(
   { type: 'checkbox', order: 200, colSpan: 2 },
 );
 
+const parentalConsent = f(
+  z.literal(true, {
+    errorMap: () => ({ message: 'Please accept parental consent to continue.' }),
+  }),
+  { type: 'checkbox', order: 210, colSpan: 2 },
+);
+
 const registrationFields = {
   aimsNo,
   firstName,
@@ -101,6 +108,7 @@ const registrationFields = {
   courseLanguage,
   secondLanguage,
   consent,
+  parentalConsent,
 };
 
 export const studentSchema = z.object(registrationFields);
@@ -119,9 +127,17 @@ export type RegistrationValues<T extends RegistrationTrack> = z.infer<
   (typeof REGISTRATION_SCHEMAS)[T]
 >;
 
-export const registrationSchema = z.discriminatedUnion('track', [
-  teacherSchema.extend({ track: z.literal('teacher') }),
-  studentSchema.extend({ track: z.literal('student') }),
-]);
+export const registrationSchema = z
+  .discriminatedUnion('track', [
+    teacherSchema.extend({ track: z.literal('teacher') }),
+    studentSchema.extend({ track: z.literal('student') }),
+  ])
+  .refine(
+    (values) => values.email === values.confirmEmail,
+    {
+      message: 'Email addresses must match.',
+      path: ['confirmEmail'],
+    },
+  );
 
 export type RegistrationInput = z.infer<typeof registrationSchema>;

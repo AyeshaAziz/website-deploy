@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { SectionDTO } from '@itqa/core';
+import type { SectionDTO } from '@itqasys/core';
 import { Cta } from './cta';
 import { FeaturedCourses } from './courses';
 import { Home } from './home';

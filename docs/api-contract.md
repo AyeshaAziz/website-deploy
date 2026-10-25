@@ -1,8 +1,9 @@
-# Registration API Contract (`/api/v1`)
+# API Contract (`/api/v1`)
 
-The Next.js app exposes a BFF under `/api/v1`. The browser only talks to this BFF; the
-BFF either uses the in-memory mock adapter (`REGISTRATION_API_MODE=mock`) or forwards to
-the real backend (`REGISTRATION_API_MODE=live`, `BACKEND_API_URL`).
+Course data is read by the Next.js server directly from the backend API. Registration
+requests go through the Next.js BFF: the browser only talks to the BFF, and the BFF either
+uses the in-memory mock adapter (`REGISTRATION_API_MODE=mock`) or forwards to the real
+backend (`REGISTRATION_API_MODE=live`, `BACKEND_API_URL`).
 
 All payloads are camelCase JSON. Dates are ISO-8601 UTC strings. IDs are strings.
 
@@ -35,7 +36,33 @@ Error codes:
 | `VALIDATION_ERROR` | Body or headers are invalid | 400 |
 | `DUPLICATE` | Email already registered for this track | 409 |
 | `RATE_LIMITED` | Too many attempts | 429 |
-| `SERVER_ERROR` | Backend unavailable, timeout, or not found | 502 (GET not found: 404) |
+| `NOT_FOUND` | The requested resource does not exist | 404 |
+| `SERVER_ERROR` | Backend unavailable or timeout | 502 |
+
+## Courses
+
+The frontend server calls the backend directly:
+
+```env
+BACKEND_API_URL=http://localhost:4000/api/v1
+```
+
+Only `PUBLISHED` courses with no `archivedAt` are returned.
+
+### GET `/api/v1/courses`
+
+Returns `{ "ok": true, "data": CourseDTO[] }`, ordered by `sortOrder`, then `title`.
+
+### GET `/api/v1/courses/sitemap`
+
+Returns `{ "ok": true, "data": [{ "urlPath": "...", "updatedAt": "..." }] }`.
+
+### GET `/api/v1/courses/{urlPath}`
+
+Returns `{ "ok": true, "data": CourseDTO }`. Unknown or malformed slugs return `404`
+with `NOT_FOUND`.
+
+`CourseDTO` is defined in `@itqasys/core` (`courseDtoSchema`).
 
 ## POST `/api/v1/registrations`
 
@@ -65,7 +92,7 @@ Tracks: `teacher` and `student`. Both use the same fields:
 - `secondLanguage` — optional second language preference
 - `consent` — must be `true`
 
-The canonical validation schemas live in `@itqa/core` (`registrationSchema` and
+The canonical validation schemas live in `@itqasys/core` (`registrationSchema` and
 `REGISTRATION_SCHEMAS`). The backend must use the same schemas or an equivalent contract
 test.
 
@@ -86,7 +113,7 @@ Success (`201`):
 ## GET `/api/v1/registrations/{reference}`
 
 Returns the stored registration in the success envelope. Unknown references return
-`404` with a `SERVER_ERROR` envelope (the contract has no separate `NOT_FOUND` code).
+`404` with a `NOT_FOUND` envelope.
 
 ## POST `/api/v1/uploads/presign`
 

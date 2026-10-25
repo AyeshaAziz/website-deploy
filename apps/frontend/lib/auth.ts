@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { SignJWT, jwtVerify } from 'jose';
-import type { Role } from '@itqa/core';
+import type { Role } from '@itqasys/core';
 
 // Minimal signed-cookie session for editors (JWT + bcrypt, as in the design document).
 // Swap for Auth.js later if wanted; keep requireAuth/requireRole as the stable interface.

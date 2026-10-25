@@ -3,8 +3,8 @@ import type {
   RegistrationInput,
   RegistrationResult,
   RegistrationTrack,
-} from '@itqa/core';
-import type { FormMessages } from '@itqa/core/forms';
+} from '@itqasys/core';
+import type { FormMessages } from '@itqasys/core/forms';
 import { submitRegistration } from '@/lib/api/registrations';
 import { getRegistrationErrorMessage } from '@/lib/registrations/errorMessage';
 

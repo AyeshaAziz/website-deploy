@@ -1,18 +1,17 @@
 import {
-  FALLBACK_COURSES,
   REGISTRATION_SCHEMAS,
   TANZEEM_OPTIONS,
   type CourseDTO,
   type RegistrationTrack,
   type Tanzeem,
-} from '@itqa/core';
+} from '@itqasys/core';
 import {
   createFormConfig,
   formContentSchema,
   type FieldContent,
   type FormConfig,
   type FormContent,
-} from '@itqa/core/forms';
+} from '@itqasys/core/forms';
 import commonJson from '../../content/registration/common.json';
 import messagesJson from '../../content/registration/messages.json';
 import studentJson from '../../content/registration/student.json';
@@ -86,7 +85,7 @@ export function getFormConfig(
   const definition = getTrackDefinition(track);
   const config = createFormConfig(definition.schema, definition.content);
 
-  const list = courses?.length ? courses : FALLBACK_COURSES;
+  const list = courses ?? [];
   const courseOptions = list.map(({ id, title }) => ({ value: id, label: title }));
   const allowedTanzeem = new Set(tanzeem);
 

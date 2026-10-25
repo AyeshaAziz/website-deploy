@@ -1,5 +1,4 @@
-import { HttpRegistrationService } from './http';
-import { MockRegistrationService } from './mock';
+import { SupabaseRegistrationService } from './supabase';
 import type { RegistrationService } from './service';
 
 const globalForRegistrations = globalThis as unknown as {
@@ -11,12 +10,7 @@ export function getRegistrationService(): RegistrationService {
     return globalForRegistrations.itqaRegistrationService;
   }
 
-  const mode = process.env.REGISTRATION_API_MODE ?? 'mock';
-  const service: RegistrationService =
-    mode === 'live'
-      ? new HttpRegistrationService(process.env.BACKEND_API_URL ?? '')
-      : new MockRegistrationService();
-
+  const service = new SupabaseRegistrationService();
   globalForRegistrations.itqaRegistrationService = service;
   return service;
 }

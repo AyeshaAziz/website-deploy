@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Container, SectionHeading } from '@itqa/ui';
 import { RegistrationForm } from '@/components/registration/form/RegistrationForm';
 import { getTrackDefinition } from '@/lib/registrations/tracks';
-import { getCourses } from '@/lib/content';
+import { getCourses } from '@/lib/courses';
 
 const TRACK = 'teacher' as const;
 

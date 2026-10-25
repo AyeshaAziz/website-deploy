@@ -1,4 +1,4 @@
-import { TANZEEM_OPTIONS, type Tanzeem } from '@itqa/core';
+import { TANZEEM_OPTIONS, type Tanzeem } from '@itqasys/core';
 
 export const REGISTRATION_GROUPS = {
   ansar: ['ansar'],

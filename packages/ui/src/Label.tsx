@@ -1,5 +1,5 @@
 import type { LabelHTMLAttributes, ReactNode } from 'react';
-import { cn } from '@itqa/core';
+import { cn } from '@itqasys/core';
 
 export type LabelProps = LabelHTMLAttributes<HTMLLabelElement>;
 

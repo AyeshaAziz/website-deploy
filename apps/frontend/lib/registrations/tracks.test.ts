@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { REGISTRATION_TRACKS } from '@itqa/core';
+import { REGISTRATION_TRACKS } from '@itqasys/core';
 import { getFormConfig, getTrackDefinition } from './tracks';
 
 const BASE_FIELDS = [
@@ -16,6 +16,7 @@ const BASE_FIELDS = [
   'courseLanguage',
   'secondLanguage',
   'consent',
+  'parentalConsent',
 ].sort();
 
 describe('registration track registry', () => {
@@ -30,6 +31,13 @@ describe('registration track registry', () => {
     const course = config.fields.find((field) => field.name === 'course');
 
     expect(course?.options).toEqual([{ value: 'c1', label: 'Course One' }]);
+  });
+
+  it('does not fall back to hardcoded courses', () => {
+    const config = getFormConfig('student');
+    const course = config.fields.find((field) => field.name === 'course');
+
+    expect(course?.options).toEqual([]);
   });
 
   it('filters the tanzeem options to the selected group', () => {

@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, type ReactNode } from 'react';
-import { cn } from '@itqa/core';
-import type { CourseDTO } from '@itqa/core';
+import { cn } from '@itqasys/core';
+import type { CourseDTO } from '@itqasys/core';
 import { CourseGlyph } from './CourseGlyph';
 
 export interface CourseCardProps {

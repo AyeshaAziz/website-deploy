@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { z } from 'zod';
-import { createFormConfig, f, type FormContent } from '@itqa/core/forms';
+import { createFormConfig, f, type FormContent } from '@itqasys/core/forms';
 import { Form } from './Form';
 
 const schema = z.object({

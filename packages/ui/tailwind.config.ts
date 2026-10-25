@@ -9,7 +9,7 @@ import {
   maxWidth,
   screens,
   spacing,
-} from '@itqa/core/design';
+} from '@itqasys/core/design';
 
 /**
  * Package-local Tailwind config so the UI can be built and previewed

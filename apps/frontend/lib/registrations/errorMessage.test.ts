@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { FormMessages } from '@itqa/core/forms';
+import type { FormMessages } from '@itqasys/core/forms';
 import { getRegistrationErrorMessage } from './errorMessage';
 
 const messages: FormMessages = {

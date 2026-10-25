@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { cn } from '@itqa/core';
+import { cn } from '@itqasys/core';
 
 export interface SectionHeadingProps {
   title: string;

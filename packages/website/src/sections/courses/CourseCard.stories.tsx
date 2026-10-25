@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { FALLBACK_COURSES } from '@itqa/core';
+import { COURSE_FIXTURES } from '@itqasys/core/fixtures';
 import { CourseCard } from './CourseCard';
 
 const meta = {
@@ -7,7 +7,7 @@ const meta = {
   component: CourseCard,
   tags: ['autodocs'],
   args: {
-    course: FALLBACK_COURSES[0],
+    course: COURSE_FIXTURES[0],
   },
   decorators: [
     (Story) => (
@@ -25,6 +25,6 @@ export const Default: Story = {};
 
 export const WithoutImage: Story = {
   args: {
-    course: { ...FALLBACK_COURSES[1], imageUrl: null },
+    course: { ...COURSE_FIXTURES[1], imageUrl: null },
   },
 };

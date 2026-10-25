@@ -9,7 +9,7 @@
     "title": "Follow Us",
     "links": [
       { "label": "X", "href": "https://x.com/itqa_uk" },
-      {"label": "Telegram", "href": "https://t.me/itqa_noticeboard" },
+      { "label": "Telegram", "href": "https://t.me/itqa_noticeboard" },
       { "label": "Instagram", "href": "https://www.instagram.com/itqa_uk/" },
       { "label": "Youtube", "href": "https://www.youtube.com/@itqa3081/featured" },
       { "label": "Soundcloud", "href": "https://soundcloud.com/itqa-uk" }
@@ -28,9 +28,13 @@
     "emailTitle": "Email:",
     "email": "contact@itqa.org.uk",
     "phoneTitle": "Phone:",
-    "phone":"+44 20 3146 1052 | +44 20 3146 1055"
+    "phone": "+44 20 3146 1052 | +44 20 3146 1055"
   },
   "map": {
     "label": "ITQA location"
+  },
+  "bottomContent": {
+    "title": "© copyright 2026  International Ta'limul Qur'an Academy",
+    "links": [{ "label": "Privacy Notice", "href": "/privacy" }]
   }
 }

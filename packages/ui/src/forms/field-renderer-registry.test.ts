@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { FIELD_TYPES } from '@itqa/core/forms';
+import { FIELD_TYPES } from '@itqasys/core/forms';
 import {
   fieldRenderers,
   getFieldRenderer,

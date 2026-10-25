@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
-import { str } from '@itqa/core';
-import type { CourseDTO, SectionDTO } from '@itqa/core';
+import { str } from '@itqasys/core';
+import type { CourseDTO, SectionDTO } from '@itqasys/core';
 import { Container, ButtonLink } from '@itqa/ui';
 import { CourseCard } from './CourseCard';
 

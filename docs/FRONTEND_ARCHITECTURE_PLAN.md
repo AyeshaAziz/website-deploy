@@ -1,11 +1,11 @@
 # Frontend Architecture Plan: Core/UI Split and Backend-Ready Registration
 
 Status: Implemented
-Scope: `@itqa/core`, `@itqa/ui`, `@itqa/website`, `@itqa/frontend`
+Scope: `@itqasys/core`, `@itqa/ui`, `@itqa/website`, `@itqa/frontend`
 
 ## 1. Goals
 
-- Rename the shared package to `@itqa/core` (contracts, design tokens, utils, form model).
+- Rename the shared package to `@itqasys/core` (contracts, design tokens, utils, form model).
 - Create `@itqa/ui`, a shared library for all generic React components.
 - Build registration forms frontend-first, with no backend, without rework when the backend arrives.
 - Keep the code modular and follow SOLID where practical.
@@ -18,7 +18,7 @@ Scope: `@itqa/core`, `@itqa/ui`, `@itqa/website`, `@itqa/frontend`
 
 | Decision | Choice |
 | --- | --- |
-| Contracts and design tokens | `@itqa/core` in `packages/core` |
+| Contracts and design tokens | `@itqasys/core` in `packages/core` |
 | Generic components | `@itqa/ui` in `packages/ui` |
 | Website composition | `@itqa/website` in `packages/website` |
 | Form state and validation | `react-hook-form` + `@hookform/resolvers/zod` |
@@ -35,7 +35,7 @@ Scope: `@itqa/core`, `@itqa/ui`, `@itqa/website`, `@itqa/frontend`
 apps/frontend              @itqa/frontend   pages, registration content/json, API seam, BFF
 packages/website           @itqa/website    site composition (Header, Subheader, Footer, About/CMS sections, Banner)
 packages/ui                @itqa/ui         all generic React components + generic form engine
-packages/core              @itqa/core       contracts (zod/DTOs), design tokens, utils, form model (NO React)
+packages/core              @itqasys/core       contracts (zod/DTOs), design tokens, utils, form model (NO React)
 ```
 
 Dependency direction, with no cycles:
@@ -48,14 +48,14 @@ core <- ui <- website <- frontend
 
 Forms are split by concern:
 
-- `@itqa/core/forms`: `FormConfig`, `FieldConfig`, content schema, `createFormConfig(schema, content)`, and the `f()` metadata helper. Framework-agnostic and server-safe.
+- `@itqasys/core/forms`: `FormConfig`, `FieldConfig`, content schema, `createFormConfig(schema, content)`, and the `f()` metadata helper. Framework-agnostic and server-safe.
 - `@itqa/ui/forms`: `Form`, `FieldWrapper`, field renderers, renderer registry, and upload adapter. React and react-hook-form only.
 
 `@itqa/ui` root exports primitives only. The `./forms` subpath is separate so importing a Button never pulls react-hook-form.
 
 ## 4. What moves where
 
-### 4.1 Into `@itqa/core` (renamed from the old shared package directory)
+### 4.1 Into `@itqasys/core` (renamed from the old shared package directory)
 
 - `src/design/*` (unchanged)
 - `src/model/*`
@@ -105,15 +105,15 @@ Exports: `.` for primitives (no react-hook-form) and `./forms` for the client-on
 - `sections/<name>/*` (Home, Text, FeaturedCourses, Multimedia, FeaturedResources, Cta)
 - `sections/shared/carousel/*` (`Carousel` API: fade banner, scroll rows, playlist)
 
-These import primitives from `@itqa/ui` and types from `@itqa/core`.
+These import primitives from `@itqa/ui` and types from `@itqasys/core`.
 
-## 5. Phase 1: Rename the shared package to `@itqa/core`
+## 5. Phase 1: Rename the shared package to `@itqasys/core`
 
 ### Tasks
 
 - Rename the old shared package directory to `packages/core`.
 - Update `package.json`:
-  - name to `@itqa/core`
+  - name to `@itqasys/core`
   - add `zod` dependency
   - exports: `.`, `./design`, `./forms`
   - keep React out of the package
@@ -154,7 +154,7 @@ These import primitives from `@itqa/ui` and types from `@itqa/core`.
 
 - Create `packages/ui` with `package.json`, `tsconfig.json`, tailwind config, postcss config, and Storybook.
 - Move the generic components and stories listed in section 4.2.
-- Keep imports of design tokens and contracts on `@itqa/core`.
+- Keep imports of design tokens and contracts on `@itqasys/core`.
 - Delete `packages/website/src/ui/`.
 - Remove `export * from './ui'` from `packages/website/src/index.ts`.
 - Update `@itqa/website` internals to import from `@itqa/ui`:
@@ -175,21 +175,21 @@ These import primitives from `@itqa/ui` and types from `@itqa/core`.
 
 `@itqa/ui`:
 
-- dependencies: `@itqa/core`, `react-hook-form`, `@hookform/resolvers`, `zod`
+- dependencies: `@itqasys/core`, `react-hook-form`, `@hookform/resolvers`, `zod`
 - peerDependencies: `react`, `react-dom`
 - exports: `.` (primitives) and `./forms`
 
 `@itqa/website`:
 
-- dependencies: `@itqa/core`, `@itqa/ui`
+- dependencies: `@itqasys/core`, `@itqa/ui`
 
 `@itqa/frontend`:
 
-- dependencies: `@itqa/core`, `@itqa/ui`, `@itqa/website`
+- dependencies: `@itqasys/core`, `@itqa/ui`, `@itqa/website`
 
 Next.js and Tailwind:
 
-- Add `@itqa/core` and `@itqa/ui` to `transpilePackages` in `apps/frontend/next.config.mjs`.
+- Add `@itqasys/core` and `@itqa/ui` to `transpilePackages` in `apps/frontend/next.config.mjs`.
 - Add `packages/core/src` and `packages/ui/src` to Tailwind content globs in the frontend and Storybook configs.
 
 ### Storybook
@@ -210,7 +210,7 @@ Next.js and Tailwind:
 
 ## 7. Phase 3: Generic form layers
 
-### 7.1 `@itqa/core/forms`
+### 7.1 `@itqasys/core/forms`
 
 Files:
 
@@ -388,8 +388,8 @@ pnpm build-storybook
 - Zero references to the old shared package name remain.
 - No `@itqa/forms` package exists.
 - `packages/website/src/ui` is removed.
-- `@itqa/core` root is React-free.
-- `@itqa/ui` imports only `@itqa/core` and React libraries, never website or frontend.
+- `@itqasys/core` root is React-free.
+- `@itqa/ui` imports only `@itqasys/core` and React libraries, never website or frontend.
 - Frontend imports generic components from `@itqa/ui` and site composition from `@itqa/website`.
 - Adding a track requires no engine changes.
 - Adding a field type requires only a renderer and registry entry.
@@ -409,7 +409,7 @@ pnpm build-storybook
 - Renaming touches every package import. Keep it as its own commit so failures are easy to isolate.
 - Moving Storybook requires cross-package story globs and careful dependency placement.
 - Schema-derived config relies on `.describe()` metadata. Keep the convention small and tested; avoid other private zod internals.
-- Putting React in `@itqa/core` is deliberately avoided via the core/ui split.
+- Putting React in `@itqasys/core` is deliberately avoided via the core/ui split.
 - The mock service is in-memory and resets on restart. It is for development only, not production persistence.
 
 ## 14. Backend handoff

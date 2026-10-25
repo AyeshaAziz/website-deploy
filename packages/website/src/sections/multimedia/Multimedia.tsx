@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { MediaVideoDTO } from '@itqa/core';
+import type { MediaVideoDTO } from '@itqasys/core';
 import { Container } from '@itqa/ui';
 import mediaData from './media.json';
 import { MediaLibrary } from './MediaLibrary';

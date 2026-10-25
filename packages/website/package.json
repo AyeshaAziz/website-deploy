@@ -14,7 +14,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@itqa/core": "workspace:*",
+    "@itqasys/core": "workspace:*",
     "@itqa/ui": "workspace:*"
   },
   "peerDependencies": {

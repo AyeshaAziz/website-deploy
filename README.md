@@ -1,7 +1,9 @@
 # ITQA Website
 
 Website-only scope from the ITQA Architecture Design Document: public pages plus a database-driven CMS.
-No portals, no Express backend, no Redis yet. Layout matches the full platform monorepo so Phase 3 adds to it.
+The courses API lives in the separate [`ITQASys/itqa-backend`](https://github.com/ITQASys/itqa-backend) repo;
+registration persistence will be added there later. No portals or Redis yet. Layout matches the full
+platform monorepo so Phase 3 adds to it.
 
 ## Quick start
 
@@ -10,8 +12,8 @@ corepack enable            # or: npm i -g pnpm
 pnpm install
 cp .env.example .env       # then set JWT_SECRET (32+ chars)
 pnpm db:up                 # Postgres 15 via Docker
-pnpm db:push               # create tables
-pnpm db:seed               # admin editor, sample pages, courses
+pnpm db:deploy             # apply migrations
+pnpm db:seed               # admin editor and sample pages
 pnpm dev                   # http://localhost:3000
 ```
 
@@ -26,26 +28,55 @@ Editor login: http://localhost:3000/admin/login (credentials from `SEED_ADMIN_EM
 | `apps/frontend` | Next.js 16 app: public routes, registration pages, `/admin` CMS, BFF API, server actions, middleware |
 | `packages/website` | `@itqa/website`: header/footer, section components, page renderer |
 | `packages/ui` | `@itqa/ui`: generic React components, Storybook, generic form engine (`@itqa/ui/forms`) |
-| `packages/core` | `@itqa/core`: contracts, design tokens, utils, form model (`@itqa/core/forms`) |
-| `packages/database` | `@itqa/database`: Prisma schema, client, seed (reused by Express later) |
+| `packages/core` | `@itqasys/core`: contracts, design tokens, utils, form model (`@itqasys/core/forms`) |
+| `packages/database` | `@itqa/database`: CMS Prisma schema, client, seed |
 | `infra/terraform` | AWS base (media bucket done; VPC, RDS, ALB, compute TODO) |
-| `.github/workflows` | CI: install, db push, seed, lint, typecheck, test, build |
+| `.github/workflows` | CI: install, migrations, seed, lint, typecheck, test, build |
 
 ## What works
 
 - ISR public pages: Home, any CMS page (`/about`, `/study-materials`), Courses list and detail, Contact form (department routing, validation, honeypot, rate limit; email delivery pending SES)
-- Registration forms for Students and Teachers, driven by `@itqa/core` schemas and JSON copy, with a `/api/v1` BFF, idempotency, duplicate handling and rate limits
+- Registration forms for Students and Teachers, driven by `@itqasys/core` schemas and JSON copy, with a `/api/v1` BFF, idempotency, duplicate handling and rate limits
 - Editor login (bcrypt + signed JWT cookie), role check in every server action, audit log on every change
 - Draft / publish with on-demand revalidation; sitemap.xml and robots.txt; security headers
+
+## Courses API
+
+Course data is served by the separate backend repo. Start it on port 4000 and point the
+frontend at it:
+
+```bash
+# terminal 1 (D:\ITQA\itqa-backend)
+pnpm install
+pnpm db:deploy
+pnpm db:seed
+pnpm dev
+
+# terminal 2
+pnpm dev
+```
+
+```env
+BACKEND_API_URL=http://localhost:4000/api/v1
+```
+
+The home page renders without courses if the API is unavailable. `/courses`, course
+detail, and registration pages use the public error boundary instead.
+
+## Shared package
+
+`@itqasys/core` is published to GitHub Packages for the backend repo. Bump the version,
+then run the **Publish core** workflow manually; it uses `GITHUB_TOKEN` with
+`packages: write`. Backend CI needs a `PACKAGES_TOKEN` secret with `read:packages`.
 
 ## Registration API
 
 The forms call the Next.js BFF at `/api/v1`. In development the BFF uses an in-memory
-mock (resets on restart); no backend is required.
+mock (resets on restart); no backend is required for registration yet.
 
 ```env
 REGISTRATION_API_MODE=mock   # or "live"
-BACKEND_API_URL=             # required when live
+BACKEND_API_URL=http://localhost:4000/api/v1
 NEXT_PUBLIC_API_BASE_URL=/api/v1
 ```
 

@@ -1,7 +1,7 @@
 'use client';
 
 import type { ReactNode } from 'react';
-import { cn } from '@itqa/core';
+import { cn } from '@itqasys/core';
 import { CarouselArrow } from './CarouselArrow';
 import type { PlaylistCarouselProps } from './carousel.types';
 import { HIDE_SCROLLBAR } from './carousel.utils';

@@ -1,7 +1,7 @@
 'use client';
 
 import type { ReactNode } from 'react';
-import type { CourseDTO } from '@itqa/core';
+import type { CourseDTO } from '@itqasys/core';
 import { Carousel } from '../shared/carousel';
 import { StudentCourseCard } from './StudentCourseCard';
 

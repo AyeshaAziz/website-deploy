@@ -1,4 +1,4 @@
-import type { ApiResult, RegistrationInput, RegistrationResult } from '@itqa/core';
+import type { ApiResult, RegistrationInput, RegistrationResult } from '@itqasys/core';
 import { apiFetch } from './client';
 
 export function submitRegistration(

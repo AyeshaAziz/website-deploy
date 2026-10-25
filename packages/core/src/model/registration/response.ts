@@ -5,6 +5,7 @@ export const API_ERROR_CODES = [
   'VALIDATION_ERROR',
   'DUPLICATE',
   'RATE_LIMITED',
+  'NOT_FOUND',
   'SERVER_ERROR',
 ] as const;
 

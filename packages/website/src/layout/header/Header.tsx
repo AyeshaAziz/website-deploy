@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, type ReactNode } from 'react';
-import { NavItem } from '@itqa/core';
+import { NavItem } from '@itqasys/core';
 import { Container, MobileNav, NavBar } from '@itqa/ui';
 import { Subheader } from './Subheader';
 

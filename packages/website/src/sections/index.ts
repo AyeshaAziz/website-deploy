@@ -9,5 +9,7 @@ export type { BannerBackgroundProps } from './shared/BannerBackground';
 export * from './about';
 export { CourseCard } from './courses';
 export type { CourseCardProps } from './courses';
+export { CourseDetail } from './courses';
+export type { CourseDetailProps } from './courses';
 export { CoursesPageSections } from './courses';
 export type { CoursesPageContent, CoursesPageSectionsProps } from './courses';

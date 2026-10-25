@@ -1,6 +1,6 @@
 'use client';
 
-import { NavItem, cn } from '@itqa/core';
+import { NavItem, cn } from '@itqasys/core';
 import { type ReactNode, useState } from 'react';
 import { ChevronDown } from './ChevronDown';
 

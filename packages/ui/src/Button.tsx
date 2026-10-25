@@ -1,5 +1,5 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'react';
-import { cn } from '@itqa/core';
+import { cn } from '@itqasys/core';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'gold';
 export type ButtonSize = 'sm' | 'md' | 'lg';

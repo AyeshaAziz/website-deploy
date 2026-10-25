@@ -1,0 +1,35 @@
+{
+  "teacher": {
+    "track": "teacher",
+    "aimsNo": "AIMS-12345",
+    "firstName": "Aisha",
+    "lastName": "Rahman",
+    "tanzeem": "khuddam",
+    "country": "United Kingdom",
+    "city": "London",
+    "phone": "+44 20 1234 5678",
+    "email": "aisha@example.com",
+    "confirmEmail": "aisha@example.com",
+    "teachingExperience": "3 years",
+    "course": "course_naziratul_quran",
+    "courseLanguage": "English",
+    "consent": true,
+    "parentalConsent": true
+  },
+  "student": {
+    "track": "student",
+    "aimsNo": "AIMS-67890",
+    "firstName": "Yusuf",
+    "lastName": "Ali",
+    "tanzeem": "khuddam",
+    "country": "United Kingdom",
+    "city": "Manchester",
+    "phone": "+44 161 123 4567",
+    "email": "yusuf@example.com",
+    "confirmEmail": "yusuf@example.com",
+    "course": "course_yassarnal_quran",
+    "courseLanguage": "English",
+    "consent": true,
+    "parentalConsent": true
+  }
+}

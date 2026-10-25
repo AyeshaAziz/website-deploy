@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
-import { str } from '@itqa/core';
-import type { ResourceDTO, SectionDTO } from '@itqa/core';
+import { str } from '@itqasys/core';
+import type { ResourceDTO, SectionDTO } from '@itqasys/core';
 import { Container, SectionHeading } from '@itqa/ui';
 
 export interface FeaturedResourcesProps {

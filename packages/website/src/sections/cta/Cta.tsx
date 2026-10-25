@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
-import { str } from '@itqa/core';
-import type { SectionDTO } from '@itqa/core';
+import { str } from '@itqasys/core';
+import type { SectionDTO } from '@itqasys/core';
 import { ButtonLink, Container } from '@itqa/ui';
 
 export interface CtaProps {

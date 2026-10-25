@@ -32,14 +32,13 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
 
-  transpilePackages: [
+transpilePackages: [
     '@itqa/website',
     '@itqa/ui',
-    '@itqa/core',
-    '@itqa/database',
+    '@itqasys/core',
   ],
 
-  serverExternalPackages: ['@prisma/client', 'bcryptjs'],
+  serverExternalPackages: ['bcryptjs'],
 
   async headers() {
     return [

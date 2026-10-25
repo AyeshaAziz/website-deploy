@@ -1,4 +1,4 @@
-import type { CourseDTO, MediaVideoDTO, ResourceDTO } from '@itqa/core';
+import type { CourseDTO, MediaVideoDTO, ResourceDTO } from '@itqasys/core';
 
 export interface SectionData {
   courses: CourseDTO[];

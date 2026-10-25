@@ -1,5 +1,5 @@
 import type { HTMLAttributes, ReactNode } from 'react';
-import { cn } from '@itqa/core';
+import { cn } from '@itqasys/core';
 
 export type BadgeTone = 'primary' | 'gold' | 'success' | 'danger';
 

@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { PageDTO } from '@itqa/core';
+import type { PageDTO } from '@itqasys/core';
 import { SectionRenderer } from './SectionRenderer';
 import type { SectionData } from './types';
 

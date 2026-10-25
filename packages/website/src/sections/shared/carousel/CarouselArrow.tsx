@@ -1,7 +1,7 @@
 'use client';
 
 import type { ReactNode } from 'react';
-import { cn } from '@itqa/core';
+import { cn } from '@itqasys/core';
 import type { CarouselArrowTone } from './carousel.types';
 
 export interface CarouselArrowProps {

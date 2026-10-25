@@ -1,11 +1,11 @@
-import { FALLBACK_COURSES } from '@itqa/core';
-import type { CourseDTO, PageDTO, ResourceDTO, SectionType } from '@itqa/core';
+import type { PageDTO, ResourceDTO, SectionType } from '@itqasys/core';
+import { supabase } from './db';
 
 // No DATABASE_URL (or an unreachable database) = frontend-only mode with static fallbacks.
-const hasDb = () => Boolean(process.env.DATABASE_URL);
+const hasDb = () => Boolean(process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY);
 
 async function db() {
-  return (await import('@itqa/database')).prisma;
+  return supabase;
 }
 
 function fallbackPage(urlPath: string): PageDTO {
@@ -37,18 +37,20 @@ function fallbackPage(urlPath: string): PageDTO {
 export async function getPage(urlPath: string): Promise<PageDTO | null> {
   if (!hasDb()) return fallbackPage(urlPath);
   try {
-    const prisma = await db();
-    const page = await prisma.websitePage.findFirst({
-      where: { urlPath, status: 'PUBLISHED' },
-      include: { sections: { where: { visible: true }, orderBy: { order: 'asc' } } },
-    });
-    if (!page) return null;
+    const supa = await db();
+    const { data: page, error } = await supa
+      .from('websitePage')
+      .select('*, sections(*)')
+      .eq('urlPath', urlPath)
+      .eq('status', 'PUBLISHED')
+      .single();
+    if (error || !page) return null;
     return {
       urlPath: page.urlPath,
       title: page.title,
       seoTitle: page.seoTitle,
       seoDescription: page.seoDescription,
-      sections: page.sections.map((s) => ({
+      sections: page.sections.map((s: any) => ({
         id: s.id,
         type: s.type as SectionType,
         order: s.order,
@@ -61,45 +63,18 @@ export async function getPage(urlPath: string): Promise<PageDTO | null> {
   }
 }
 
-const courseSelect = { id: true, urlPath: true, title: true, summary: true, description: true, imageUrl: true } as const;
-
-export async function getCourses(): Promise<CourseDTO[]> {
-  if (!hasDb()) return FALLBACK_COURSES;
-  try {
-    const prisma = await db();
-    const courses = await prisma.course.findMany({
-      where: { status: 'PUBLISHED', archivedAt: null },
-      orderBy: { sortOrder: 'asc' },
-      select: courseSelect,
-    });
-    return courses;
-  } catch {
-    return FALLBACK_COURSES;
-  }
-}
-
-export async function getCourse(urlPath: string): Promise<CourseDTO | null> {
-  if (!hasDb()) return FALLBACK_COURSES.find((c) => c.urlPath === urlPath) ?? null;
-  try {
-    const prisma = await db();
-    return await prisma.course.findFirst({
-      where: { urlPath, status: 'PUBLISHED', archivedAt: null },
-      select: courseSelect,
-    });
-  } catch {
-    return FALLBACK_COURSES.find((c) => c.urlPath === urlPath) ?? null;
-  }
-}
-
 export async function getResources(): Promise<ResourceDTO[]> {
   if (!hasDb()) return [];
   try {
-    const prisma = await db();
-    return await prisma.resource.findMany({
-      where: { status: 'PUBLISHED', archivedAt: null },
-      orderBy: { sortOrder: 'asc' },
-      select: { id: true, title: true, url: true, kind: true, description: true },
-    });
+    const supa = await db();
+    const { data, error } = await supa
+      .from('resource')
+      .select('id, title, url, kind, description')
+      .eq('status', 'PUBLISHED')
+      .order('sortOrder', 'asc')
+      .order('createdAt', 'asc');
+    if (error) return [];
+    return data as ResourceDTO[];
   } catch {
     return [];
   }

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { CoursesPageSections } from '@itqa/website';
-import { getCourses } from '@/lib/content';
+import { getCourses } from '@/lib/courses';
 
 export const revalidate = 3600;
 export const metadata: Metadata = {

@@ -59,7 +59,7 @@ registration foundations.
 | --- | --- |
 | Monorepo | pnpm workspaces, TypeScript strict |
 | App | Next.js 16 App Router, React 19, Server Components first |
-| Styling | Tailwind CSS 3, design tokens from `@itqa/core/design` |
+| Styling | Tailwind CSS 3, design tokens from `@itqasys/core/design` |
 | Data | Prisma 5 + PostgreSQL, CMS-driven pages (`WebsitePage` / `Section`) |
 | UI preview | Storybook 10 (`packages/ui`, stories for `packages/website`) |
 | Tests | Vitest, Testing Library |
@@ -103,7 +103,7 @@ docs/                          Architecture and API contracts
 ```
 
 Import direction: apps may import packages; packages must not import apps.
-`@itqa/core` must not depend on Prisma, React, or Next.js.
+`@itqasys/core` must not depend on Prisma, React, or Next.js.
 
 ## 4. Modularity & File Size
 
@@ -118,7 +118,7 @@ Import direction: apps may import packages; packages must not import apps.
   and `PageView.tsx` should only map page sections.
 - **Client components are leaves.** Add `'use client'` only to the smallest
   interactive component, never to a page/layout that could stay server-side.
-- **Types and contracts live in `@itqa/core`** when shared across packages.
+- **Types and contracts live in `@itqasys/core`** when shared across packages.
 - **Tests and stories live beside the code** (`X.test.tsx`, `X.stories.tsx`).
 - **Avoid barrel-file sprawl.** Barrels belong at package entrypoints, not as a
   layer for every folder.
@@ -162,12 +162,12 @@ Import direction: apps may import packages; packages must not import apps.
 - Use Tailwind utilities. **No inline `style` objects** unless a computed value
   cannot be expressed otherwise.
 - **Never hardcode colors, fonts, spacing, radii, or shadows.** Import tokens
-  from `@itqa/core/design` or use the generated Tailwind classes
+  from `@itqasys/core/design` or use the generated Tailwind classes
   (`bg-primary-5`, `text-h3`, `shadow-card`).
 - Typography uses **Cabin** for all Latin text (body, headings, UI) through
   `font-sans` / `font-cabin` / `font-heading`; Arabic/RTL text uses
   `font-arabic` (Amiri). Never hardcode fonts.
-- Use `cn()` from `@itqa/core` for conditional classes.
+- Use `cn()` from `@itqasys/core` for conditional classes.
 - Match the existing responsive approach: mobile-first, `sm/md/lg` breakpoints.
 - Use semantic HTML and accessible names. Interactive elements must be real
   `<button>`/`<a>` elements and keyboard accessible.
@@ -189,7 +189,7 @@ Import direction: apps may import packages; packages must not import apps.
   (`export { Prisma } ...`), not `export *` (avoids the CJS external warning).
 - Keep Prisma out of frontend-only mode: `apps/frontend/lib/content.ts` imports
   it dynamically and falls back to static content when the DB is unavailable.
-- All DTOs used by pages belong in `@itqa/core` (`PageDTO`, `SectionDTO`,
+- All DTOs used by pages belong in `@itqasys/core` (`PageDTO`, `SectionDTO`,
   `CourseDTO`, `ResourceDTO`).
 - Section types are `HOME`, `TEXT`, `FEATURED_COURSES`, `MULTIMEDIA`,
   `FEATURED_RESOURCES`, `CTA`. Renaming or adding one requires updating together:
@@ -197,8 +197,8 @@ Import direction: apps may import packages; packages must not import apps.
   `SectionRenderer`, seed data, Storybook stories, and docs.
 - Seed scripts must be idempotent: use `upsert`; never duplicate rows on rerun.
 - App-only static fallback content belongs in `apps/frontend/content/`. Data
-  shared with the database seed lives in `@itqa/core` (e.g.
-  `FALLBACK_COURSES`) so there is one source of truth.
+  shared with the backend seed lives in `@itqasys/core` (e.g.
+  `COURSE_FIXTURES`) so there is one source of truth.
 - Design tokens have one source of truth: `packages/core/src/design/tokens.ts`.
   If a CSS variable changes, update both `tokens.ts` and
   `apps/frontend/app/globals.css`.
@@ -243,7 +243,7 @@ pnpm --filter @itqa/frontend exec eslint app/path/file.tsx lib/file.ts
 
 # Run one test
 pnpm --filter @itqa/frontend exec vitest run path/to/file.test.ts
-pnpm --filter @itqa/core exec vitest run src/path/file.test.ts
+pnpm --filter @itqasys/core exec vitest run src/path/file.test.ts
 ```
 
 ### Before finishing (full checks)
@@ -302,5 +302,6 @@ Stop and ask before:
   `lib/content.ts` must keep the site renderable.
 - Do not reintroduce `export * from '@prisma/client'` in
   `packages/database/src/index.ts`.
-- Do not hardcode the five course cards in the page; they come from
-  `getCourses()` with `FALLBACK_COURSES` from `@itqa/core` as the no-DB fallback.
+- Do not hardcode course cards in the page; they come from the backend API via
+  `getCourses()`. `COURSE_FIXTURES` from `@itqasys/core/fixtures` is only for
+  seeds, stories, and contract tests.

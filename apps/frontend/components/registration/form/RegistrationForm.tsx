@@ -2,7 +2,7 @@
 
 import { useMemo, type ReactNode } from 'react';
 import { Form } from '@itqa/ui/forms';
-import type { CourseDTO, RegistrationTrack, Tanzeem } from '@itqa/core';
+import type { CourseDTO, RegistrationTrack, Tanzeem } from '@itqasys/core';
 import { getFormConfig, getTrackDefinition } from '@/lib/registrations/tracks';
 import { validateRegistration } from '@/lib/registrations/validate';
 import { RegistrationErrorAlert } from './RegistrationErrorAlert';

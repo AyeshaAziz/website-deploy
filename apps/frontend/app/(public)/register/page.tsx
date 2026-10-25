@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Container } from '@itqa/ui';
 import { BannerBackground } from '@itqa/website';
 import { StudentRegistrationForm } from '@/components/registration/student/StudentRegistrationForm';
-import { getCourses } from '@/lib/content';
+import { getCourses } from '@/lib/courses';
 import { resolveRegistrationCourse } from '@/lib/registrations/course';
 import { resolveRegistrationGroup } from '@/lib/registrations/groups';
 

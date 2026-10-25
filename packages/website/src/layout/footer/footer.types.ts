@@ -34,6 +34,7 @@ export interface FooterContent {
   social: FooterSocialData;
   contact: FooterContactData;
   map: FooterMapData;
+  bottomInfo: FooterSocialData[];
 }
 
 export interface FooterProps {

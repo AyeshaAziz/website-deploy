@@ -1,21 +1,16 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { prisma } from '@itqa/database';
+import { supabase } from '@/lib/db';
 import { Button, Card, Container, SectionHeading, Textarea } from '@itqa/ui';
 import { requireAuth, requireRole } from '@/lib/auth';
 import { setPageStatus, updateSection } from '../../actions';
 
-// Skeleton editor: one JSON textarea per section. Replace with typed forms per section type,
-// rich text (Tiptap) and drag-and-drop ordering (dnd-kit) in the CMS step.
 export default async function PageEditor({ params }: { params: { page: string } }) {
   const session = await requireAuth();
   requireRole(session, ['ADMIN', 'CONTENT_EDITOR']);
 
-  const page = await prisma.websitePage.findUnique({
-    where: { urlPath: params.page },
-    include: { sections: { orderBy: { order: 'asc' } } },
-  });
-  if (!page) notFound();
+  const { data: page, error } = await supabase.from('websitePage').select('*, sections(order)').eq('urlPath', params.page).single();
+  if (!page || error) notFound();
 
   return (
     <Container className="py-section-sm">
@@ -29,7 +24,7 @@ export default async function PageEditor({ params }: { params: { page: string } 
         </div>
 
         <div className="mt-4 flex flex-wrap gap-2">
-          {(['DRAFT', 'PUBLISHED', 'ARCHIVED'] as const).map((status) => (
+          (['DRAFT', 'PUBLISHED', 'ARCHIVED'] as const).map((status) => (
             <form key={status} action={setPageStatus}>
               <input type="hidden" name="urlPath" value={page.urlPath} />
               <input type="hidden" name="status" value={status} />

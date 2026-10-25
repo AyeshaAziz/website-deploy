@@ -9,7 +9,7 @@ import {
   maxWidth,
   screens,
   spacing,
-} from '@itqa/core/design';
+} from '@itqasys/core/design';
 
 const config: Config = {
   content: [

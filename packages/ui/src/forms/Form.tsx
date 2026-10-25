@@ -10,8 +10,8 @@ import {
   type Resolver,
 } from 'react-hook-form';
 import type { z } from 'zod';
-import { cn } from '@itqa/core';
-import type { FormConfig } from '@itqa/core/forms';
+import { cn } from '@itqasys/core';
+import type { FormConfig } from '@itqasys/core/forms';
 import { Button } from '../Button';
 import { FieldWrapper } from './FieldWrapper';
 import { getFieldRenderer } from './field-renderer-registry';

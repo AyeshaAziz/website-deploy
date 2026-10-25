@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
-import { apiSuccess } from '@itqa/core';
+import { apiSuccess } from '@itqasys/core';
 
 export function GET(): NextResponse {
   return NextResponse.json(
     apiSuccess({
       status: 'ok',
-      mode: process.env.REGISTRATION_API_MODE ?? 'mock',
+      mode: 'supabase',
       timestamp: new Date().toISOString(),
     }),
   );

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { FALLBACK_COURSES } from '@itqa/core';
+import { COURSE_FIXTURES } from '@itqasys/core/fixtures';
 import { CoursesPageSections } from './CoursesPageSections';
 
 const meta = {
@@ -13,5 +13,5 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: { courses: FALLBACK_COURSES },
+  args: { courses: COURSE_FIXTURES },
 };

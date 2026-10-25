@@ -4,8 +4,8 @@ import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import bcrypt from 'bcryptjs';
 import { z } from 'zod';
-import { prisma, Prisma } from '@itqa/database';
-import type { Role } from '@itqa/core';
+import { supabase } from '@/lib/db';
+import type { Role } from '@itqasys/core';
 import { audit } from '@/lib/audit';
 import { createSession, destroySession, requireAuth, requireRole } from '@/lib/auth';
 
@@ -17,8 +17,10 @@ export async function login(formData: FormData): Promise<void> {
     .safeParse(Object.fromEntries(formData));
   if (!parsed.success) redirect('/admin/login?error=1');
 
-  const user = await prisma.user.findUnique({ where: { email: parsed.data.email } });
-  const ok = user && !user.archivedAt && (await bcrypt.compare(parsed.data.password, user.passwordHash));
+  const { data: user, error } = await supabase.from('users').select('*').eq('email', parsed.data.email).single();
+  if (error || !user) redirect('/admin/login?error=1');
+
+  const ok = !user.archivedAt && (await bcrypt.compare(parsed.data.password, user.passwordHash));
   if (!user || !ok) redirect('/admin/login?error=1');
 
   await createSession({ userId: user.id, email: user.email, role: user.role });
@@ -41,12 +43,12 @@ export async function updateSection(formData: FormData): Promise<void> {
   const id = z.string().min(1).parse(formData.get('id'));
   const content = z.record(z.unknown()).parse(JSON.parse(String(formData.get('content'))));
 
-  const before = await prisma.section.findUniqueOrThrow({ where: { id }, include: { page: true } });
-  const after = await prisma.section.update({ where: { id }, data: { content: content as Prisma.InputJsonObject } });
+  const before = await supabase.from('sections').select('*, page:urlPath(title,status)').eq('id', id).single();
+  const after = await supabase.from('sections').update({ id, data: content }).select('*, page:urlPath(title,status)').single();
 
-  await audit({ actorId: session.userId, action: 'SECTION_UPDATED', entityType: 'Section', entityId: id, before: before.content, after: after.content });
-  revalidatePath(pagePath(before.page.urlPath));
-  revalidatePath(`/admin/content-management/${before.page.urlPath}`);
+  await audit({ actorId: session.userId, action: 'SECTION_UPDATED', entityType: 'Section', entityId: id, before: before.data?.content, after: after.data?.content });
+  revalidatePath(pagePath(before.data?.page?.urlPath));
+  revalidatePath(`/admin/content-management/${before.data?.page?.urlPath}`);
 }
 
 export async function setPageStatus(formData: FormData): Promise<void> {
@@ -56,17 +58,10 @@ export async function setPageStatus(formData: FormData): Promise<void> {
   const urlPath = z.string().min(1).parse(formData.get('urlPath'));
   const status = z.enum(['DRAFT', 'PUBLISHED', 'ARCHIVED']).parse(formData.get('status'));
 
-  const before = await prisma.websitePage.findUniqueOrThrow({ where: { urlPath } });
-  const after = await prisma.websitePage.update({
-    where: { urlPath },
-    data: {
-      status,
-      publishedAt: status === 'PUBLISHED' ? new Date() : before.publishedAt,
-      publishedById: status === 'PUBLISHED' ? session.userId : before.publishedById,
-    },
-  });
+  const before = await supabase.from('websitePage').select('*, publishedById').eq('urlPath', urlPath).single();
+  const after = await supabase.from('websitePage').update({ urlPath, data: { status, publishedAt: status === 'PUBLISHED' ? new Date() : before.data?.publishedAt, publishedById: status === 'PUBLISHED' ? session.userId : before.data?.publishedById } }).select().single();
 
-  await audit({ actorId: session.userId, action: `PAGE_${status}`, entityType: 'WebsitePage', entityId: after.id, before: { status: before.status }, after: { status: after.status } });
+  await audit({ actorId: session.userId, action: `PAGE_${status}`, entityType: 'WebsitePage', entityId: after.id, before: { status: before.data?.status }, after: { status: after.status } });
   revalidatePath(pagePath(urlPath));
   revalidatePath(`/admin/content-management/${urlPath}`);
 }

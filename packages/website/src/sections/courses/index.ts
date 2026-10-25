@@ -1,5 +1,7 @@
 export { CourseCard } from './CourseCard';
 export type { CourseCardProps } from './CourseCard';
+export { CourseDetail } from './CourseDetail';
+export type { CourseDetailProps } from './CourseDetail';
 export { CourseGlyph } from './CourseGlyph';
 export { CoursesBanner } from './CoursesBanner';
 export type { CoursesBannerProps } from './CoursesBanner';

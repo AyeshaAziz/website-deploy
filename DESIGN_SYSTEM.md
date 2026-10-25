@@ -29,7 +29,7 @@ Use this document when adding pages, sections or UI; update it when the system c
 
 ```ts
 import { Button, Card, Container, SectionHeading } from '@itqa/ui'; // primitives
-import { colors, fontSize, cssVars } from '@itqa/core/design';     // raw tokens
+import { colors, fontSize, cssVars } from '@itqasys/core/design';     // raw tokens
 ```
 
 **Rule:** edit tokens in `tokens.ts`, never hardcode hex values or font stacks in components.

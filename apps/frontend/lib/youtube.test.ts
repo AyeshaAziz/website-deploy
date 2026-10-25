@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { MediaVideoDTO } from '@itqa/core';
+import type { MediaVideoDTO } from '@itqasys/core';
 import { mergeVideosNewestFirst, parseChannelFeed } from './youtube';
 
 const FEED = `<?xml version="1.0" encoding="UTF-8"?>

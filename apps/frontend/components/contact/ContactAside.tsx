@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import Image from 'next/image';
-import { cn } from '@itqa/core';
+import { cn } from '@itqasys/core';
 import type { ContactAsideContent } from '@/lib/contact/content';
 
 interface ContactAsideProps {

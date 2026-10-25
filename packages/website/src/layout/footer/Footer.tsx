@@ -5,6 +5,7 @@ import { FooterAbout } from './FooterAbout';
 import { FooterContact } from './FooterContact';
 import { FooterMap } from './FooterMap';
 import { FooterSocial } from './FooterSocial';
+import { FooterBottom } from './FooterBottom';
 import type { FooterProps } from './footer.types';
 
 function mapEmbedUrl(query: string): string {
@@ -12,7 +13,7 @@ function mapEmbedUrl(query: string): string {
 }
 
 export function Footer({ content = footerData, mapSrc }: FooterProps): ReactNode {
-  const { about, social, contact, map } = content;
+  const { about, social, contact, map, bottomContent } = content;
   const mapEmbed =
     mapSrc ??
     mapEmbedUrl(contact.addressLines.map((line) => line.replace(/[,\s]+$/, '')).join(', '));
@@ -26,6 +27,7 @@ export function Footer({ content = footerData, mapSrc }: FooterProps): ReactNode
         <FooterContact {...contact} />
         <FooterMap src={mapEmbed} label={map.label} />
       </Container>
+      <FooterBottom content={bottomContent} />
     </footer>
   );
 }

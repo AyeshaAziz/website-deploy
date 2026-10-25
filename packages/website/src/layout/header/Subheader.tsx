@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { NavItem } from '@itqa/core';
+import type { NavItem } from '@itqasys/core';
 import { Container, NavBar } from '@itqa/ui';
 
 export interface SubheaderProps {

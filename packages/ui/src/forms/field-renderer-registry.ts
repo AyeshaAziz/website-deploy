@@ -1,4 +1,4 @@
-import type { FieldType } from '@itqa/core/forms';
+import type { FieldType } from '@itqasys/core/forms';
 import { CheckboxField } from './field-renderers/checkbox';
 import { DateField } from './field-renderers/date';
 import { EmailField } from './field-renderers/email';
