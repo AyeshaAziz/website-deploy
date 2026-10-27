@@ -65,10 +65,13 @@ const course = f(z.string().trim().min(1).max(120), {
   options: [],
 });
 
-const teachingExperience = f(z.string().trim().min(1).max(200), {
-  type: 'text',
-  order: 120,
-});
+const teachingExperience = f(
+  z.enum(['less-than-one-year', 'over-one-year', 'other']),
+  {
+    type: 'radio',
+    order: 120,
+  },
+);
 
 const courseLanguage = f(z.string().trim().min(1).max(60), {
   type: 'text',
@@ -79,6 +82,25 @@ const secondLanguage = f(z.string().trim().max(60).optional(), {
   type: 'text',
   order: 110,
 });
+
+const role = f(z.enum(['main-teacher']), {
+  type: 'radio',
+  order: 140,
+});
+
+const commitDays = f(
+  z
+    .array(z.enum(['monday', 'tuesday', 'wednesday', 'thursday']))
+    .min(1, 'Select at least one day.'),
+  { type: 'checkboxGroup', order: 150 },
+);
+
+const availableTimes = f(
+  z
+    .array(z.enum(['09:00', '10:00', '16:00', '17:00', '18:00', '22:00', '23:00', '00:00']))
+    .min(1, 'Select at least one time slot.'),
+  { type: 'checkboxGroup', order: 160 },
+);
 
 const consent = f(
   z.literal(true, {
@@ -116,6 +138,9 @@ export const studentSchema = z.object(registrationFields);
 export const teacherSchema = z.object({
   ...registrationFields,
   teachingExperience,
+  role,
+  commitDays,
+  availableTimes,
 });
 
 export const REGISTRATION_SCHEMAS = {

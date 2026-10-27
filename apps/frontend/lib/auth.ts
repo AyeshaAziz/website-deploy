@@ -1,12 +1,6 @@
-import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { SignJWT, jwtVerify } from 'jose';
+import { createServerSupabaseClient } from '@/utils/supabase/server';
 import type { Role } from '@itqasys/core';
-
-// Minimal signed-cookie session for editors (JWT + bcrypt, as in the design document).
-// Swap for Auth.js later if wanted; keep requireAuth/requireRole as the stable interface.
-const COOKIE = 'itqa_session';
-const MAX_AGE = 60 * 60 * 8;
 
 export interface Session {
   userId: string;
@@ -14,37 +8,21 @@ export interface Session {
   role: Role;
 }
 
-function secret(): Uint8Array {
-  const s = process.env.JWT_SECRET;
-  if (!s || s.length < 32) throw new Error('JWT_SECRET must be set (32+ characters)');
-  return new TextEncoder().encode(s);
-}
-
-export async function createSession(session: Session): Promise<void> {
-  const token = await new SignJWT({ email: session.email, role: session.role })
-    .setProtectedHeader({ alg: 'HS256' })
-    .setSubject(session.userId)
-    .setIssuedAt()
-    .setExpirationTime('8h')
-    .sign(secret());
-  (await cookies()).set(COOKIE, token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
-    path: '/',
-    maxAge: MAX_AGE,
-  });
-}
-
 export async function getSession(): Promise<Session | null> {
-  const token = (await cookies()).get(COOKIE)?.value;
-  if (!token) return null;
-  try {
-    const { payload } = await jwtVerify(token, secret());
-    return { userId: String(payload.sub), email: String(payload.email), role: payload.role as Role };
-  } catch {
-    return null;
-  }
+  const supabase = createServerSupabaseClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return null;
+
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('role')
+    .eq('id', user.id)
+    .single();
+
+  if (profile?.role !== 'admin') return null;
+  return { userId: user.id, email: user.email ?? '', role: 'ADMIN' };
 }
 
 export async function requireAuth(): Promise<Session> {
@@ -58,5 +36,13 @@ export function requireRole(session: Session, roles: Role[]): void {
 }
 
 export async function destroySession(): Promise<void> {
-  (await cookies()).delete(COOKIE);
+  const supabase = createServerSupabaseClient();
+  await supabase.auth.signOut();
+}
+
+// Keep a no-op createSession for backwards compatibility with callers that
+// still reference it; Supabase manages the session cookies itself.
+export async function createSession(_session: Session): Promise<void> {
+  void _session;
+  // Intentionally empty: Supabase Auth sets the session cookies.
 }

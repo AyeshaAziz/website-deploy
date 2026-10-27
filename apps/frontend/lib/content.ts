@@ -2,7 +2,7 @@ import type { PageDTO, ResourceDTO, SectionType } from '@itqasys/core';
 import { supabase } from './db';
 
 // No DATABASE_URL (or an unreachable database) = frontend-only mode with static fallbacks.
-const hasDb = () => Boolean(process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY);
+const hasDb = () => Boolean((process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL) && (process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SECRET_KEY));
 
 async function db() {
   return supabase;
@@ -71,8 +71,8 @@ export async function getResources(): Promise<ResourceDTO[]> {
       .from('resource')
       .select('id, title, url, kind, description')
       .eq('status', 'PUBLISHED')
-      .order('sortOrder', 'asc')
-      .order('createdAt', 'asc');
+      .order('sortOrder', { ascending: true })
+      .order('createdAt', { ascending: true });
     if (error) return [];
     return data as ResourceDTO[];
   } catch {

@@ -98,3 +98,90 @@ describe('Form', () => {
     );
   });
 });
+
+const checkboxGroupSchema = z.object({
+  days: f(z.array(z.enum(['monday', 'tuesday'])).min(1, 'Select at least one day.'), {
+    type: 'checkboxGroup',
+    order: 10,
+  }),
+});
+
+const checkboxGroupContent: FormContent = {
+  title: 'Example',
+  submitLabel: 'Send',
+  fields: {
+    days: { label: 'Commitment days' },
+  },
+  options: {
+    days: { monday: 'Monday', tuesday: 'Tuesday' },
+  },
+  messages: {
+    successTitle: 'Thanks',
+    successBody: 'Received.',
+    referenceLabel: 'Reference',
+    duplicate: 'Duplicate',
+    rateLimited: 'Slow down',
+    validationError: 'Check the form',
+    networkError: 'Network error',
+    submitting: 'Submitting...',
+    required: 'Required',
+  },
+};
+
+const checkboxGroupConfig = createFormConfig(checkboxGroupSchema, checkboxGroupContent);
+
+describe('Form with checkboxGroup', () => {
+  it('renders one checkbox per option, toggles values and shows the min message when empty', async () => {
+    const user = userEvent.setup();
+    const onSubmit = vi.fn();
+    render(
+      <Form schema={checkboxGroupSchema} config={checkboxGroupConfig} onSubmit={onSubmit} />,
+    );
+
+    const monday = screen.getByRole('checkbox', { name: 'Monday' });
+    const tuesday = screen.getByRole('checkbox', { name: 'Tuesday' });
+    expect(monday).toBeInTheDocument();
+    expect(tuesday).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Send' }));
+    expect(await screen.findByText('Select at least one day.')).toBeInTheDocument();
+    expect(onSubmit).not.toHaveBeenCalled();
+
+    await user.click(monday);
+    await user.click(tuesday);
+    await user.click(monday);
+    await user.click(screen.getByRole('button', { name: 'Send' }));
+
+    await waitFor(() => expect(onSubmit).toHaveBeenCalledWith({ days: ['tuesday'] }));
+  });
+});
+
+const timesSchema = z.object({
+  times: f(z.array(z.enum(['09:00', '18:00'])), { type: 'checkboxGroup', order: 10 }),
+});
+
+const timesContent: FormContent = {
+  ...checkboxGroupContent,
+  fields: { ...checkboxGroupContent.fields, times: { label: 'Times' } },
+  options: {
+    times: {
+      '09:00': {
+        label: '09:00 – English/Urdu:',
+        details: ['NL1 – Intermediate Level', 'NL2 – Advance Level'],
+      },
+      '18:00': { label: '18:00 - English/Urdu:', details: ['NL2 – Advance Level'] },
+    },
+  },
+};
+
+const timesConfig = createFormConfig(timesSchema, timesContent);
+
+describe('Form with checkboxGroup details', () => {
+  it('renders detail rows next to each option label', () => {
+    render(<Form schema={timesSchema} config={timesConfig} onSubmit={vi.fn()} />);
+
+    expect(screen.getByRole('checkbox', { name: '09:00 – English/Urdu:' })).toBeInTheDocument();
+    expect(screen.getByText('NL1 – Intermediate Level')).toBeInTheDocument();
+    expect(screen.getAllByText('NL2 – Advance Level')).toHaveLength(2);
+  });
+});

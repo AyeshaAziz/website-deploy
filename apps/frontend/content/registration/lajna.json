@@ -1,7 +1,7 @@
 {
   "title": "Lajna Registration",
   "description": "Register as a Lajna volunteer with ITQA.",
-  "submitLabel": "Submit registration",
+  "submitLabel": "Submit",
   "fields": {
     "profession": { "label": "Profession", "placeholder": "Optional" },
     "education": { "label": "Highest education" },

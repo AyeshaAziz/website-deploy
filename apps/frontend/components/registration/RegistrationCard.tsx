@@ -1,17 +1,14 @@
 import Image from 'next/image';
 import type { ReactNode } from 'react';
 
-export interface StudentRegistrationCardProps {
+export interface RegistrationCardProps {
   children: ReactNode;
   aside?: ReactNode;
 }
 
-export function StudentRegistrationCard({
-  children,
-  aside,
-}: StudentRegistrationCardProps): ReactNode {
+export function RegistrationCard({ children, aside }: RegistrationCardProps): ReactNode {
   return (
-    <div className="mx-auto max-w-5xl overflow-hidden rounded-card bg-white shadow-card lg:grid lg:grid-cols-[2fr_3fr]">
+    <div className="mx-auto max-w-5xl overflow-hidden rounded-card bg-white/70 shadow-card lg:grid lg:grid-cols-[2fr_3fr]">
       {aside ? (
         aside
       ) : (

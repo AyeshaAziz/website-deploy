@@ -22,10 +22,9 @@ export function StudentRegistrationHeader({
 
       <div className="mt-4 space-y-1 text-small text-neutral-700">
         <p>
-          Please note that you are requested to register with an email which you
-          have not used previously for any other ITQA site.
+          You can use the same AIMS number and email address to register for
+          additional courses. To enroll for more than one course, please register again.
         </p>
-        <p>To enroll for more than one course, please register again.</p>
       </div>
     </>
   );

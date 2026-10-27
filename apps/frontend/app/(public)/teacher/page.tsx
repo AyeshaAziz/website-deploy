@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import { Container, SectionHeading } from '@itqa/ui';
+import { BannerBackground } from '@itqa/website';
+import { RegistrationCard } from '@/components/registration/RegistrationCard';
 import { RegistrationForm } from '@/components/registration/form/RegistrationForm';
 import { getTrackDefinition } from '@/lib/registrations/tracks';
 import { getCourses } from '@/lib/courses';
@@ -16,14 +18,21 @@ export default async function TeacherRegistrationPage() {
   const courses = await getCourses();
 
   return (
-    <Container className="py-section-sm">
-      <SectionHeading
-        as="h1"
-        title={content.title}
-        subtitle={content.description}
-        className="mb-8"
-      />
-      <RegistrationForm track={TRACK} courses={courses} />
-    </Container>
+    <BannerBackground
+      imageSrc="/images/background/registration-bg.webp"
+      imageClassName="opacity-100"
+    >
+      <Container className="py-section-sm lg:py-section-lg">
+        <RegistrationCard>
+          <SectionHeading
+            as="h1"
+            title={content.title}
+            subtitle={content.description}
+            className="mb-8"
+          />
+          <RegistrationForm track={TRACK} courses={courses} />
+        </RegistrationCard>
+      </Container>
+    </BannerBackground>
   );
 }

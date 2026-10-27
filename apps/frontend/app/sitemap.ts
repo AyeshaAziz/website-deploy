@@ -11,7 +11,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     getCourseSitemap().catch(() => []),
   ]);
 
-  const pageRows = (pages as any[]).map((p: any) => ({
+  const pageRows = ((pages.data ?? []) as any[]).map((p: any) => ({
     url: p.urlPath === 'home' ? base : `${base}/${p.urlPath}`,
     lastModified: p.updatedAt,
   }));

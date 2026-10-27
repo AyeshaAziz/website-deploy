@@ -8,6 +8,7 @@ export const FIELD_TYPES = [
   'select',
   'radio',
   'checkbox',
+  'checkboxGroup',
   'file',
 ] as const;
 
@@ -28,6 +29,7 @@ export interface FieldContent {
   label: string;
   placeholder?: string;
   help?: string;
+  heading?: string;
 }
 
 export interface FormMessages {
@@ -42,18 +44,26 @@ export interface FormMessages {
   required: string;
 }
 
+export interface RichOptionContent {
+  label: string;
+  details?: string[];
+}
+
+export type OptionContent = string | RichOptionContent;
+
 export interface FormContent {
   title: string;
   description?: string;
   submitLabel: string;
   fields: Record<string, FieldContent>;
-  options?: Record<string, Record<string, string>>;
+  options?: Record<string, Record<string, OptionContent>>;
   messages: FormMessages;
 }
 
 export interface FieldOption {
   value: string;
   label: string;
+  details?: string[];
 }
 
 export interface FieldConfig {
@@ -63,6 +73,7 @@ export interface FieldConfig {
   label: string;
   placeholder?: string;
   help?: string;
+  heading?: string;
   required: boolean;
   options: FieldOption[];
   autoComplete?: string;

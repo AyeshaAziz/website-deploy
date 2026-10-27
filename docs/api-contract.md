@@ -34,7 +34,7 @@ Error codes:
 | Code | Meaning | HTTP status |
 | --- | --- | --- |
 | `VALIDATION_ERROR` | Body or headers are invalid | 400 |
-| `DUPLICATE` | Email already registered for this track | 409 |
+| `DUPLICATE` | Duplicate submission conflict | 409 |
 | `RATE_LIMITED` | Too many attempts | 429 |
 | `NOT_FOUND` | The requested resource does not exist | 404 |
 | `SERVER_ERROR` | Backend unavailable or timeout | 502 |
@@ -82,15 +82,21 @@ Tracks: `teacher` and `student`. Both use the same fields:
 
 - `aimsNo` — AIMS number or member code (required)
 - `firstName`, `lastName` — required
-- `tanzeem` — `atfal` | `nasirat` | `khuddam` | `lajna` | `ansar`
+- `tanzeem` — `boy-5-7` | `girl-5-7` | `atfal-7-11` | `nasirat-7-11` | `atfal-12-15` | `nasirat-12-15` | `khuddam` | `lajna` | `ansar` | `special-needs` | `missionary`
 - `country`, `city` — required
 - `phone` — required, `+0123456789() -` characters only
 - `email`, `confirmEmail` — must match (case-insensitive)
-- `teachingExperience` — free text, `teacher` track only
+- `teachingExperience` — one of `less-than-one-year` | `over-one-year` | `other` (`teacher` track only)
+- `role` — `main-teacher` (`teacher` track only, required)
+- `commitDays` — array of `monday` | `tuesday` | `wednesday` | `thursday`, at least one (`teacher` track only, required)
+- `availableTimes` — array of `09:00` | `10:00` | `16:00` | `17:00` | `18:00` | `22:00` | `23:00` | `00:00`, at least one (`teacher` track only, required)
 - `course` — required, the selected course id
 - `courseLanguage` — preferred language for teaching, free text
 - `secondLanguage` — optional second language preference
 - `consent` — must be `true`
+
+Each registration covers one course. Students may register for additional courses by
+submitting again with the same AIMS number and email address.
 
 The canonical validation schemas live in `@itqasys/core` (`registrationSchema` and
 `REGISTRATION_SCHEMAS`). The backend must use the same schemas or an equivalent contract
@@ -132,7 +138,8 @@ Returns `{ ok: true, data: { status: "ok", mode: "mock" | "live", timestamp } }`
 
 ## Persistence expectations
 
-- Enforce a unique constraint on `(track, normalizedEmail)`.
+- Do not enforce a unique constraint on `(track, normalizedEmail)`; students may register for multiple courses with the same identity.
+- Keep `reference` and `idempotency_key` unique.
 - Persist the idempotency key with the result and expire it after a reasonable window.
 - Store consent timestamp and source (form version) for audit.
 - Return the same reference for duplicate idempotency keys.

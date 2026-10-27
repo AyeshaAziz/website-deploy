@@ -19,14 +19,7 @@ export function CheckboxField({
         className="mt-0.5 h-4 w-4 accent-primary-2"
         {...registration}
       />
-      <span>
-        {field.label}
-        {field.required && (
-          <span aria-hidden="true" className="ml-1 text-danger">
-            *
-          </span>
-        )}
-      </span>
+      <span dangerouslySetInnerHTML={{ __html: field.label }} />
     </label>
   );
 }

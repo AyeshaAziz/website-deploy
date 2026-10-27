@@ -7,9 +7,11 @@ describe('registration schemas', () => {
     expect(Object.keys(REGISTRATION_SCHEMAS)).toEqual([...REGISTRATION_TRACKS]);
   });
 
-  it('only includes teaching experience on the teacher schema', () => {
-    expect('teachingExperience' in REGISTRATION_SCHEMAS.student.shape).toBe(false);
-    expect('teachingExperience' in REGISTRATION_SCHEMAS.teacher.shape).toBe(true);
+  it('only includes teacher-only fields on the teacher schema', () => {
+    for (const field of ['teachingExperience', 'role', 'commitDays', 'availableTimes']) {
+      expect(field in REGISTRATION_SCHEMAS.student.shape).toBe(false);
+      expect(field in REGISTRATION_SCHEMAS.teacher.shape).toBe(true);
+    }
   });
 
   it('requires consent and validates the discriminated union', () => {
@@ -24,7 +26,10 @@ describe('registration schemas', () => {
       phone: '+123456789',
       email: 'a@example.com',
       confirmEmail: 'a@example.com',
-      teachingExperience: '3 years',
+      teachingExperience: 'over-one-year',
+      role: 'main-teacher',
+      commitDays: ['monday'],
+      availableTimes: ['09:00'],
       course: 'naziratul-quran',
       courseLanguage: 'English',
       consent: false,
@@ -51,5 +56,53 @@ describe('registration schemas', () => {
     });
 
     expect(result.success).toBe(false);
+  });
+
+  const validTeacher = {
+    track: 'teacher',
+    aimsNo: 'AIMS-12345',
+    firstName: 'A',
+    lastName: 'B',
+    tanzeem: 'khuddam',
+    country: 'Country',
+    city: 'City',
+    phone: '+123456789',
+    email: 'a@example.com',
+    confirmEmail: 'a@example.com',
+    teachingExperience: 'over-one-year',
+    role: 'main-teacher',
+    commitDays: ['monday', 'tuesday'],
+    availableTimes: ['09:00', '16:00'],
+    course: 'naziratul-quran',
+    courseLanguage: 'English',
+    consent: true,
+    parentalConsent: true,
+  };
+
+  it('accepts a fully valid teacher registration', () => {
+    expect(registrationSchema.safeParse(validTeacher).success).toBe(true);
+  });
+
+  it('requires the teacher-only fields', () => {
+    for (const field of ['teachingExperience', 'role', 'commitDays', 'availableTimes']) {
+      const result = registrationSchema.safeParse({ ...validTeacher, [field]: undefined });
+      expect(result.success, field).toBe(false);
+    }
+  });
+
+  it('rejects unknown commit day values', () => {
+    const result = registrationSchema.safeParse({
+      ...validTeacher,
+      commitDays: ['friday'],
+    });
+
+    expect(result.success).toBe(false);
+  });
+
+  it('rejects an empty commitDays or availableTimes array', () => {
+    expect(registrationSchema.safeParse({ ...validTeacher, commitDays: [] }).success).toBe(false);
+    expect(registrationSchema.safeParse({ ...validTeacher, availableTimes: [] }).success).toBe(
+      false,
+    );
   });
 });

@@ -7,9 +7,10 @@ function unwrap(field: ZodTypeAny): ZodTypeAny {
   while (
     current instanceof z.ZodOptional ||
     current instanceof z.ZodNullable ||
-    current instanceof z.ZodDefault
+    current instanceof z.ZodDefault ||
+    current instanceof z.ZodArray
   ) {
-    current = current._def.innerType;
+    current = current instanceof z.ZodArray ? current._def.type : current._def.innerType;
   }
   return current;
 }
@@ -29,28 +30,26 @@ function resolveOptions(
   meta: FieldMeta,
   content: FormContent,
 ): FieldOption[] {
-  if (meta.type !== 'select' && meta.type !== 'radio') return [];
+  if (meta.type !== 'select' && meta.type !== 'radio' && meta.type !== 'checkboxGroup') {
+    return [];
+  }
 
   return resolveOptionValues(name, field, meta).map((value) => {
-    const label = content.options?.[name]?.[value];
-    if (!label) {
-      throw new Error(
-        `Missing option label for field "${name}" value "${value}" in form content.`,
-      );
+    const entry = content.options?.[name]?.[value];
+    if (!entry) {
+      throw new Error(`Missing option label for field "${name}" value "${value}" in form content.`);
     }
-    return { value, label };
+    if (typeof entry === 'string') {
+      return { value, label: entry };
+    }
+    return { value, label: entry.label, details: entry.details };
   });
 }
 
-export function createFormConfig(
-  schema: z.AnyZodObject,
-  content: FormContent,
-): FormConfig {
+export function createFormConfig(schema: z.AnyZodObject, content: FormContent): FormConfig {
   const fields: FieldConfig[] = [];
 
-  for (const [name, field] of Object.entries(schema.shape) as Array<
-    [string, ZodTypeAny]
-  >) {
+  for (const [name, field] of Object.entries(schema.shape) as Array<[string, ZodTypeAny]>) {
     const meta = parseFieldMeta(field, name);
     const fieldContent = content.fields[name];
 
@@ -65,6 +64,7 @@ export function createFormConfig(
       label: fieldContent.label,
       placeholder: fieldContent.placeholder,
       help: fieldContent.help,
+      heading: fieldContent.heading,
       required: !field.isOptional(),
       options: resolveOptions(name, field, meta, content),
       autoComplete: meta.autoComplete,

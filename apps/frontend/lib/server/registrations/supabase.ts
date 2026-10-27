@@ -20,6 +20,19 @@ function createReference(track: RegistrationTrack): string {
   return `ITQA-${REFERENCE_PREFIX[track]}-${date}-${suffix}`;
 }
 
+function toRegistrationResult(row: {
+  reference: string;
+  track: string;
+  submitted_at: string;
+}): RegistrationResult {
+  return {
+    reference: row.reference,
+    track: row.track as RegistrationTrack,
+    submittedAt: row.submitted_at,
+    status: 'RECEIVED',
+  };
+}
+
 function toFieldErrors(
   issues: Array<{ path: Array<string | number>; message: string }>,
 ): Record<string, string> {
@@ -89,31 +102,7 @@ export class SupabaseRegistrationService implements RegistrationService {
         return apiFailure('SERVER_ERROR', replayError.message);
       }
 
-      return apiSuccess({
-        reference: replay.reference,
-        track: replay.track as RegistrationTrack,
-        submittedAt: replay.submitted_at,
-        status: 'RECEIVED',
-      });
-    }
-
-    const identity = `${data.track}:${email}`;
-    const { data: existingByIdentity, error: identityError } = await supabase
-      .from('registrations')
-      .select('reference')
-      .eq('user_id', user.id)
-      .eq('track', data.track)
-      .eq('email', email)
-      .maybeSingle();
-
-    if (identityError) {
-      return apiFailure('SERVER_ERROR', identityError.message);
-    }
-
-    if (existingByIdentity) {
-      return apiFailure('DUPLICATE', 'A registration already exists for this email address.', {
-        fieldErrors: { email: 'This email is already registered for this track.' },
-      });
+      return apiSuccess(toRegistrationResult(replay));
     }
 
     const reference = createReference(data.track);
@@ -134,16 +123,25 @@ export class SupabaseRegistrationService implements RegistrationService {
       course: data.course,
       course_language: data.courseLanguage,
       second_language: data.secondLanguage,
-      teaching_experience: data.teachingExperience,
+      teaching_experience: (data as { teachingExperience?: string }).teachingExperience,
+      teaching_role: (data as { role?: string }).role,
+      commit_days: (data as { commitDays?: string[] }).commitDays,
+      available_times: (data as { availableTimes?: string[] }).availableTimes,
       idempotency_key: idempotencyKey,
       submitted_at: submittedAt,
     });
 
     if (insertError) {
       if (insertError.code === '23505') {
-        return apiFailure('DUPLICATE', 'A registration already exists for this email address.', {
-          fieldErrors: { email: 'This email is already registered for this track.' },
-        });
+        const { data: replay, error: replayError } = await supabase
+          .from('registrations')
+          .select('*')
+          .eq('idempotency_key', idempotencyKey)
+          .maybeSingle();
+
+        if (!replayError && replay) {
+          return apiSuccess(toRegistrationResult(replay));
+        }
       }
       return apiFailure('SERVER_ERROR', insertError.message);
     }

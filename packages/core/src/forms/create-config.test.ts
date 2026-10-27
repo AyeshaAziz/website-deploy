@@ -21,7 +21,7 @@ const content: FormContent = {
   submitLabel: 'Send',
   fields: {
     second: { label: 'Second' },
-    first: { label: 'First', placeholder: 'First name' },
+    first: { label: 'First', placeholder: 'First name', heading: 'First heading' },
     choice: { label: 'Choice' },
   },
   options: { choice: { a: 'Option A', b: 'Option B' } },
@@ -38,14 +38,11 @@ describe('createFormConfig', () => {
 
     const config = createFormConfig(schema, content);
 
-    expect(config.fields.map((field) => field.name)).toEqual([
-      'first',
-      'second',
-      'choice',
-    ]);
+    expect(config.fields.map((field) => field.name)).toEqual(['first', 'second', 'choice']);
     expect(config.fields[0]).toMatchObject({
       label: 'First',
       placeholder: 'First name',
+      heading: 'First heading',
       required: true,
     });
     expect(config.fields[1].required).toBe(false);
@@ -68,5 +65,70 @@ describe('createFormConfig', () => {
     });
 
     expect(() => createFormConfig(schema, content)).toThrow(/Missing option label/);
+  });
+
+  it('resolves checkboxGroup option values from the inner enum and labels from content', () => {
+    const checkboxGroupContent: FormContent = {
+      ...content,
+      fields: { ...content.fields, days: { label: 'Days' } },
+      options: { ...content.options, days: { monday: 'Monday', tuesday: 'Tuesday' } },
+    };
+    const schema = z.object({
+      days: f(z.array(z.enum(['monday', 'tuesday'])).min(1), {
+        type: 'checkboxGroup',
+        order: 10,
+      }),
+    });
+
+    const config = createFormConfig(schema, checkboxGroupContent);
+
+    expect(config.fields[0]).toMatchObject({
+      name: 'days',
+      type: 'checkboxGroup',
+      required: true,
+      options: [
+        { value: 'monday', label: 'Monday' },
+        { value: 'tuesday', label: 'Tuesday' },
+      ],
+    });
+  });
+
+  it('resolves checkboxGroup options from the object form with details', () => {
+    const richContent: FormContent = {
+      ...content,
+      fields: { ...content.fields, times: { label: 'Times' } },
+      options: {
+        ...content.options,
+        times: {
+          '09:00': { label: '09:00 – English/Urdu:', details: ['NL1 – Intermediate Level'] },
+          '10:00': { label: '10:00 - Urdu:' },
+        },
+      },
+    };
+    const schema = z.object({
+      times: f(z.array(z.enum(['09:00', '10:00'])).min(1), {
+        type: 'checkboxGroup',
+        order: 10,
+      }),
+    });
+
+    const config = createFormConfig(schema, richContent);
+
+    expect(config.fields[0].options).toEqual([
+      { value: '09:00', label: '09:00 – English/Urdu:', details: ['NL1 – Intermediate Level'] },
+      { value: '10:00', label: '10:00 - Urdu:', details: undefined },
+    ]);
+  });
+
+  it('throws when a checkboxGroup option label is missing', () => {
+    const partialContent: FormContent = {
+      ...content,
+      fields: { ...content.fields, days: { label: 'Days' } },
+    };
+    const schema = z.object({
+      days: f(z.array(z.enum(['monday', 'friday'])), { type: 'checkboxGroup', order: 10 }),
+    });
+
+    expect(() => createFormConfig(schema, partialContent)).toThrow(/Missing option label/);
   });
 });

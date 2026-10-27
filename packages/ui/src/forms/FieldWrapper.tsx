@@ -11,20 +11,15 @@ export interface FieldWrapperProps {
   children: ReactNode;
 }
 
-export function FieldWrapper({
-  field,
-  id,
-  error,
-  hideLabel = false,
-  children,
-}: FieldWrapperProps) {
+export function FieldWrapper({ field, id, error, hideLabel = false, children }: FieldWrapperProps) {
   return (
     <div
-      className={cn(
-        'flex flex-col gap-1',
-        field.colSpan === 2 && 'sm:col-span-2 lg:col-span-3',
-      )}
+      className={cn('flex flex-col gap-1', field.colSpan === 2 && 'sm:col-span-2 lg:col-span-3')}
     >
+      {field.heading ? (
+        <h2 className="font-heading text-h3 text-primary-neg2">{field.heading}</h2>
+      ) : null}
+
       {!hideLabel && (
         <Label htmlFor={id}>
           {field.label}
@@ -39,7 +34,7 @@ export function FieldWrapper({
       {children}
 
       {field.help && (
-        <p id={`${id}-help`} className="text-small text-neutral-600">
+        <p id={`${id}-help`} className="whitespace-pre-line text-small text-neutral-600">
           {field.help}
         </p>
       )}

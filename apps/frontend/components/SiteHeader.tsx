@@ -15,7 +15,7 @@ export function SiteHeader() {
       label: 'Registration',
       href: '/register',
       options: [
-        { label: 'Teacher Registration', href: '/teachersReg' },
+        { label: 'Teachers', href: '/teacher' },
         {
           label: 'Students',
           options: [

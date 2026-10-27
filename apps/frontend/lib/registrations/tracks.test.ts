@@ -57,7 +57,13 @@ describe('registration track registry', () => {
       const contentFields = Object.keys(definition.content.fields).sort();
       const expectedFields =
         track === 'teacher'
-          ? [...BASE_FIELDS, 'teachingExperience'].sort()
+          ? [
+              ...BASE_FIELDS,
+              'teachingExperience',
+              'role',
+              'commitDays',
+              'availableTimes',
+            ].sort()
           : BASE_FIELDS;
 
       expect(schemaFields).toEqual(expectedFields);

@@ -52,6 +52,7 @@ keyed `neg1`/`neg2` in code so classes read `bg-primary-neg1` instead of `bg-pri
 | `primary-4` | `#8DB8C9` (Figma `Primary 4`) | `bg-primary-4`, `text-primary-4` | Light tints |
 | `primary-5` | `#BDD7E1` (Figma `Primary 5`) | `border-primary-5`, `bg-primary-5` | Card/panel borders, dividers, on-dark text |
 | `primary-6` | `#EEF6F9` (Figma `Primary 6`) | `bg-primary-6` | Page tint, ghost button hover |
+| `primary-8` | `#2D6D8A` | `bg-primary-8`, `text-primary-8` | Brand submit button, course/media accents |
 | `accent-gold` | `#C9A24B` | `bg-accent-gold`, `text-accent-gold` | Hero ornament, highlights, "gold" buttons |
 | `warm-surface` / `warm-ink` / `warm-border` | `#F2EDE4` / `#7A623F` / `#D9CBB7` | `bg-warm-surface`, `text-warm-ink`, `ring-warm-border` | Warm multimedia library headings and carousel arrows |
 | `success` | `#2E8B57` | `text-success`, `bg-success/10` | Success form state |
@@ -149,10 +150,11 @@ All primitives are server-safe (no hooks) and theme entirely through tokens.
 Renders a heading; `arabicSubtitle` is output `dir="rtl" lang="ar"` with `font-arabic`.
 
 ### `Button` / `ButtonLink`
-Variants follow the Figma "Primary button" sheet (Style 1–3), plus a `gold` accent:
+Variants follow the Figma "Primary button" sheet (Style 1–3), plus `brand` and `gold`:
 - `primary` (default, Style 1) — solid dark: `bg-primary-neg2 text-white`, hover `primary-neg1`
 - `secondary` (Style 2) — white with a light border: `border-primary-5 bg-white text-primary-neg1`, hover `primary-6`
 - `tertiary` (Style 3) — light tonal fill: `bg-primary-5 text-primary-neg1`, hover `primary-4`
+- `brand` — brand teal submit: `bg-primary-8 text-white`, hover `primary-1`
 - `gold` — accent for hero/CTA highlights: `bg-accent-gold text-primary-neg2`
 - `size`: `sm` · `md` (default) · `lg`
 - `Button` accepts native `<button>` props; `ButtonLink` accepts `<a>` props plus required `href`.

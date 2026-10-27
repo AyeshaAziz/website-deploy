@@ -11,6 +11,7 @@ import {
   type FieldContent,
   type FormConfig,
   type FormContent,
+  type OptionContent,
 } from '@itqasys/core/forms';
 import commonJson from '../../content/registration/common.json';
 import messagesJson from '../../content/registration/messages.json';
@@ -25,7 +26,8 @@ interface TrackContentJson {
 
 interface CommonContentJson {
   fields: Record<string, FieldContent>;
-  options?: Record<string, Record<string, string>>;
+  options?: Record<string, Record<string, OptionContent>>;
+  info?: { description: string };
 }
 
 const common: CommonContentJson = commonJson;
@@ -56,16 +58,19 @@ function buildContent(track: RegistrationTrack): FormContent {
 export interface TrackDefinition {
   schema: (typeof REGISTRATION_SCHEMAS)[RegistrationTrack];
   content: FormContent;
+  info?: { description: string };
 }
 
 export const REGISTRATION: Record<RegistrationTrack, TrackDefinition> = {
   teacher: {
     schema: REGISTRATION_SCHEMAS.teacher,
     content: buildContent('teacher'),
+    info: common.info,
   },
   student: {
     schema: REGISTRATION_SCHEMAS.student,
     content: buildContent('student'),
+    info: common.info,
   },
 };
 
@@ -96,9 +101,7 @@ export function getFormConfig(
       if (field.name === 'tanzeem') {
         return {
           ...field,
-          options: field.options.filter((option) =>
-            allowedTanzeem.has(option.value as Tanzeem),
-          ),
+          options: field.options.filter((option) => allowedTanzeem.has(option.value as Tanzeem)),
         };
       }
       return field;

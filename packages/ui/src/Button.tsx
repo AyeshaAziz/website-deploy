@@ -1,7 +1,7 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'react';
 import { cn } from '@itqasys/core';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'gold';
+export type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'brand' | 'gold';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 const BASE =
@@ -15,6 +15,8 @@ const VARIANTS: Record<ButtonVariant, string> = {
   secondary: 'border border-primary-5 bg-white text-primary-neg1 hover:bg-primary-6',
   // Style 3 — light tonal fill
   tertiary: 'bg-primary-5 text-primary-neg1 hover:bg-primary-4',
+  // Brand submit button
+  brand: 'bg-primary-8 text-white hover:bg-primary-1',
   // Accent (hero ornaments, highlights) — not part of the three primary styles
   gold: 'bg-accent-gold text-primary-neg2 hover:brightness-95',
 };

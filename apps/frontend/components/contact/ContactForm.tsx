@@ -13,7 +13,7 @@ interface ContactFormProps {
 
 export function ContactForm({ departments, copy, sent, error }: ContactFormProps): ReactNode {
   return (
-    <Card className="min-w-0 bg-course-card p-5 shadow-lg shadow-primary-7/20">
+    <Card className="min-w-0 bg-white/70 p-5 shadow-lg shadow-primary-7/20">
       <ContactStatus sent={sent} error={error} copy={copy} />
       <form action={sendContact} className="space-y-4">
         <div>

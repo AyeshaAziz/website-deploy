@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import type { ButtonSize, ButtonVariant } from './Button';
 import { Button, ButtonLink } from './Button';
 
-const VARIANTS: ButtonVariant[] = ['primary', 'secondary', 'tertiary'];
+const VARIANTS: ButtonVariant[] = ['primary', 'secondary', 'tertiary', 'brand'];
 const SIZES: ButtonSize[] = ['sm', 'md', 'lg'];
 
 const meta = {

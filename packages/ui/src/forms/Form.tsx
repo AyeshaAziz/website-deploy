@@ -3,6 +3,7 @@
 import { useEffect, useId, useMemo } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
+  FormProvider,
   useForm,
   useWatch,
   type DefaultValues,
@@ -90,44 +91,46 @@ export function Form<TSchema extends z.ZodTypeAny>({
   );
 
   return (
-    <form noValidate onSubmit={submit} className={cn('space-y-6', className)}>
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {config.fields.map((field) => {
-          const id = `${idPrefix}-${field.name}`;
-          const error = errorMap[field.name]?.message;
-          const describedBy =
-            [field.help ? `${id}-help` : null, error ? `${id}-error` : null]
-              .filter(Boolean)
-              .join(' ') || undefined;
-          const Renderer = getFieldRenderer(field.type);
+    <FormProvider {...form}>
+      <form noValidate onSubmit={submit} className={cn('space-y-6', className)}>
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {config.fields.map((field) => {
+            const id = `${idPrefix}-${field.name}`;
+            const error = errorMap[field.name]?.message;
+            const describedBy =
+              [field.help ? `${id}-help` : null, error ? `${id}-error` : null]
+                .filter(Boolean)
+                .join(' ') || undefined;
+            const Renderer = getFieldRenderer(field.type);
 
-          return (
-            <FieldWrapper
-              key={field.name}
-              field={field}
-              id={id}
-              error={error}
-              hideLabel={field.type === 'checkbox'}
-            >
-              <Renderer
+            return (
+              <FieldWrapper
+                key={field.name}
                 field={field}
                 id={id}
-                registration={register(
-                  field.name as Path<Values>,
-                  field.type === 'number' ? { valueAsNumber: true } : undefined,
-                )}
                 error={error}
-                describedBy={describedBy}
-                disabled={disabled || isSubmitting}
-              />
-            </FieldWrapper>
-          );
-        })}
-      </div>
+                hideLabel={field.type === 'checkbox'}
+              >
+                <Renderer
+                  field={field}
+                  id={id}
+                  registration={register(
+                    field.name as Path<Values>,
+                    field.type === 'number' ? { valueAsNumber: true } : undefined,
+                  )}
+                  error={error}
+                  describedBy={describedBy}
+                  disabled={disabled || isSubmitting}
+                />
+              </FieldWrapper>
+            );
+          })}
+        </div>
 
-      <Button type="submit" disabled={disabled || isSubmitting}>
-        {isSubmitting ? config.messages.submitting : config.submitLabel}
-      </Button>
-    </form>
+        <Button type="submit" variant="brand" disabled={disabled || isSubmitting}>
+          {isSubmitting ? config.messages.submitting : config.submitLabel}
+        </Button>
+      </form>
+    </FormProvider>
   );
 }

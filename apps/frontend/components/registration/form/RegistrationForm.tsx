@@ -10,11 +10,11 @@ import { RegistrationSuccess } from './RegistrationSuccess';
 import { useRegistrationForm } from './useRegistrationForm';
 
 const COMPACT_FIELDS = [
-  '[&_label.block]:text-[10px]',
-  '[&_input[type=text]]:h-[26px] [&_input[type=text]]:px-2 [&_input[type=text]]:py-0 [&_input[type=text]]:text-[10px] sm:[&_input[type=text]]:max-w-[146px]',
-  '[&_input[type=email]]:h-[26px] [&_input[type=email]]:px-2 [&_input[type=email]]:py-0 [&_input[type=email]]:text-[10px] sm:[&_input[type=email]]:max-w-[146px]',
-  '[&_input[type=tel]]:h-[26px] [&_input[type=tel]]:px-2 [&_input[type=tel]]:py-0 [&_input[type=tel]]:text-[10px] sm:[&_input[type=tel]]:max-w-[146px]',
-  '[&_select]:h-[26px] [&_select]:px-2 [&_select]:py-0 [&_select]:text-[10px] sm:[&_select]:max-w-[146px]',
+  '[&_label.block]:text-[12px]',
+  '[&_input[type=text]]:h-[26px] [&_input[type=text]]:px-2 [&_input[type=text]]:py-0 [&_input[type=text]]:text-[12px] sm:[&_input[type=text]]:max-w-[146px]',
+  '[&_input[type=email]]:h-[26px] [&_input[type=email]]:px-2 [&_input[type=email]]:py-0 [&_input[type=email]]:text-[12px] sm:[&_input[type=email]]:max-w-[146px]',
+  '[&_input[type=tel]]:h-[26px] [&_input[type=tel]]:px-2 [&_input[type=tel]]:py-0 [&_input[type=tel]]:text-[12px] sm:[&_input[type=tel]]:max-w-[146px]',
+  '[&_select]:h-[26px] [&_select]:px-2 [&_select]:py-0 [&_select]:text-[12px] sm:[&_select]:max-w-[146px]',
 ].join(' ');
 
 export interface RegistrationFormProps {
@@ -48,8 +48,11 @@ export function RegistrationForm({
           ...(defaultTanzeem ? { tanzeem: defaultTanzeem } : {}),
         }
       : undefined;
-  const { state, fieldErrors, alertRef, successRef, handleSubmit } =
-    useRegistrationForm({ track, messages: config.messages, validate: validateRegistration });
+  const { state, fieldErrors, alertRef, successRef, handleSubmit } = useRegistrationForm({
+    track,
+    messages: config.messages,
+    validate: validateRegistration,
+  });
 
   if (state.status === 'success') {
     return (
@@ -77,6 +80,10 @@ export function RegistrationForm({
         onWatchChange={onWatchChange}
         className={COMPACT_FIELDS}
       />
+
+      {definition.info ? (
+        <p className="mt-6 text-small text-neutral-600">{definition.info.description}</p>
+      ) : null}
     </div>
   );
 }

@@ -2,12 +2,11 @@
 
 import { useCallback, useState, type ReactNode } from 'react';
 import type { CourseDTO, Tanzeem } from '@itqasys/core';
+import { ATFAL_NASIRAT_TANZEEM } from '@/lib/registrations/groups';
+import { RegistrationCard } from '../RegistrationCard';
 import { RegistrationForm } from '../form/RegistrationForm';
 import { AtfalNasiratPanel } from './AtfalNasiratPanel';
-import { StudentRegistrationCard } from './StudentRegistrationCard';
 import { StudentRegistrationHeader } from './StudentRegistrationHeader';
-
-const ATFAL_NASIRAT = ['atfal', 'nasirat'];
 
 export interface StudentRegistrationFormProps {
   courseTitle?: string;
@@ -26,16 +25,14 @@ export function StudentRegistrationForm({
 }: StudentRegistrationFormProps): ReactNode {
   const [tanzeem, setTanzeem] = useState<string | undefined>(defaultTanzeem);
   const showAtfalNasiratNotice =
-    tanzeem !== undefined && ATFAL_NASIRAT.includes(tanzeem);
+    tanzeem !== undefined && ATFAL_NASIRAT_TANZEEM.some((option) => option === tanzeem);
 
   const handleWatchChange = useCallback((value: unknown) => {
     setTanzeem(typeof value === 'string' ? value : undefined);
   }, []);
 
   return (
-    <StudentRegistrationCard
-      aside={showAtfalNasiratNotice ? <AtfalNasiratPanel /> : undefined}
-    >
+    <RegistrationCard aside={showAtfalNasiratNotice ? <AtfalNasiratPanel /> : undefined}>
       <StudentRegistrationHeader courseTitle={courseTitle} />
 
       <div className="mt-6">
@@ -49,6 +46,6 @@ export function StudentRegistrationForm({
           onWatchChange={handleWatchChange}
         />
       </div>
-    </StudentRegistrationCard>
+    </RegistrationCard>
   );
 }
