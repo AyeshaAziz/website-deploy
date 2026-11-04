@@ -19,7 +19,8 @@
       "label": "What role would you like?"
     },
     "commitDays": {
-      "label": "You are required to commit to teach on these days"
+      "label": "Commit to teach on these days",
+      "placeholder": "Select days"
     },
     "availableTimes": {
       "label": "What times can you teach (times in UK Time)?"
@@ -61,7 +62,9 @@
       "other": "Other"
     },
     "role": {
-      "main-teacher": "Main Teacher"
+      "main-teacher": "Main Teacher",
+      "support-teacher": "Support Teacher",
+      "assistant-teacher": "Assistant Teacher"
     },
     "commitDays": {
       "monday": "Monday",

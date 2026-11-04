@@ -3,6 +3,7 @@
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
+import { saveContactEnquiry } from '@/lib/contact/store';
 import { CONTACT_DEPARTMENTS } from '@/lib/contact/departments';
 import { rateLimit } from '@/lib/rate-limit';
 
@@ -25,9 +26,15 @@ export async function sendContact(formData: FormData): Promise<void> {
 
   const recipient = CONTACT_DEPARTMENTS[parsed.data.department].email;
 
-  // TODO: send via Amazon SES (or Resend) to the ITQA inbox. Logged for now.
-  // or DB inbox + admin page notifications
-  console.info('[contact] new message', {
+  const saved = await saveContactEnquiry({
+    name: parsed.data.name,
+    email: parsed.data.email,
+    department: parsed.data.department,
+    message: parsed.data.message,
+  });
+  if (!saved) redirect('/contact?error=server');
+
+  console.info('[contact] enquiry saved', {
     sender: parsed.data.email,
     department: parsed.data.department,
     recipient,

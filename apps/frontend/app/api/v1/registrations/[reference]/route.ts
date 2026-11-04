@@ -23,12 +23,20 @@ export async function GET(
   }
 
   const { reference } = await params;
-  const result = await getRegistrationService().get(reference);
+  try {
+    const result = await getRegistrationService().get(reference);
 
-  if (!result.ok) {
-    const status = result.error.code === 'NOT_FOUND' ? 404 : 502;
-    return NextResponse.json(result, { status });
+    if (!result.ok) {
+      const status = result.error.code === 'NOT_FOUND' ? 404 : 502;
+      return NextResponse.json(result, { status });
+    }
+
+    return NextResponse.json(result);
+  } catch (error) {
+    console.error('Failed to load registration:', error);
+    return NextResponse.json(
+      apiFailure('SERVER_ERROR', 'Unable to load registration. Please try again.'),
+      { status: 502 },
+    );
   }
-
-  return NextResponse.json(result);
 }

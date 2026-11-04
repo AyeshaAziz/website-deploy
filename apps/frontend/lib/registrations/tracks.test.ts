@@ -58,7 +58,7 @@ describe('registration track registry', () => {
       const expectedFields =
         track === 'teacher'
           ? [
-              ...BASE_FIELDS,
+              ...BASE_FIELDS.filter((field) => field !== 'parentalConsent'),
               'teachingExperience',
               'role',
               'commitDays',

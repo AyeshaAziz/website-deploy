@@ -13,3 +13,5 @@ export { CourseDetail } from './courses';
 export type { CourseDetailProps } from './courses';
 export { CoursesPageSections } from './courses';
 export type { CoursesPageContent, CoursesPageSectionsProps } from './courses';
+export { Multimedia } from './multimedia';
+export type { MultimediaProps } from './multimedia';

@@ -3,8 +3,13 @@
 import { usePathname, useRouter } from 'next/navigation';
 import { Header } from '@itqa/website';
 import { NavItem } from '@itqasys/core';
+import { logout } from '@/app/admin/actions';
 
-export function SiteHeader() {
+interface SiteHeaderProps {
+  isAuthenticated?: boolean;
+}
+
+export function SiteHeader({ isAuthenticated = false }: SiteHeaderProps) {
   const pathname = usePathname();
   const router = useRouter();
 
@@ -27,10 +32,15 @@ export function SiteHeader() {
         },
       ],
     },
-    // { label: 'Volunteers', href: '/volunteers' },
+    { label: 'Volunteers', href: '/volunteers' },
     { label: 'About', href: '/about' },
     { label: 'Contact Us', href: '/contact' },
-    { label: 'Login', href: '/login' },
+    ...(isAuthenticated
+      ? [
+          { label: 'Dashboard', href: '/admin' },
+          { label: 'Logout', href: '/logout' },
+        ]
+      : [{ label: 'Login', href: '/login' }]),
   ];
 
   const SECONDARY_NAV: NavItem[] = [
@@ -44,8 +54,8 @@ export function SiteHeader() {
     },
     {
       label: 'Multimedia',
-      href: '/multimedia',
-      options: [{ label: 'Gallery', href: '/multimedia' }],
+      href: '/gallery',
+      options: [{ label: 'Gallery', href: '/gallery' }],
     },
   ];
   return (
@@ -55,6 +65,10 @@ export function SiteHeader() {
       secondaryNav={SECONDARY_NAV}
       activeHref={pathname}
       onNavigate={(href) => {
+        if (href === '/logout') {
+          logout();
+          return;
+        }
         if (href !== pathname) router.push(href);
       }}
     />

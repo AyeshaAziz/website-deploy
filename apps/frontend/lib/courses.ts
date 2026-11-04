@@ -8,7 +8,8 @@ export async function getCourses(): Promise<CourseDTO[]> {
 export async function getCoursesSafe(): Promise<CourseDTO[]> {
   try {
     return await getCourses();
-  } catch {
+  } catch (error) {
+    console.error('Failed to load courses from database:', error);
     return [];
   }
 }

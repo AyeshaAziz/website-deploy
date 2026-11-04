@@ -151,3 +151,35 @@ ON CONFLICT (url_path) DO UPDATE SET
   status = EXCLUDED.status,
   sort_order = EXCLUDED.sort_order,
   updated_at = NOW();
+-- 11. Registration processing status (admin workflow)
+-- NOTE: Apply this section to the hosted Supabase project via the SQL Editor.
+ALTER TABLE public.registrations
+  ADD COLUMN IF NOT EXISTS status TEXT NOT NULL DEFAULT 'TODO'
+  CHECK (status IN ('TODO', 'PROCESSED'));
+
+CREATE POLICY "Admins update registrations" ON public.registrations
+  FOR UPDATE USING (public.is_admin());
+
+-- 12. Contact enquiries (public contact form inbox)
+-- NOTE: must be applied to the hosted Supabase project via the SQL editor.
+CREATE TABLE IF NOT EXISTS public.contactEnquiries (
+  id BIGSERIAL PRIMARY KEY,
+  name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  department TEXT NOT NULL,
+  message TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+ALTER TABLE public.contactEnquiries ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Admins read all contact enquiries" ON public.contactEnquiries
+  FOR SELECT USING (public.is_admin());
+-- 13. Contact enquiry processing status (admin workflow)
+-- NOTE: must be applied to the hosted Supabase project via the SQL editor.
+ALTER TABLE public.contactEnquiries
+  ADD COLUMN IF NOT EXISTS status TEXT NOT NULL DEFAULT 'TODO'
+  CHECK (status IN ('TODO', 'PROCESSED'));
+
+CREATE POLICY "Admins update contact enquiries" ON public.contactEnquiries
+  FOR UPDATE USING (public.is_admin());

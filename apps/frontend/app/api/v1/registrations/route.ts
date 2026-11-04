@@ -55,6 +55,14 @@ export async function POST(request: Request): Promise<NextResponse> {
     );
   }
 
-  const result = await getRegistrationService().submit(body, idempotencyKey);
-  return NextResponse.json(result, { status: statusFor(result) });
+  try {
+    const result = await getRegistrationService().submit(body, idempotencyKey);
+    return NextResponse.json(result, { status: statusFor(result) });
+  } catch (error) {
+    console.error('Failed to submit registration:', error);
+    return NextResponse.json(
+      apiFailure('SERVER_ERROR', 'Unable to process registration. Please try again.'),
+      { status: 502 },
+    );
+  }
 }

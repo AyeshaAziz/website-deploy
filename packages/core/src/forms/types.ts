@@ -9,6 +9,7 @@ export const FIELD_TYPES = [
   'radio',
   'checkbox',
   'checkboxGroup',
+  'multiSelect',
   'file',
 ] as const;
 

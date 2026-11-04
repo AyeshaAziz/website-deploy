@@ -15,6 +15,8 @@ const COMPACT_FIELDS = [
   '[&_input[type=email]]:h-[26px] [&_input[type=email]]:px-2 [&_input[type=email]]:py-0 [&_input[type=email]]:text-[12px] sm:[&_input[type=email]]:max-w-[146px]',
   '[&_input[type=tel]]:h-[26px] [&_input[type=tel]]:px-2 [&_input[type=tel]]:py-0 [&_input[type=tel]]:text-[12px] sm:[&_input[type=tel]]:max-w-[146px]',
   '[&_select]:h-[26px] [&_select]:px-2 [&_select]:py-0 [&_select]:text-[12px] sm:[&_select]:max-w-[146px]',
+  '[&_.multi-select-trigger]:h-[26px] [&_.multi-select-trigger]:px-2 [&_.multi-select-trigger]:py-0 [&_.multi-select-trigger]:text-[12px]',
+  '[&_.multi-select-option]:text-[12px]',
 ].join(' ');
 
 export interface RegistrationFormProps {

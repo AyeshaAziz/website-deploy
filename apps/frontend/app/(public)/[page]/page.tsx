@@ -2,27 +2,28 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { WebsiteLanding } from '@itqa/website';
 import { getCoursesSafe } from '@/lib/courses';
-import { getPage, getResources } from '@/lib/content';
+import { getPage, getResourcesSafe } from '@/lib/content';
 import { getChannelVideos, getPlaylistVideos } from '@/lib/youtube';
 
 export const revalidate = 3600;
 
-type Props = { params: { page: string } };
+type Props = { params: Promise<{ page: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const page = await getPage(params.page);
+  const { page: pageParam } = await params;
+  const page = await getPage(pageParam);
   if (!page) return {};
   return { title: page.seoTitle ?? page.title, description: page.seoDescription ?? undefined };
 }
 
-// Serves any published CMS page (about, study-materials, ...)
-export default async function CmsPage({ params }: Props) {
-  const page = await getPage(params.page);
+export default async function ContentPage({ params }: Props) {
+  const { page: pageParam } = await params;
+  const page = await getPage(pageParam);
   if (!page) notFound();
   const hasMultimedia = page.sections.some((section) => section.type === 'MULTIMEDIA');
   const [courses, resources, videos, playlist] = await Promise.all([
     getCoursesSafe(),
-    getResources(),
+    getResourcesSafe(),
     hasMultimedia ? getChannelVideos() : Promise.resolve([]),
     hasMultimedia ? getPlaylistVideos() : Promise.resolve([]),
   ]);

@@ -30,7 +30,7 @@ function resolveOptions(
   meta: FieldMeta,
   content: FormContent,
 ): FieldOption[] {
-  if (meta.type !== 'select' && meta.type !== 'radio' && meta.type !== 'checkboxGroup') {
+  if (meta.type !== 'select' && meta.type !== 'radio' && meta.type !== 'checkboxGroup' && meta.type !== 'multiSelect') {
     return [];
   }
 

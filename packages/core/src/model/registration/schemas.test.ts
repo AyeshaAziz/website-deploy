@@ -76,7 +76,6 @@ describe('registration schemas', () => {
     course: 'naziratul-quran',
     courseLanguage: 'English',
     consent: true,
-    parentalConsent: true,
   };
 
   it('accepts a fully valid teacher registration', () => {

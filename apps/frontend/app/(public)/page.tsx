@@ -1,7 +1,6 @@
-import { notFound } from 'next/navigation';
 import { Carousel, WebsiteLanding } from '@itqa/website';
 import { getCoursesSafe } from '@/lib/courses';
-import { getPage, getResources } from '@/lib/content';
+import { fallbackPage, getResourcesSafe } from '@/lib/content';
 import { getChannelVideos, getPlaylistVideos } from '@/lib/youtube';
 
 export const revalidate = 3600; // ISR: regenerate hourly; CMS publish also revalidates on demand
@@ -13,14 +12,13 @@ const BANNER_SLIDES = [
 ];
 
 export default async function HomePage() {
-  const [page, courses, resources, videos, playlist] = await Promise.all([
-    getPage('home'),
+  const page = fallbackPage('home');
+  const [courses, resources, videos, playlist] = await Promise.all([
     getCoursesSafe(),
-    getResources(),
+    getResourcesSafe(),
     getChannelVideos(),
     getPlaylistVideos(),
   ]);
-  if (!page) notFound();
   return (
     <>
       <Carousel variant="fade" slides={BANNER_SLIDES} ariaLabel="Featured banner" />

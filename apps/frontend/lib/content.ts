@@ -8,7 +8,7 @@ async function db() {
   return supabase;
 }
 
-function fallbackPage(urlPath: string): PageDTO {
+export function fallbackPage(urlPath: string): PageDTO {
   return {
     urlPath,
     title: urlPath,
@@ -44,7 +44,14 @@ export async function getPage(urlPath: string): Promise<PageDTO | null> {
       .eq('urlPath', urlPath)
       .eq('status', 'PUBLISHED')
       .single();
-    if (error || !page) return null;
+    if (error) {
+      if (error.code === 'PGRST116') return null;
+      // CMS tables not deployed (schema cache miss) = frontend-only mode; serve 404, not 500.
+      if (error.code === 'PGRST205') return null;
+      console.error('Failed to load page from database:', error);
+      throw new Error(error.message || 'Failed to load page from database');
+    }
+    if (!page) return null;
     return {
       urlPath: page.urlPath,
       title: page.title,
@@ -58,7 +65,18 @@ export async function getPage(urlPath: string): Promise<PageDTO | null> {
         content: (s.content ?? {}) as Record<string, unknown>,
       })),
     };
-  } catch {
+  } catch (error) {
+    console.error('Failed to load page from database:', error);
+    throw error instanceof Error ? error : new Error('Failed to load page from database');
+  }
+}
+
+export async function getPageSafe(urlPath: string): Promise<PageDTO> {
+  try {
+    const page = await getPage(urlPath);
+    return page ?? fallbackPage(urlPath);
+  } catch (error) {
+    console.error('Failed to load page from database:', error);
     return fallbackPage(urlPath);
   }
 }
@@ -73,9 +91,24 @@ export async function getResources(): Promise<ResourceDTO[]> {
       .eq('status', 'PUBLISHED')
       .order('sortOrder', { ascending: true })
       .order('createdAt', { ascending: true });
-    if (error) return [];
-    return data as ResourceDTO[];
-  } catch {
+    if (error) {
+      // Resource table not deployed (schema cache miss) = frontend-only mode; serve empty list.
+      if (error.code === 'PGRST205') return [];
+      console.error('Failed to load resources from database:', error);
+      throw new Error(error.message || 'Failed to load resources from database');
+    }
+    return (data ?? []) as ResourceDTO[];
+  } catch (error) {
+    console.error('Failed to load resources from database:', error);
+    throw error instanceof Error ? error : new Error('Failed to load resources from database');
+  }
+}
+
+export async function getResourcesSafe(): Promise<ResourceDTO[]> {
+  try {
+    return await getResources();
+  } catch (error) {
+    console.error('Failed to load resources from database:', error);
     return [];
   }
 }

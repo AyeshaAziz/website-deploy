@@ -1,9 +1,12 @@
 'use server';
 
 import { redirect } from 'next/navigation';
+import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
-import { destroySession } from '@/lib/auth';
+import { destroySession, requireAuth, requireRole } from '@/lib/auth';
 import { createServerSupabaseClient } from '@/utils/supabase/server';
+import { setRegistrationStatus } from '@/lib/admin/registrations';
+import { setEnquiryStatus } from '@/lib/admin/enquiries';
 
 export async function login(formData: FormData): Promise<void> {
   const parsed = z
@@ -50,4 +53,42 @@ export async function login(formData: FormData): Promise<void> {
 export async function logout(): Promise<void> {
   await destroySession();
   redirect('/login');
+}
+
+export async function setRegistrationStatusAction(formData: FormData): Promise<void> {
+  const session = await requireAuth();
+  requireRole(session, ['ADMIN', 'CONTENT_EDITOR']);
+
+  const parsed = z
+    .object({
+      reference: z.string().min(1).max(64),
+      status: z.enum(['TODO', 'PROCESSED']),
+    })
+    .safeParse(Object.fromEntries(formData));
+
+  if (!parsed.success) {
+    return;
+  }
+
+  await setRegistrationStatus(parsed.data.reference, parsed.data.status);
+  revalidatePath('/admin');
+}
+
+export async function setEnquiryStatusAction(formData: FormData): Promise<void> {
+  const session = await requireAuth();
+  requireRole(session, ['ADMIN', 'CONTENT_EDITOR']);
+
+  const parsed = z
+    .object({
+      id: z.coerce.number().int().positive(),
+      status: z.enum(['TODO', 'PROCESSED']),
+    })
+    .safeParse(Object.fromEntries(formData));
+
+  if (!parsed.success) {
+    return;
+  }
+
+  await setEnquiryStatus(parsed.data.id, parsed.data.status);
+  revalidatePath('/admin');
 }

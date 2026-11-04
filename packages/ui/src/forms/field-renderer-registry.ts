@@ -1,6 +1,7 @@
 import type { FieldType } from '@itqasys/core/forms';
 import { CheckboxField } from './field-renderers/checkbox';
 import { CheckboxGroupField } from './field-renderers/checkbox-group';
+import { MultiSelectField } from './field-renderers/multi-select';
 import { DateField } from './field-renderers/date';
 import { EmailField } from './field-renderers/email';
 import { FileField } from './field-renderers/file';
@@ -23,6 +24,7 @@ export const fieldRenderers: FieldRendererRegistry = {
   radio: RadioField,
   checkbox: CheckboxField,
   checkboxGroup: CheckboxGroupField,
+  multiSelect: MultiSelectField,
   file: FileField,
 };
 

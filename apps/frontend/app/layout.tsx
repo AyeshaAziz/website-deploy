@@ -23,7 +23,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${cabin.variable} ${arabic.variable}`}
     >
       <body
-        suppressHydrationWarning
         className="min-h-screen bg-primary-6 font-sans text-neutral-900 antialiased"
       >
         <ExtensionAttributeGuard />
