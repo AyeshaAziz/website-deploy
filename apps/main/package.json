@@ -1,0 +1,42 @@
+{
+  "name": "@itqa/main",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@itqa/ui": "workspace:*",
+    "@itqa/website": "workspace:*",
+    "@itqasys/core": "workspace:*",
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.118.0",
+    "bcryptjs": "^2.4.3",
+    "jose": "^5.9.0",
+    "next": "16.4.2",
+    "pdfjs-dist": "^6.5.438",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "react-pdf": "^11.0.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@next/env": "16.4.2",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "^20.14.0",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.22.0",
+    "eslint-config-next": "16.4.2",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.13",
+    "typescript": "^5.5.4",
+    "vitest": "^2.1.0"
+  }
+}

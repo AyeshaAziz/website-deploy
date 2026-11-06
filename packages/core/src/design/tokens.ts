@@ -111,7 +111,7 @@ export const screens = {
 
 /**
  * shadcn/ui-compatible CSS custom properties (HSL channels, no `hsl()` wrapper).
- * Injected into `:root` by `apps/frontend/app/globals.css`.
+ * Injected into `:root` by `src/app/globals.css`.
  */
 export const cssVars: Record<string, string> = {
   '--background': '0 0% 95%',

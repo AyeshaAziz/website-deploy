@@ -25,7 +25,7 @@ Editor login: http://localhost:3000/admin/login (credentials from `SEED_ADMIN_EM
 
 | Path | Purpose |
 | --- | --- |
-| `apps/frontend` | Next.js 16 app: public routes, registration pages, `/admin` CMS, BFF API, server actions, middleware |
+| `src` | Next.js 16 app: public routes, registration pages, `/admin` CMS, BFF API, server actions, middleware |
 | `packages/website` | `@itqa/website`: header/footer, section components, page renderer |
 | `packages/ui` | `@itqa/ui`: generic React components, Storybook, generic form engine (`@itqa/ui/forms`) |
 | `packages/core` | `@itqasys/core`: contracts, design tokens, utils, form model (`@itqasys/core/forms`) |
@@ -81,8 +81,8 @@ NEXT_PUBLIC_API_BASE_URL=/api/v1
 ```
 
 See `docs/api-contract.md` for the contract and `BACKEND_TODO.md` for the handoff. Each
-track is one schema (`packages/core`), one JSON file (`apps/frontend/content/registration`),
-and one registry entry (`apps/frontend/lib/registrations/tracks.ts`).
+track is one schema (`packages/core`), one JSON file (`src/content/registration`),
+and one registry entry (`src/lib/registrations/tracks.ts`).
 
 ## Checks
 
@@ -104,4 +104,4 @@ Storybook lives in `packages/ui` (`pnpm storybook`).
 - Step 5: typed section forms, Tiptap rich text, dnd-kit ordering, S3 image upload, Course/Resource editors
 - Step 6: CSP with nonces, WordPress content migration and 301 redirects, load test
 - Registration backend: replace the mock adapter with the live API (`BACKEND_TODO.md`), shared Redis rate limiting, S3 uploads
-- Auth is a minimal JWT cookie; `requireAuth`/`requireRole` in `apps/frontend/lib/auth.ts` is the interface to keep if you move to Auth.js.
+- Auth is a minimal JWT cookie; `requireAuth`/`requireRole` in `src/lib/auth.ts` is the interface to keep if you move to Auth.js.

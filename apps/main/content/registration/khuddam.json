@@ -1,0 +1,15 @@
+{
+  "title": "Khuddam Registration",
+  "description": "Register as a Khuddam volunteer with ITQA.",
+  "submitLabel": "Submit registration",
+  "fields": {
+    "profession": { "label": "Profession", "placeholder": "Your current profession" },
+    "education": { "label": "Highest education" },
+    "bloodGroup": { "label": "Blood group" },
+    "skills": {
+      "label": "Skills and interests",
+      "placeholder": "Tell us how you would like to contribute",
+      "help": "Optional. Separate multiple skills with commas."
+    }
+  }
+}

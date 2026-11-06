@@ -1,25 +1,46 @@
 {
-  "name": "itqa-platform",
+  "name": "@itqa",
+  "version": "0.1.0",
   "private": true,
-  "packageManager": "pnpm@9.12.0",
-  "engines": {
-    "node": ">=20"
-  },
   "scripts": {
-    "dev": "pnpm --filter @itqa/frontend dev",
-    "build": "pnpm --filter @itqa/frontend build",
-    "lint": "pnpm -r --if-present lint",
-    "typecheck": "pnpm -r --if-present typecheck",
-    "test": "pnpm -r --if-present test",
-    "storybook": "pnpm --filter @itqa/ui storybook",
-    "build-storybook": "pnpm --filter @itqa/ui build-storybook",
-    "db:up": "docker compose up -d",
-    "db:deploy": "pnpm --filter @itqa/database db:deploy",
-    "db:seed": "pnpm --filter @itqa/database db:seed",
-    "format": "prettier --write ."
+    "dev": "pnpm --filter @itqa/main dev",
+    "build": "pnpm --filter @itqa/main build",
+    "start": "pnpm --filter @itqa/main start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@itqa/ui": "workspace:*",
+    "@itqa/website": "workspace:*",
+    "@itqasys/core": "workspace:*",
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.118.0",
+    "ag-grid-community": "^36.3.0",
+    "ag-grid-react": "^36.3.0",
+    "bcryptjs": "^2.4.3",
+    "jose": "^5.9.0",
+    "next": "16.4.2",
+    "pdfjs-dist": "^6.5.438",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "react-pdf": "^11.0.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
-    "prettier": "^3.3.3",
-    "typescript": "^5.5.4"
+    "@next/env": "16.4.2",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "^20.14.0",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.22.0",
+    "eslint-config-next": "16.4.2",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.13",
+    "typescript": "^5.5.4",
+    "vitest": "^2.1.0"
   }
 }
+
+

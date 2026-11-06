@@ -1,0 +1,23 @@
+{
+  "title": "Lajna Registration",
+  "description": "Register as a Lajna volunteer with ITQA.",
+  "submitLabel": "Submit",
+  "fields": {
+    "profession": { "label": "Profession", "placeholder": "Optional" },
+    "education": { "label": "Highest education" },
+    "maritalStatus": { "label": "Marital status" },
+    "skills": {
+      "label": "Skills and interests",
+      "placeholder": "Tell us how you would like to contribute",
+      "help": "Optional. Separate multiple skills with commas."
+    }
+  },
+  "options": {
+    "maritalStatus": {
+      "single": "Single",
+      "married": "Married",
+      "widowed": "Widowed",
+      "divorced": "Divorced"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "title": "Ansar Registration",
+  "description": "Register as an Ansar volunteer with ITQA.",
+  "submitLabel": "Submit registration",
+  "fields": {
+    "occupation": { "label": "Occupation", "placeholder": "Your current occupation" },
+    "employer": { "label": "Employer", "placeholder": "Optional" },
+    "bloodGroup": { "label": "Blood group" },
+    "skills": {
+      "label": "Skills and interests",
+      "placeholder": "Tell us how you would like to contribute",
+      "help": "Optional. Separate multiple skills with commas."
+    }
+  }
+}

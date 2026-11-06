@@ -1,0 +1,31 @@
+{
+  "title": "Atfal & Nasirat",
+  "paragraphs": [
+    "Qur'an classes run one-to-one or in small groups after a placement test. Split-word translation is group-only.",
+    "A parent or guardian must complete the application.",
+    "Classes run Monday to Thursday.",
+    "Tarjamah (Translation) classes are only available for 12 years and above."
+  ],
+  "contact": {
+    "prefix": "Questions? ",
+    "label": "Contact us",
+    "href": "/contact",
+    "suffix": "."
+  },
+  "dates": {
+    "title": "Registration dates",
+    "note": "Registration opens twice a year.",
+    "semesters": [
+      {
+        "name": "Semester 1",
+        "registration": "1 - 31 May",
+        "classesStart": "September"
+      },
+      {
+        "name": "Semester 2",
+        "registration": "1 - 31 October",
+        "classesStart": "February"
+      }
+    ]
+  }
+}

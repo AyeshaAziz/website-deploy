@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /*
- * Storybook-only stylesheet. Mirrors apps/frontend/app/globals.css so the
+ * Storybook-only stylesheet. Mirrors src/app/globals.css so the
  * package can be previewed without the Next.js app. Keep the two in sync
  * (both derive from @itqasys/core design tokens cssVars).
  */

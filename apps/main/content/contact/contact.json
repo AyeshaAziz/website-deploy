@@ -1,0 +1,36 @@
+{
+  "page": {
+    "title": "Contact",
+    "description": "Contact ITQA",
+    "heading": "Contact Us"
+  },
+  "aside": {
+    "image": {
+      "src": "/images/logo.png",
+      "alt": "Contact section image",
+      "width": 1200,
+      "height": 400
+    },
+    "heading": "Get in Touch",
+    "body": "Send us a message using the form below.",
+    "emailLabel": "Email",
+    "submit": "Submit"
+  },
+  "form": {
+    "success": "Your message has been sent!",
+    "error": "There was an error sending your message.",
+    "departmentLabel": "Department",
+    "departmentHint": "Select a department",
+    "nameLabel": "Name",
+    "emailLabel": "Email Address",
+    "messageLabel": "Message",
+    "submit": "Send Message"
+  },
+  "departments": [
+    {
+      "id": "general",
+      "label": "General",
+      "email": "contact@itqa.org.uk"
+    }
+  ]
+}

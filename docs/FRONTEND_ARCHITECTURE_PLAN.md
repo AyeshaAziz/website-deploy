@@ -32,7 +32,7 @@ Scope: `@itqasys/core`, `@itqa/ui`, `@itqa/website`, `@itqa/frontend`
 ## 3. Target topology
 
 ```
-apps/frontend              @itqa/frontend   pages, registration content/json, API seam, BFF
+src/              @itqa/src   pages, registration content/json, API seam, BFF
 packages/website           @itqa/website    site composition (Header, Subheader, Footer, About/CMS sections, Banner)
 packages/ui                @itqa/ui         all generic React components + generic form engine
 packages/core              @itqasys/core       contracts (zod/DTOs), design tokens, utils, form model (NO React)
@@ -118,13 +118,13 @@ These import primitives from `@itqa/ui` and types from `@itqasys/core`.
   - exports: `.`, `./design`, `./forms`
   - keep React out of the package
 - Update dependencies:
-  - `apps/frontend/package.json:14`
+  - `src/package.json:14`
   - `packages/website/package.json:18`
 - Update imports (approximately 22 files), including:
-  - `apps/frontend/components/SiteHeader.tsx:5`
-  - `apps/frontend/lib/content.ts:49`
-  - `apps/frontend/lib/auth.ts:4`
-  - `apps/frontend/app/admin/actions.ts:8`
+  - `src/components/SiteHeader.tsx:5`
+  - `src/lib/content.ts:49`
+  - `src/lib/auth.ts:4`
+  - `src/app/admin/actions.ts:8`
   - `packages/website/src/layout/header/Header.tsx:4`
   - `packages/website/src/layout/header/Subheader.tsx:2`
   - `packages/website/src/ui/NavBar.tsx:4`
@@ -133,8 +133,8 @@ These import primitives from `@itqa/ui` and types from `@itqasys/core`.
   - `packages/website/src/sections/shared/carousel/Carousel.tsx:1`
   - All files in `packages/website/src/ui/`
 - Update configuration:
-  - `apps/frontend/next.config.mjs:37`
-  - `apps/frontend/tailwind.config.ts:11` and content glob at `:16`
+  - `src/next.config.mjs:37`
+  - `src/tailwind.config.ts:11` and content glob at `:16`
   - `packages/website/tailwind.config.ts:11`
 - Update documentation:
   - `README.md:28`
@@ -163,7 +163,7 @@ These import primitives from `@itqa/ui` and types from `@itqasys/core`.
   - `sections/about/*`: Container
   - `layout/footer/*`: Container
 - Update frontend imports (no re-exports):
-  - `app/(public)/contact/page.tsx:2`
+  - `src/app/(public)/contact/page.tsx:2`
   - `app/admin/login/page.tsx:1`
   - `app/admin/content-management/[page]/page.tsx:4`
   - `app/admin/content-management/page.tsx:2`
@@ -189,7 +189,7 @@ These import primitives from `@itqa/ui` and types from `@itqasys/core`.
 
 Next.js and Tailwind:
 
-- Add `@itqasys/core` and `@itqa/ui` to `transpilePackages` in `apps/frontend/next.config.mjs`.
+- Add `@itqasys/core` and `@itqa/ui` to `transpilePackages` in `src/next.config.mjs`.
 - Add `packages/core/src` and `packages/ui/src` to Tailwind content globs in the frontend and Storybook configs.
 
 ### Storybook
@@ -248,7 +248,7 @@ Client boundary rule: build the config inside the client component. Never pass a
 
 ### 8.1 Content JSON
 
-`apps/frontend/content/registration/`:
+`src/content/registration/`:
 
 - `atfal-nasirat.json`
 - `ansar.json`
@@ -293,7 +293,7 @@ Error codes:
 
 ### 8.3 Track registry
 
-`apps/frontend/lib/registrations/tracks.ts`:
+`src/lib/registrations/tracks.ts`:
 
 - Map `RegistrationTrack` to `{ schema, content }`.
 - Expose `getFormConfig(track)` which calls `createFormConfig`.
@@ -301,12 +301,12 @@ Error codes:
 
 ### 8.4 API seam
 
-- `apps/frontend/lib/api/client.ts`: `apiFetch<T>()` against `/api/v1`, timeout/abort, error normalization.
-- `apps/frontend/lib/api/registrations.ts`: `submitRegistration`, `getRegistration`.
-- `apps/frontend/lib/server/registrations/service.ts`: `RegistrationService` interface.
-- `apps/frontend/lib/server/registrations/mock.ts`: shared-schema validation, in-memory idempotency map, generated reference; dev-only.
-- `apps/frontend/lib/server/registrations/http.ts`: forwards to `BACKEND_API_URL` when `REGISTRATION_API_MODE=live`.
-- `apps/frontend/lib/server/registrations/factory.ts`: the only composition root.
+- `src/lib/api/client.ts`: `apiFetch<T>()` against `/api/v1`, timeout/abort, error normalization.
+- `src/lib/api/registrations.ts`: `submitRegistration`, `getRegistration`.
+- `src/lib/server/registrations/service.ts`: `RegistrationService` interface.
+- `src/lib/server/registrations/mock.ts`: shared-schema validation, in-memory idempotency map, generated reference; dev-only.
+- `src/lib/server/registrations/http.ts`: forwards to `BACKEND_API_URL` when `REGISTRATION_API_MODE=live`.
+- `src/lib/server/registrations/factory.ts`: the only composition root.
 - Route handlers:
   - `app/api/v1/registrations/route.ts` (POST)
   - `app/api/v1/registrations/[reference]/route.ts` (GET)
@@ -317,7 +317,7 @@ Error codes:
 
 ### 8.5 UI and routes
 
-- `apps/frontend/components/registration/RegistrationForm.tsx`:
+- `src/components/registration/RegistrationForm.tsx`:
   - resolves config from the track registry
   - wires `@itqa/ui/forms` `Form` to `submitRegistration`
   - renders success, duplicate, rate-limited, and network states

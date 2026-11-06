@@ -1,0 +1,2 @@
+export { getRegistrations, deleteRegistration, setRegistrationStatus } from '@/lib/services/registrations-admin';
+export { getEnquiries, deleteEnquiry, setEnquiryStatus } from '@/lib/services/enquiries-admin';

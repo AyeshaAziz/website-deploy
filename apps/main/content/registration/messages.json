@@ -1,0 +1,11 @@
+{
+  "successTitle": "Registration received",
+  "successBody": "Thank you. We will contact you using the details you provided.",
+  "referenceLabel": "Reference",
+  "duplicate": "This registration has already been submitted. Please contact us if you need to make a change.",
+  "rateLimited": "Too many attempts. Please wait a moment and try again.",
+  "validationError": "Please review the highlighted fields and try again.",
+  "networkError": "We could not reach the server. Please check your connection and try again.",
+  "submitting": "Submitting...",
+  "required": "This field is required."
+}
