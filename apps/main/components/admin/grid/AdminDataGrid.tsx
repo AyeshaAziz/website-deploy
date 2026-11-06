@@ -45,7 +45,7 @@ export function AdminDataGrid<T>({
   quickFilterLabel,
   quickFilterPlaceholder = 'Quick filter...',
   getRowId,
-  pageSize = 25,
+  pageSize = 20,
   defaultFilterModel,
   storageKey,
 }: AdminDataGridProps<T>): ReactNode {

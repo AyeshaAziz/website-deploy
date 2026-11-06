@@ -83,7 +83,6 @@ export function RegistrationsTable({ rows }: RegistrationsTableProps): ReactNode
     () => rows.map((row) => ({ ...row, name: `${row.firstName} ${row.lastName}`.trim() })),
     [rows],
   );
-
   return (
     <AdminDataGrid
       rows={rowData}
