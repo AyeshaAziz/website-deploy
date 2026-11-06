@@ -2,7 +2,6 @@
 
 import dynamic from 'next/dynamic';
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
-import { cn } from '@itqasys/core';
 
 const FlipbookInner = dynamic(() => import('./FlipbookInner'), {
   ssr: false,
@@ -60,7 +59,7 @@ export function Flipbook({ src, title }: FlipbookProps): ReactNode {
     <button
       type="button"
       onClick={() => setOpen(true)}
-      className="block w-full max-w-[min(20rem,30vh)] overflow-hidden rounded-card border border-primary-5 bg-white shadow-card transition hover:shadow-lg"
+      className="block w-full max-w-[min(20rem,30vh)] overflow-hidden transition hover:shadow-lg"
     >
       <div ref={containerRef} className="aspect-[3/4] w-full">
         <FlipbookInner
@@ -80,7 +79,7 @@ export function Flipbook({ src, title }: FlipbookProps): ReactNode {
   if (!open) return preview;
 
   return (
-    <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div className="pointer-events-none fixed inset-0 z-50 flex items-center justify-center p-4 bg-primary-neg1/80 backdrop-blur-sm">
       <button
         type="button"
         aria-label="Close flipbook"
