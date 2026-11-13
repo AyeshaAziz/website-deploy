@@ -61,7 +61,7 @@ function buildContent(track: RegistrationTrack): FormContent {
       rateLimited: 'Too many requests, please try again later.',
       validationError: 'Please check the form for errors.',
       networkError: 'Unable to connect to the server.',
-      submitting: 'Submitting your registration...',
+      submitting: 'Submitting...',
       required: 'All fields are required',
     },
   });

@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import Image from 'next/image';
 import type { NavItem } from '@itqasys/core';
 import { Container, NavBar } from '@itqa/ui';
 
@@ -19,11 +20,13 @@ export function Subheader({
     <div className="bg-white">
       <Container className="flex justify-center py-3 lg:items-center lg:justify-between lg:py-5">
         {logoUrl && (
-          <img
+          <Image
             src={logoUrl}
             alt="International Ta'limul Qur'an Academy"
             width={1512}
             height={368}
+            sizes="(min-width: 1024px) 329px, 230px"
+            loading="eager"
             className="h-14 w-auto lg:h-20"
           />
         )}

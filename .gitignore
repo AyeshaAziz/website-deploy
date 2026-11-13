@@ -12,3 +12,4 @@ storybook-static
 packages/core/dist/
 *.tgz
 opencode.json
+apps/main/next-env.d.ts

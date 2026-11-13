@@ -1,17 +1,42 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { Header } from '@itqa/website';
 import { NavItem } from '@itqasys/core';
 import { logout } from '@/app/admin/actions';
+import { createClientSupabaseClient } from '@/utils/supabase/client';
 
 interface SiteHeaderProps {
+  /** Pass a value on dynamic pages. Omit on static pages so the session is read client-side. */
   isAuthenticated?: boolean;
 }
 
-export function SiteHeader({ isAuthenticated = false }: SiteHeaderProps) {
+export function SiteHeader({ isAuthenticated }: SiteHeaderProps) {
   const pathname = usePathname();
   const router = useRouter();
+  const [authenticated, setAuthenticated] = useState(isAuthenticated ?? false);
+
+  useEffect(() => {
+    if (isAuthenticated !== undefined) {
+      setAuthenticated(isAuthenticated);
+      return;
+    }
+
+    let cancelled = false;
+    createClientSupabaseClient()
+      .auth.getSession()
+      .then(({ data }) => {
+        if (!cancelled) setAuthenticated(Boolean(data.session));
+      })
+      .catch(() => {
+        if (!cancelled) setAuthenticated(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [isAuthenticated]);
 
   const PRIMARY_NAV: NavItem[] = [
     { label: 'Home', href: '/' },
@@ -35,7 +60,7 @@ export function SiteHeader({ isAuthenticated = false }: SiteHeaderProps) {
     { label: 'Volunteers', href: '/volunteers' },
     { label: 'About', href: '/about' },
     { label: 'Contact Us', href: '/contact' },
-    ...(isAuthenticated
+    ...(authenticated
       ? [
           { label: 'Dashboard', href: '/admin' },
           { label: 'Logout', href: '/logout' },
