@@ -8,15 +8,14 @@ import { FooterSocial } from './FooterSocial';
 import { FooterBottom } from './FooterBottom';
 import type { FooterProps } from './footer.types';
 
-function mapEmbedUrl(query: string): string {
-  return `https://maps.google.com/maps?q=${encodeURIComponent(query)}&z=15&output=embed`;
+function mapLinkUrl(query: string): string {
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
 }
 
-export function Footer({ content = footerData, mapSrc }: FooterProps): ReactNode {
+export function Footer({ content = footerData, mapSrc, mapHref }: FooterProps): ReactNode {
   const { about, social, contact, map, bottomContent } = content;
-  const mapEmbed =
-    mapSrc ??
-    mapEmbedUrl(contact.addressLines.map((line) => line.replace(/[,\s]+$/, '')).join(', '));
+  const addressQuery = contact.addressLines.map((line) => line.replace(/[,\s]+$/, '')).join(', ');
+  const mapLink = mapHref ?? mapLinkUrl(addressQuery);
 
   return (
     <footer className="bg-primary-7 font-cabin font-bold text-primary-5">
@@ -25,7 +24,7 @@ export function Footer({ content = footerData, mapSrc }: FooterProps): ReactNode
         <FooterAbout {...about} />
         <FooterSocial {...social} />
         <FooterContact {...contact} />
-        <FooterMap src={mapEmbed} label={map.label} />
+        <FooterMap src={mapSrc} href={mapLink} label={map.label} />
       </Container>
       <FooterBottom content={bottomContent} />
     </footer>

@@ -1,4 +1,4 @@
-import { createServerSupabaseClient } from '@/utils/supabase/server';
+import { createPublicSupabaseClient } from '@/utils/supabase/public';
 import type { CourseDTO, CourseSitemapEntry } from '@itqasys/core';
 import type { CourseService } from './service';
 
@@ -11,7 +11,7 @@ export class CourseApiError extends Error {
 
 export class SupabaseCourseService implements CourseService {
   private getClient() {
-    return createServerSupabaseClient();
+    return createPublicSupabaseClient();
   }
 
   async list(): Promise<CourseDTO[]> {

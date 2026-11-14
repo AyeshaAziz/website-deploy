@@ -64,10 +64,33 @@ export default function PrivacyPage() {
           </ul>
 
           <h2 className="mt-8 font-heading text-h2 text-primary-neg2">Cookies</h2>
-          <p className="mb-6 text-body text-neutral-700">
-            Our website uses cookies to enhance your browsing experience. You can disable cookies in
-            your browser settings, but this may affect some functionality.
-          </p>
+          <section className="mb-6 text-body text-neutral-700">
+              <p className="mb-6 text-body text-neutral-700">
+                We use essential first-party cookies to keep our website secure and provide
+                authentication and session management for login and administrative functionality.
+              </p>
+
+              <div className="rounded-card border border-primary-5 bg-neutral-50 p-4">
+                <div className="mb-2 flex items-center justify-between gap-4">
+                  <h3 className="font-semibold text-neutral-900">Essential cookies</h3>
+
+                  <span className="rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-800">
+                    Always active
+                  </span>
+                </div>
+
+                <p className="text-sm text-neutral-700">
+                  These cookies are necessary for the website's authentication and security
+                  features. They cannot be disabled through our cookie preferences. Disabling
+                  cookies in your browser may prevent login and administrative functionality from
+                  working correctly.
+                </p>
+              </div>
+
+              <p className="mt-4 text-sm text-neutral-700">
+                We currently do not use analytics, advertising or marketing cookies.
+              </p>
+            </section>
 
           <h2 className="mt-8 font-heading text-h2 text-primary-neg2">Contact us</h2>
           <p className="mb-6 text-body text-neutral-700">

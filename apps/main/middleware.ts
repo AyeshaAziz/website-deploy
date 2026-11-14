@@ -6,6 +6,24 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || "";
 
 export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
+  // Public routes without an existing Supabase auth cookie do not need
+  // session processing, reducing unnecessary cookie reads/writes.
+  const isProtectedRoute =
+    pathname.startsWith('/admin') ||
+    pathname === '/login' ||
+    pathname === '/signup' ||
+    pathname.startsWith('/api/v1');
+
+  const hasAuthCookie = request.cookies
+    .getAll()
+    .some((cookie) => cookie.name.startsWith('sb-'));
+
+  if (!isProtectedRoute && !hasAuthCookie) {
+    return NextResponse.next();
+  }
+
   let supabaseResponse = NextResponse.next({
     request: {
       headers: request.headers,
@@ -45,7 +63,6 @@ export async function middleware(request: NextRequest) {
     });
   }
 
-  const { pathname } = request.nextUrl;
   if (pathname.startsWith('/admin') && pathname !== '/admin/login' && pathname !== '/login') {
     if (!user) {
       const url = new URL('/login', request.url);

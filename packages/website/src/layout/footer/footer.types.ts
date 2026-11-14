@@ -40,4 +40,5 @@ export interface FooterContent {
 export interface FooterProps {
   content?: FooterContent;
   mapSrc?: string;
+  mapHref?: string;
 }

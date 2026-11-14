@@ -1,4 +1,5 @@
 import type { CourseDTO, CourseSitemapEntry } from '@itqasys/core';
+import { unstable_rethrow } from 'next/navigation';
 import { getCourseService } from './server/courses/factory';
 
 export async function getCourses(): Promise<CourseDTO[]> {
@@ -9,6 +10,7 @@ export async function getCoursesSafe(): Promise<CourseDTO[]> {
   try {
     return await getCourses();
   } catch (error) {
+    unstable_rethrow(error);
     console.error('Failed to load courses from database:', error);
     return [];
   }
