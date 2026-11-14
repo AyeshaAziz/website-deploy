@@ -38,7 +38,7 @@ const nextConfig = {
     '@itqasys/core',
   ],
 
-  serverExternalPackages: ['bcryptjs'],
+  serverExternalPackages: ['bcryptjs', 'sharp', '@napi-rs/canvas', 'pdfjs-dist'],
 
   async headers() {
     return [

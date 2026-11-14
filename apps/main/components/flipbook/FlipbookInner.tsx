@@ -22,7 +22,8 @@ export default function FlipbookInner({ src, page, width, onLoadSuccess, classNa
       <Document
         file={src}
         onLoadSuccess={({ numPages: n }) => onLoadSuccess(n)}
-        loading={<div className="flex h-full items-center justify-center text-neutral-600">Loading PDF…</div>}
+        suspense
+        options={{ verbosity: 0 }}
         error={<div className="flex h-full items-center justify-center text-danger">Failed to load PDF.</div>}
       >
         <Page
@@ -30,6 +31,7 @@ export default function FlipbookInner({ src, page, width, onLoadSuccess, classNa
           width={width}
           renderTextLayer={false}
           renderAnnotationLayer={false}
+          suspense
         />
       </Document>
     </div>

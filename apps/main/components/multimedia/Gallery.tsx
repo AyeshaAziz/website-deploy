@@ -1,14 +1,11 @@
 'use client';
 
 import type { ReactNode } from 'react';
+import Image from 'next/image';
 import { Container, SectionHeading } from '@itqa/ui';
 import { Carousel } from '@itqa/website';
 import { Flipbook } from '@/components/flipbook/Flipbook';
-
-interface Newsletter {
-  name: string;
-  href: string;
-}
+import type { Newsletter } from '@/lib/newsletters';
 
 interface MultimediaGalleryProps {
   newsletters: Newsletter[];
@@ -25,7 +22,14 @@ export function NewsletterGallery({ newsletters }: MultimediaGalleryProps): Reac
           variant="scroll"
           items={newsletters}
           getKey={(item) => item.href}
-          renderItem={(item) => <Flipbook src={item.href} title={item.name} />}
+          renderItem={(item) => (
+            <Flipbook
+              src={item.href}
+              title={item.name}
+              thumbnail={item.thumbnail}
+              priority={newsletters.indexOf(item) < 3}
+            />
+          )}
           itemClassName="w-56 shrink-0"
           prevLabel="Previous newsletters"
           nextLabel="Next newsletters"

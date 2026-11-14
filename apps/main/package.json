@@ -8,12 +8,14 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "generate:thumbnails": "node scripts/generate-newsletter-thumbnails.mjs"
   },
   "dependencies": {
     "@itqa/ui": "workspace:*",
     "@itqa/website": "workspace:*",
     "@itqasys/core": "workspace:*",
+    "@napi-rs/canvas": "^1.1.1",
     "@supabase/ssr": "^0.12.7",
     "@supabase/supabase-js": "^2.118.0",
     "bcryptjs": "^2.4.3",
@@ -23,6 +25,7 @@
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "react-pdf": "^11.0.0",
+    "sharp": "^0.35.5",
     "zod": "^3.23.8"
   },
   "devDependencies": {
@@ -38,5 +41,13 @@
     "tailwindcss": "^3.4.13",
     "typescript": "^5.5.4",
     "vitest": "^2.1.0"
+  },
+  "pnpm": {
+    "approvedBuilds": [
+      "esbuild"
+    ],
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   }
 }
