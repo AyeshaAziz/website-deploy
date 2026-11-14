@@ -1,21 +1,15 @@
 import type { CourseDTO, CourseSitemapEntry } from '@itqasys/core';
 import { getCourseService } from './server/courses/factory';
-import { unstable_rethrow } from 'next/navigation';
 
 export async function getCourses(): Promise<CourseDTO[]> {
   return getCourseService().list();
 }
 
-
 export async function getCoursesSafe(): Promise<CourseDTO[]> {
   try {
     return await getCourses();
   } catch (error) {
-    // Preserve Next.js internal control-flow errors.
-    unstable_rethrow(error);
-
     console.error('Failed to load courses from database:', error);
-
     return [];
   }
 }
