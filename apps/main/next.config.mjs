@@ -32,6 +32,10 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
 
+  experimental: {
+    agentUpgrade: 'security',
+  },
+
   transpilePackages: [
     '@itqa/website',
     '@itqa/ui',
