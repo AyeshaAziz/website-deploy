@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, type ReactNode } from 'react';
+import { useState, useSyncExternalStore, type ReactNode } from 'react';
 import { NavItem } from '@itqasys/core';
 import { Container, MobileNav, NavBar } from '@itqa/ui';
 import { Subheader } from './Subheader';
@@ -21,18 +21,17 @@ export function Header({
   logoUrl,
 }: HeaderProps): ReactNode {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [internalHref, setInternalHref] = useState<string | undefined>(undefined);
+  const pathname = useSyncExternalStore(
+    subscribeToLocation,
+    getPathname,
+    getServerPathname,
+  );
 
-  useEffect(() => {
-    if (activeHref === undefined) setInternalHref(window.location.pathname);
-  }, [activeHref]);
-
-  const currentHref = activeHref ?? internalHref;
+  const currentHref = activeHref ?? pathname;
 
   const navigate = (href: string) => {
     setMenuOpen(false);
     if (href === currentHref) return;
-    if (!activeHref) setInternalHref(href);
     if (onNavigate) onNavigate(href);
     else window.location.assign(href);
   };
@@ -92,6 +91,19 @@ export function Header({
 }
 
 export const SiteHeader = Header;
+
+function subscribeToLocation(onChange: () => void): () => void {
+  window.addEventListener('popstate', onChange);
+  return () => window.removeEventListener('popstate', onChange);
+}
+
+function getPathname(): string | undefined {
+  return window.location.pathname;
+}
+
+function getServerPathname(): string | undefined {
+  return undefined;
+}
 
 function MenuIcon({ open }: { open: boolean }): ReactNode {
   return (

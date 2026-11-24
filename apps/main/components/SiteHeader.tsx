@@ -15,22 +15,20 @@ interface SiteHeaderProps {
 export function SiteHeader({ isAuthenticated }: SiteHeaderProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const [authenticated, setAuthenticated] = useState(isAuthenticated ?? false);
+  const [sessionAuthenticated, setSessionAuthenticated] = useState(false);
+  const authenticated = isAuthenticated ?? sessionAuthenticated;
 
   useEffect(() => {
-    if (isAuthenticated !== undefined) {
-      setAuthenticated(isAuthenticated);
-      return;
-    }
+    if (isAuthenticated !== undefined) return;
 
     let cancelled = false;
     createClientSupabaseClient()
       .auth.getSession()
       .then(({ data }) => {
-        if (!cancelled) setAuthenticated(Boolean(data.session));
+        if (!cancelled) setSessionAuthenticated(Boolean(data.session));
       })
       .catch(() => {
-        if (!cancelled) setAuthenticated(false);
+        if (!cancelled) setSessionAuthenticated(false);
       });
 
     return () => {

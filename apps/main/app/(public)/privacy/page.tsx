@@ -80,7 +80,7 @@ export default function PrivacyPage() {
                 </div>
 
                 <p className="text-sm text-neutral-700">
-                  These cookies are necessary for the website's authentication and security
+                  These cookies are necessary for the website&apos;s authentication and security
                   features. They cannot be disabled through our cookie preferences. Disabling
                   cookies in your browser may prevent login and administrative functionality from
                   working correctly.

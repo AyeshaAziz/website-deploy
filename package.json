@@ -8,7 +8,7 @@
                     "build":  "pnpm --filter @itqa/main build",
                     "start":  "pnpm --filter @itqa/main start",
                     "lint":  "eslint .",
-                    "typecheck":  "tsc --noEmit",
+                    "typecheck":  "pnpm -r --if-present typecheck",
                     "test":  "vitest run"
                 },
     "dependencies":  {
