@@ -84,6 +84,17 @@ See `docs/api-contract.md` for the contract and `BACKEND_TODO.md` for the handof
 track is one schema (`packages/core`), one JSON file (`src/content/registration`),
 and one registry entry (`src/lib/registrations/tracks.ts`).
 
+## Deploying to Vercel
+
+`vercel.json` at the repo root configures the pnpm monorepo: Vercel uses the Next.js
+preset, builds `@itqa/main`, and serves `apps/main/.next`. Keep the project's Root
+Directory set to the repository root (the default). Set the app's environment variables
+in the Vercel project settings; `.env` files are not committed.
+
+Alternatively, set Root Directory to `apps/main`, choose the Next.js preset, and clear
+the Output Directory override in the dashboard. Do not use `public` as the output
+directory — that is a static-site setting, not a Next.js build output.
+
 ## Checks
 
 ```bash
