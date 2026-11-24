@@ -9,7 +9,7 @@
                     "start":  "pnpm --filter @itqa/main start",
                     "lint":  "eslint .",
                     "typecheck":  "pnpm -r --if-present typecheck",
-                    "test":  "vitest run"
+                    "test":  "pnpm -r --if-present test"
                 },
     "dependencies":  {
                          "@itqa/ui":  "workspace:*",

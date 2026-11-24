@@ -60,7 +60,8 @@ export function MultiSelectField({
     <div ref={containerRef} className="relative">
       <button
         type="button"
-        aria-haspopup="true"
+        role="combobox"
+        aria-haspopup="listbox"
         aria-expanded={open}
         aria-controls={`${registration.name}-panel`}
         aria-invalid={Boolean(error)}
