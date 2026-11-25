@@ -86,14 +86,14 @@ and one registry entry (`src/lib/registrations/tracks.ts`).
 
 ## Deploying to Vercel
 
-`vercel.json` at the repo root configures the pnpm monorepo: Vercel uses the Next.js
-preset, builds `@itqa/main`, and serves `apps/main/.next`. Keep the project's Root
-Directory set to the repository root (the default). Set the app's environment variables
-in the Vercel project settings; `.env` files are not committed.
+This is a pnpm monorepo, so the Vercel project's **Root Directory must be `apps/main`**.
+`apps/main/vercel.json` then sets the Next.js preset, build command, and `.next` output
+directory. Set the app's environment variables in the Vercel project settings; `.env`
+files are not committed.
 
-Alternatively, set Root Directory to `apps/main`, choose the Next.js preset, and clear
-the Output Directory override in the dashboard. Do not use `public` as the output
-directory — that is a static-site setting, not a Next.js build output.
+`public` is the Next.js static-assets folder, not a build output. A Vercel build that
+looks for `public` or a root-level `.next` means the Root Directory is still the repo
+root. Change it in **Settings → Build and Deployment → Root Directory** and redeploy.
 
 ## Checks
 
